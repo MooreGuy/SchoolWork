@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Walrus</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_walrus_facts">What the heck is a walrus?</string>
+    <string name="button_walrus_pics">Show me the walruses!</string>
+    <string name="button_get_facts">Get random fact</string>
+    <string name="text_title">Welcome to the Walrus App.</string>
+
+    <string-array name="walrusfacts">
+        <item>            Walruses are cinnamon brown in color. They are able to turn their hind flippers forward to aid in movement on land. Their front flippers are large and each has five digits. Males have special air sacs that are used to make a bell-like sound.</item>
+        <item>            Both males and females have large tusks that are used for defense, cutting through ice and getting out of the water. The tusks can be more than three feet long in males and about two and a half feet long in females.</item>
+        <item>            Walrus staples include clams, mussels and other bottom dwelling (or benthic) organisms that they locate through their whiskers. They are also known to eat carcasses of young seals when food is scarce.</item>
+        <item>            The worldwide walrus population is about 250,000 animals. Pacific walruses number more than 200,000. The Pacific walrus population has been severely reduced by hunting several times in the past. Their numbers have rebounded after these severe reductions.</item>
+        <item>            The walrus is circumpolar in its range but they are found in geographically separate areas. The Pacific walrus is found in the Bering, Chukchi, and Laptev Sea, while the Atlantic walrus inhabits the coastal regions of northeastern Canada and Greenland.</item>
+        <item>            Walruses are very social animals and congregate in large numbers. They haul out in herds and males and females form separate herds during the non-breeding season. They establish dominance through threat displays involving tusks, bodies and aggression. The largest walruses are the most aggressive. Walruses spend two thirds of their lives in the water. Most walrus groups migrate north in the summer and south in the winter, and females haul out on the ice to give birth.</item>
+    </string-array>
+
+    <string name="title_activity_display_facts">DisplayFactsActivity</string>
+    <string name="title_activity_display_pictures">DisplayPicturesActivity</string>
+    <string name="title_activity_picture_viewer_fragment">PictureViewerFragment</string>
+    <string name="title_activity_title_fragment">TitleFragment</string>
+    <string name="title_activity_display_facts_fragment">DisplayFactsFragment</string>
+    <string name="title_activity_main_menu_fragment">MainMenuFragment</string>
+
+</resources>
