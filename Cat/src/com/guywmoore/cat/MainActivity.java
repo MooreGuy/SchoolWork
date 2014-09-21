@@ -1,6 +1,8 @@
 package com.guywmoore.cat;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +24,7 @@ public class MainActivity extends FragmentActivity {
 			}
 			TestFragment testFrag = new TestFragment();
 			getSupportFragmentManager().beginTransaction()
-				.add(R.id.main_container, testFrag).commit();
+				.add(R.id.main_container, testFrag).addToBackStack(null).commit();
 		}
 		else
 		{
@@ -46,7 +48,11 @@ public class MainActivity extends FragmentActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings)
 		{
-			
+			SettingsFragment settingsFragment = new SettingsFragment();
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.main_container, settingsFragment);
+			transaction.addToBackStack(null);
+			transaction.commit();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

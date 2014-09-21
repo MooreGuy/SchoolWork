@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cat</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string-array
+        name="settings_strings">
+        <Item>
+            Test Setting 1
+        </Item>
+        <Item>
+            Test Setting 2
+        </Item>
+    </string-array>
+    
+
+</resources>
