@@ -20,11 +20,11 @@ int main()
   double doubleArray[25];
   int x;
   
-  //Gets the 25 values and sets them to the array.
+  //Gets the 25 values and assigns them to an array spot.
   for(x = 1; x < 26; x++)
   {
     printf("Please enter a double value for the %i", x);
-    if(x > 3 || x ==1)
+    if(x > 3 || x == 1)
     {
       printf("st ");
     }
@@ -41,15 +41,15 @@ int main()
     scanf("%lf", &doubleArray[x-1]);
   }
   
-  //Prints the values both backwards and forwards of the array.
-  printf("\n\nThe values in order are:\n");
+  //Prints the values both backwards and forwards in the array.
+  printf("\n\nThe values in order are: \n");
   for(x = 0; x < 25; x ++)
   {
     printf("%0.1lf ", doubleArray[x]);
     sum += doubleArray[x];
   }
-  printf("\n\nThe values in reverse order are:\n");
-  for(x = 24; x > -1 ; x--)
+  printf("\n\nThe values in reverse order are: \n");
+  for(x = 24; x > -1; x--)
   {
     printf("%0.1lf ", doubleArray[x]);
   }
@@ -60,7 +60,7 @@ int main()
   low = doubleArray[0];
   for(x = 0; x < 25; x++)
   {
-    //Find the numbers above, below and on average. And increment the
+    //Find the numbers above, below, and on average. Increment the
     //corrosponding variable.
     if(doubleArray[x] > average)
     {
@@ -85,12 +85,33 @@ int main()
     }
   }
   
-  printf("There is %i value(s) below the average.\nThere is %i value(s) above"
-         " the average.\nAnd there is %i value(s) that are the average.\n", 
-         belowAverage, aboveAverage, onAverage);
+  if(belowAverage != 1)
+  {
+    printf("There are %i values below the average.\n", belowAverage);
+  }
+  else
+  {
+    printf("There is %i value below the average.\n", belowAverage);
+  }
+  if(aboveAverage != 1)
+  {
+    printf("There are %i values above the average.\n", aboveAverage);
+  }
+  else
+  {
+    printf("There is %i value above the average.\n", aboveAverage);
+  }
+  if(onAverage != 1)
+  {
+    printf("There are %i values equal to the average.\n", onAverage);
+  }
+  else
+  {
+    printf("There is %i value equal to the average.\n", onAverage);
+  }
   
   
-  printf("The highest value is %i, and the lowest is %i\n", high, low); 
+  printf("The highest value is %i, and the lowest is %i.\n", high, low); 
   system("PAUSE");	
   return 0;
 }
