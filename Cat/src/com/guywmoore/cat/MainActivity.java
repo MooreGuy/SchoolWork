@@ -1,36 +1,16 @@
 package com.guywmoore.cat;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		if((findViewById(R.id.main_container)) != null)
-		{
-			if(savedInstanceState != null)
-			{
-				return;
-			}
-			TestFragment testFrag = new TestFragment();
-			getSupportFragmentManager().beginTransaction()
-				.add(R.id.main_container, testFrag).addToBackStack(null).commit();
-		}
-		else
-		{
-			
-			Log.i("com.guywmoore.cat", "fragment_test is null");
-		}
 	}
 
 	@Override
@@ -46,13 +26,7 @@ public class MainActivity extends FragmentActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings)
-		{
-			SettingsFragment settingsFragment = new SettingsFragment();
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			transaction.replace(R.id.main_container, settingsFragment);
-			transaction.addToBackStack(null);
-			transaction.commit();
+		if (id == R.id.action_settings) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

@@ -1,15 +1,182 @@
-header
+/****************************************
+GENERAL
+*****************************************/
+
+body
 {
-  background-color: #888;
-  text: #999;
+  font-family: 'Titillium Web' sans-serif;
+  font-size: 1em;
 }
 
-footer
+a
 {
-  background-color: #888;
+  text-decoration: none;
 }
 
 #wrapper
 {
-  background-color: #333;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 5%;
+  overflow: auto;
 }
+
+img
+{
+  max-width: 100%;
+}
+
+
+
+
+/****************************************
+HEADER
+*****************************************/
+
+#logo 
+{
+  text-align: center;
+  margin: 0;
+}
+
+header
+{
+  padding: 0.5em, 0;
+  margin-bottom: 16px;
+}
+
+h1
+{
+  font-family: 'Titillium Web', sans-serif;
+  margin: 30px, 0;
+  font-size: 2.5em;
+  font-weight: normal;
+  line-height: 0.8em;
+}
+
+h2
+{
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: normal;
+  line-height: 1.75em;
+}
+
+nav
+{
+  text-align: center;
+}
+
+
+
+
+/****************************************
+FOOTER
+*****************************************/
+
+
+footer
+{
+  text-align: center;
+  margin: 15, 0;
+}
+
+
+
+/****************************************
+PAGE: PORTfOLIO
+*****************************************/
+
+#gallery
+{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#gallery li
+{
+  float: left;
+  width: 45%;
+  margin: 2.5%;
+  background-color: #14212B;
+  color: #f5f5f5;
+  
+}
+
+#gallery li a p
+{
+  margin: 0;
+  padding: 5%;
+  font-size: 1em;
+}
+
+#banner
+{
+  margin: 32px, 0;
+  padding: 16px, 0;
+  background-color: #14212B;
+  
+  
+}
+
+#banner img
+{
+  height: 20%;
+  max-width: 100%;
+  padding: 16px;
+}
+
+/****************************************
+COLORS
+*****************************************/
+
+body
+{
+  background-color: #4F6373;
+  color: #8F8164;
+}
+
+header
+{
+  background: #14212B;
+  border-color: #3E454C;
+
+}
+
+footer
+{
+  background-color: #293845;
+  
+}
+
+nav
+{
+  background: #293845;
+}
+
+h1
+{
+  color: #D9D7AC;
+}
+
+h2
+{
+  color: #8F8164;
+}
+
+a
+{
+  color: #8F8164;
+}
+
+nav a, nav a:visited
+{
+  color: #8F8164;
+}
+
+nav a:hover, nav a.selected
+{
+  color: #D9D7AC;
+}
+
+
