@@ -1,6 +1,6 @@
 Android-Practice
 ================
 
-Me learning to program android.
+School work for all of my computer related classes.
 
-There is nothing really interesting here, move along. Thank you.
+You my look at things, but I doubt I will actually take any pull requests, but thanks anyways.
