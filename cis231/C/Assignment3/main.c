@@ -26,10 +26,7 @@ int main(void)
     
     printHeader();
     printTemps(temps, numTemps);
-    
-    //Testing the Fahrenheit to Celsius conversion function
-    printf("Converted %lf to %lf\n", 32.0, convertFahrToCels(32.0));
-    
+     
     return 0;
 }
 
