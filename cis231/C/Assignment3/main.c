@@ -92,14 +92,17 @@ void printHeader()
  */
 void printTemps(const double temps[], int arraySize)
 {
-    printf("Fahr");
-    printf("Cels\n");    
+    char * fahrString = "Fahr";
+    char * celsString = "Cels";
+
+    printf("%30s", fahrString);
+    printf("%30s\n", celsString);    
 
     int i;
     for( i = 0; i < arraySize; i++)
     {
-	printf("%-.2lf", temps[i]);
-	printf("%.2lf", convertFahrToCels(temps[i]));
+	printf("%30.2lf", temps[i]);
+	printf("%30.2lf", convertFahrToCels(temps[i]));
 	printf("\n");
     }	
 }
