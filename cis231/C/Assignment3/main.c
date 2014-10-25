@@ -95,28 +95,28 @@ void printTemps(const double temps[], int arraySize)
 {
     char * fahrString = "Fahr";
     char * celsString = "Cels";
-    char * divider = "=====";
+    char * divider = "======";
 
     printf("%30s", fahrString);
-    printf("%30s\n", celsString);    
+    printf("%10s\n", celsString);    
     
     //Print the divider to split values.
     //The divider will be 6 equals signs and extend 2 past the decimal
     printf("%31s", divider);
-    printf("%10s", divider);
+    printf("%10s\n", divider);
 
     //Print out the temperatures
     int i;
     for( i = 0; i < arraySize; i++)
     {
-	printf("%30.2lf", temps[i]);
-	printf("%30.2lf", convertFahrToCels(temps[i]));
+	printf("%30.1lf", temps[i]);
+	printf("%10.1lf", convertFahrToCels(temps[i]));
 	printf("\n");
     }	
 
     //Print the divider again to show the end of the temperature values
-    printf("%30s", divider);
-    printf("%9s", divider);
+    printf("%31s", divider);
+    printf("%10s\n", divider);
 }
 
 double convertFahrToCels(double fahrTemp)
