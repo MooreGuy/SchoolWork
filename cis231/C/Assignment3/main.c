@@ -89,15 +89,26 @@ void printHeader()
 
 /*
  *  Prints the temperatures in both Fahrenheit and Celsius units.
+ *  The temperatures will be divided by a divider that is 6
+ *  characters long and is alligned 2 places further than the 
+ *  decimal place to look more similiar to the sample output
+ *  for the project.
  */
 void printTemps(const double temps[], int arraySize)
 {
     char * fahrString = "Fahr";
     char * celsString = "Cels";
+    char * divider = "=====";
 
     printf("%30s", fahrString);
     printf("%30s\n", celsString);    
+    
+    //Print the divider to split values.
+    //The divider will be 6 equals signs and extend 2 past the decimal
+    printf("%31s", divider);
+    printf("%10s", divider);
 
+    //Print out the temperatures
     int i;
     for( i = 0; i < arraySize; i++)
     {
@@ -105,6 +116,10 @@ void printTemps(const double temps[], int arraySize)
 	printf("%30.2lf", convertFahrToCels(temps[i]));
 	printf("\n");
     }	
+
+    //Print the divider again to show the end of the temperature values
+    printf("%30s", divider);
+    printf("%9s", divider);
 }
 
 double convertFahrToCels(double fahrTemp)
