@@ -14,17 +14,24 @@ int getTemperature(double temps[], int numTemps);
 int getTemps(double temps[], int numTemps);
 void printHeader();
 void printTemps(const double temps[], int arraySize);
+void getAverage(const double temps[], int arraySize,
+    double * average);
 double convertFahrToCels(double fahrTemp);
 
 int main(void)
 {
     int numTemps; 
     double temps[TEMP_ARRAY_SIZE];
+    double average;
     
     getNumber(&numTemps);
     getTemps(temps, numTemps);
+    getAverage(temps, numTemps, &average);
+    
     printHeader();
     printTemps(temps, numTemps);
+    printf("%lf\n",average); 
+    
      
     return 0;
 }
@@ -118,6 +125,29 @@ void printTemps(const double temps[], int arraySize)
     printf("%31s", divider);
     printf("%10s\n", divider);
 }
+
+
+/*
+ *  Get average will get set the double * average to the average of
+ *  all of the temperatures in the array.
+ */
+void getAverage(const double temps[], int arraySize,
+    double * average)
+{
+    //Erase garbage values in the average.
+    *average = 0;
+    
+    //Add all of the temps and then divide by the ammount to find
+    //the average temperature.
+    int i;
+    for ( i = 0; i < arraySize; i++)
+    {
+	*average += temps[i];	
+    }
+    *average = *average/arraySize;
+}
+
+
 
 double convertFahrToCels(double fahrTemp)
 {
