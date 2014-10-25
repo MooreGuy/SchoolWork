@@ -23,7 +23,6 @@ int main(void)
     
     getNumber(&numTemps);
     getTemps(temps, numTemps);
-    
     printHeader();
     printTemps(temps, numTemps);
      
@@ -80,7 +79,8 @@ int getTemps(double temps[], int numTemps)
  */
 void printHeader()
 {
-    printf("Assignment 3 | Guy Moore\n");
+    char * header = "CIS 231 | Assignment 3 | Guy Moore";
+    printf("\n\n%41s\n\n", header);
 }
 
 
