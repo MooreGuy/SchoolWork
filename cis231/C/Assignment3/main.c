@@ -13,26 +13,23 @@ void getNumber(int * numTemps);
 int getTemperature(double temps[], int numTemps);
 int getTemps(double temps[], int numTemps);
 void printHeader();
-void printSpaceing(int space);
 void printTemps(const double temps[], int arraySize);
 double convertFahrToCels(double fahrTemp);
 
 int main(void)
 {
     int numTemps; 
-    //TODO: Ask Randy if declaring arrays with variables
-    // is good practice 
     double temps[TEMP_ARRAY_SIZE];
-
+    
     getNumber(&numTemps);
     getTemps(temps, numTemps);
-
+    
     printHeader();
     printTemps(temps, numTemps);
-
+    
     //Testing the Fahrenheit to Celsius conversion function
     printf("Converted %lf to %lf\n", 32.0, convertFahrToCels(32.0));
-
+    
     return 0;
 }
 
@@ -89,34 +86,19 @@ void printHeader()
     printf("Assignment 3 | Guy Moore\n");
 }
 
-/*
- *  Prints a specified number of spaces to format the document
- */
-void printSpacing(int space)
-{
-    int i;
-    for( i = 0; i < space; i++)
-    {
-	printf(" ");
-    }
-}
 
 /*
  *  Prints the temperatures in both Fahrenheit and Celsius units.
  */
 void printTemps(const double temps[], int arraySize)
 {
-    printSpacing(20);
     printf("Fahr");
-    printSpacing(10);
     printf("Cels\n");    
 
     int i;
     for( i = 0; i < arraySize; i++)
     {
-	printSpacing(20);
 	printf("%-.2lf", temps[i]);
-	printSpacing(10);
 	printf("%.2lf", convertFahrToCels(temps[i]));
 	printf("\n");
     }	
