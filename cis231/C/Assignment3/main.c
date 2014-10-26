@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h>
+#include <math.h>
 
 #define TEMP_ARRAY_SIZE 40
 
@@ -19,7 +20,7 @@ void getAverage(const double temps[], int arraySize,
 void printAverage(double average);
 void printHighLowAverage(const double temps[], int arraySize,
     double average);
-void printStandarDeviation(const double temps[], int arraySize,
+void printStandardDeviation(const double temps[], int arraySize,
     double average);
 double convertFahrToCels(double fahrTemp);
 
@@ -219,14 +220,14 @@ void printHighLowAverage(const double temps[], int arraySize,
 /*
  *Finds and prints the Standard Deviation
  */
-void printStandarDeviation(const double temps[], int arraySize,
+void printStandardDeviation(const double temps[], int arraySize,
     double average)
 {
     double deviation = 0;
     int i;    
     
     //Find how far each temperature deviates from the average.
-    for( i = 0; i < temps; i++ )
+    for( i = 0; i < arraySize; i++ )
     {
 	deviation += pow(temps[i] - average, 2);
     } 
