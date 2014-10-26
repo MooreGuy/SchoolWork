@@ -19,6 +19,8 @@ void getAverage(const double temps[], int arraySize,
 void printAverage(double average);
 void printHighLowAverage(const double temps[], int arraySize,
     double average);
+void printStandarDeviation(const double temps[], int arraySize,
+    double average);
 double convertFahrToCels(double fahrTemp);
 
 int main(void)
@@ -35,7 +37,8 @@ int main(void)
     printTemps(temps, numTemps);
     printAverage(average);   
     printHighLowAverage(temps, numTemps, average);
-     
+    printStandardDeviation(temps, numTemps, average);
+ 
     return 0;
 }
 
@@ -201,17 +204,40 @@ void printHighLowAverage(const double temps[], int arraySize,
 	
     }	 
     
+    //Print highest and lowest values. 
     printf("High:%25.1lf%10.1lf\n\n", high, convertFahrToCels(high));
     printf("Low:%26.1lf%10.1lf\n\n", low, convertFahrToCels(low));
-
+    
+    //Print the number of times a temperature was above, below or equal
+    //to the average.
     printf("Above Average:%14i\n", numAboveAverage);
     printf("Equal to Average:%11i\n", numEqualToAverage);
-    printf("Below Average:%14.1i\n\n", numBelowAverage);
-
-  	
+    printf("Below Average:%14.1i\n\n", numBelowAverage);  	
 }
 
 
+/*
+ *Finds and prints the Standard Deviation
+ */
+void printStandarDeviation(const double temps[], int arraySize,
+    double average)
+{
+    double deviation = 0;
+    int i;    
+    
+    //Find how far each temperature deviates from the average.
+    for( i = 0; i < temps; i++ )
+    {
+	deviation += pow(temps[i] - average, 2);
+    } 
+
+    //Finally print the deviation devided by the number of temperatures.
+    printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
+}
+
+/*
+ *  Converts Fahrenheit temperatures to Celsius.
+ */
 double convertFahrToCels(double fahrTemp)
 {
     return (fahrTemp - 32) * 5 / 9;
