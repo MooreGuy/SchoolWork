@@ -16,6 +16,7 @@ void printHeader();
 void printTemps(const double temps[], int arraySize);
 void getAverage(const double temps[], int arraySize,
     double * average);
+void printAverage(double average);
 double convertFahrToCels(double fahrTemp);
 
 int main(void)
@@ -30,8 +31,7 @@ int main(void)
     
     printHeader();
     printTemps(temps, numTemps);
-    printf("%lf\n",average); 
-    
+    printAverage(average);   
      
     return 0;
 }
@@ -147,6 +147,14 @@ void getAverage(const double temps[], int arraySize,
     *average = *average/arraySize;
 }
 
+
+/*
+ *  Prints the average of the temperatures.
+ */
+void printAverage(double average)
+{
+    printf("Average:%22.1lf%10.1lf\n\n",average, convertFahrToCels(average));
+}
 
 
 double convertFahrToCels(double fahrTemp)
