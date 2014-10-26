@@ -17,6 +17,8 @@ void printTemps(const double temps[], int arraySize);
 void getAverage(const double temps[], int arraySize,
     double * average);
 void printAverage(double average);
+void printHighLowAverage(const double temps[], int arraySize,
+    double average);
 double convertFahrToCels(double fahrTemp);
 
 int main(void)
@@ -32,6 +34,7 @@ int main(void)
     printHeader();
     printTemps(temps, numTemps);
     printAverage(average);   
+    printHighLowAverage(temps, numTemps, average);
      
     return 0;
 }
@@ -140,7 +143,7 @@ void getAverage(const double temps[], int arraySize,
     //Add all of the temps and then divide by the ammount to find
     //the average temperature.
     int i;
-    for ( i = 0; i < arraySize; i++)
+    for( i = 0; i < arraySize; i++)
     {
 	*average += temps[i];	
     }
@@ -154,6 +157,58 @@ void getAverage(const double temps[], int arraySize,
 void printAverage(double average)
 {
     printf("Average:%22.1lf%10.1lf\n\n",average, convertFahrToCels(average));
+}
+
+
+/*
+ *  Prints the highest and lowest temperatures and then outputs how many
+ *  temperatures are either above, below or equal to the average.
+ */
+void printHighLowAverage(const double temps[], int arraySize,
+    double average)
+{
+    int i, numAboveAverage = 0, numBelowAverage = 0, numEqualToAverage = 0;
+    double high = -200.0, low = 300.0, currentValue;
+    
+    for( i = 0; i < arraySize; i++)
+    {
+	currentValue = temps[i];
+	
+	//Find the highest and lowest temperatures.	
+	if( currentValue > high )
+	{
+	    high = currentValue;
+	}
+	if( currentValue < low )
+	{
+	    low = currentValue;
+	}
+	
+	//Find the ammount of temperatures above, below, or
+	//equal to the average.
+	if( currentValue > average )
+	{
+	    numAboveAverage++;
+	}
+	else if( currentValue < average )
+	{
+	    numBelowAverage++;
+	}
+	else
+	{
+	    numEqualToAverage++;
+	}
+	
+    }	 
+    
+    printf("High:%25.1lf%10.1lf\n\n", high, convertFahrToCels(high));
+    printf("Low:%26.1lf%10.1lf\n\n", low, convertFahrToCels(low));
+
+    printf("Above Average:%14i\n", numAboveAverage);
+    printf("Equal to Average:%11i\n", numEqualToAverage);
+    printf("Below Average:%14.1i\n\n", numBelowAverage);
+
+  	
 }
 
 
