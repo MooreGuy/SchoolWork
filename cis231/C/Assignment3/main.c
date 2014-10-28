@@ -23,6 +23,7 @@ void printHighLowAverage(const double temps[], int arraySize,
 void printStandardDeviation(const double temps[], int arraySize,
     double average);
 double convertFahrToCels(double fahrTemp);
+void sortTempArray(double temps[], int arraySize);
 
 int main(void)
 {
@@ -33,7 +34,8 @@ int main(void)
     getNumber(&numTemps);
     getTemps(temps, numTemps);
     getAverage(temps, numTemps, &average);
-    
+    sortTempArray(temps, numTemps);
+
     printHeader();
     printTemps(temps, numTemps);
     printAverage(average);   
@@ -235,6 +237,36 @@ void printStandardDeviation(const double temps[], int arraySize,
     //Finally print the deviation devided by the number of temperatures.
     printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
 }
+
+
+/*
+ *	Sorts the temperature array in ascending order using selection sort.
+ */
+void sortTempArray(double temps[], int arraySize)
+{
+	double temporary, currentVal;	
+	int i, k, low;
+	for(i = 0; i < arraySize-1; i++)
+	{
+		currentVal = temps[i];
+		low = i;
+		for( k = i + 1; k < arraySize; k++)
+		{
+			if(temps[k] < temps[low])
+			{
+				low = k;
+			}
+		}
+		
+		//Swap if the lowest isn't i.
+		if(low != i)
+		{	
+			temps[i] = temps[low];
+			temps[low] = currentVal;
+		}
+	}
+}
+
 
 /*
  *  Converts Fahrenheit temperatures to Celsius.
