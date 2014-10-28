@@ -5,9 +5,11 @@
  *	Due: 12:00 30/10/2014
  */
 
-#define ARRAY_LENGTH
+#include <stdio.h>
 
-void getString( char string[], ARRAY_LENGTH);
+#define ARRAY_LENGTH 81
+
+void getString( char string[], int arraySize);
 
 
 int main(int argc, char * argv)
@@ -18,10 +20,7 @@ int main(int argc, char * argv)
 	return 0;
 }
 
-void getString( char string[], ARRAY_LENGTH)
+void getString( char string[], int arraySize)
 {
 	int i;	
-}	
-
-
-
+}
