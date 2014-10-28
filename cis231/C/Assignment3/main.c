@@ -18,7 +18,7 @@ void printTemps(const double temps[], int arraySize);
 void getAverage(const double temps[], int arraySize,
     double * average);
 void printAverage(double average);
-void printHighLowAverage(const double temps[], int arraySize,
+void printDataRanges(const double temps[], int arraySize,
     double average);
 void printStandardDeviation(const double temps[], int arraySize,
     double average);
@@ -27,10 +27,12 @@ void sortTempArray(double temps[], int arraySize);
 
 int main(void)
 {
+	//Declare variables
     int numTemps; 
     double temps[TEMP_ARRAY_SIZE];
     double average;
-    
+   	
+	//Call functions 
     getNumber(&numTemps);
     getTemps(temps, numTemps);
     getAverage(temps, numTemps, &average);
@@ -39,7 +41,7 @@ int main(void)
     printHeader();
     printTemps(temps, numTemps);
     printAverage(average);   
-    printHighLowAverage(temps, numTemps, average);
+    printDataRanges(temps, numTemps, average);
     printStandardDeviation(temps, numTemps, average);
  
     return 0;
@@ -167,10 +169,12 @@ void printAverage(double average)
 
 
 /*
- *  Prints the highest and lowest temperatures and then outputs how many
+ *  
+ *  Finds and prints the range of the numbers and their range in relation to average.
+ *	First is the highest and lowest temperatures and then outputs how many
  *  temperatures are either above, below or equal to the average.
  */
-void printHighLowAverage(const double temps[], int arraySize,
+void printDataRanges(const double temps[], int arraySize,
     double average)
 {
     int i, numAboveAverage = 0, numBelowAverage = 0, numEqualToAverage = 0;
