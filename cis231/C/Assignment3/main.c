@@ -105,8 +105,8 @@ void printHeader()
 /*
  *  Prints the temperatures in both Fahrenheit and Celsius units.
  *  The temperatures will be divided by a divider that is 6
- *  characters long and is alligned 2 places further than the 
- *  decimal place to look more similiar to the sample output
+ *  characters long and is aligned 2 places further than the 
+ *  decimal place to look more similar to the sample output
  *  for the project.
  */
 void printTemps(const double temps[], int arraySize)
@@ -148,7 +148,7 @@ void getAverage(const double temps[], int arraySize,
     //Erase garbage values in the average.
     *average = 0;
     
-    //Add all of the temps and then divide by the ammount to find
+    //Add all of the temps and then divide by the amount to find
     //the average temperature.
     int i;
     for( i = 0; i < arraySize; i++)
@@ -194,7 +194,7 @@ void printDataRanges(const double temps[], int arraySize,
 	    low = currentValue;
 	}
 	
-	//Find the ammount of temperatures above, below, or
+	//Find the amount of temperatures above, below, or
 	//equal to the average.
 	if( currentValue > average )
 	{
@@ -230,7 +230,7 @@ void printStandardDeviation(const double temps[], int arraySize,
     double average)
 {
 	//If the data set is equal to zero, then it doesn't deviate,
-	//so outputting zero is valid and also avoids devid by zero
+	//so outputing zero is valid and also avoids divide by zero
 	if(!arraySize)
 	{
     	printf("Standard Deviation:%11.1lf\n", 0);
@@ -246,7 +246,7 @@ void printStandardDeviation(const double temps[], int arraySize,
 		deviation += pow(temps[i] - average, 2);
 		} 
 
-		//Finally print the deviation devided by the number of temperatures.
+		//Finally print the deviation divided by the number of temperatures.
 		printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
 	}
 }
