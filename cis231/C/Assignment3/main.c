@@ -12,7 +12,7 @@
 
 void getNumber(int * numTemps);
 int getTemperature(double temps[], int numTemps);
-int getTemps(double temps[], int numTemps);
+void getTemps(double temps[], int numTemps);
 void printHeader();
 void printTemps(const double temps[], int arraySize);
 void getAverage(const double temps[], int arraySize,
@@ -22,8 +22,8 @@ void printDataRanges(const double temps[], int arraySize,
     double average);
 void printStandardDeviation(const double temps[], int arraySize,
     double average);
-double convertFahrToCels(double fahrTemp);
 void sortTempArray(double temps[], int arraySize);
+double convertFahrToCels(double fahrTemp);
 
 int main(void)
 {
@@ -67,7 +67,7 @@ void getNumber(int * numTemps)
     }
 }
 
-int getTemps(double temps[], int numTemps)
+void getTemps(double temps[], int numTemps)
 {
     printf("Now enter Fahrenheit temperatures from -200.0 to 300.0"
            "(.\n");
@@ -87,13 +87,13 @@ int getTemps(double temps[], int numTemps)
 	    printf("\nEnter a valid temperature\n");
 	    
 	    getchar(); 
-	    scanf("%lf", temps[i]); 
+	    scanf("%lf", &temps[i]); 
 	}
     }
 }
 
 /* 
- *  Prints the project header with the assignment name and then my name
+ *  Prints the project header with the assignment name and then my name.
  */
 void printHeader()
 {
@@ -119,7 +119,7 @@ void printTemps(const double temps[], int arraySize)
     printf("%10s\n", celsString);    
     
     //Print the divider to split values.
-    //The divider will be 6 equals signs and extend 2 past the decimal
+    //The divider will be 6 equals signs and extend 2 past the decimal.
     printf("%31s", divider);
     printf("%10s\n", divider);
 
@@ -246,9 +246,14 @@ void printStandardDeviation(const double temps[], int arraySize,
 		deviation += pow(temps[i] - average, 2);
 		} 
 
+<<<<<<< HEAD
 		//Finally print the deviation divided by the number of temperatures.
 		printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
 	}
+=======
+    //Finally print the deviation divided by the number of temperatures.
+    printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
+>>>>>>> 90617b3692a485961238ef1af7784d6e5828c2ad
 }
 
 
