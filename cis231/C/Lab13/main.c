@@ -40,6 +40,7 @@ int main(int argc, char * argv)
 			 &combinedUpperCase, &combinedNumeric, &combinedAlphanumeric,
 			 &combinedOther );
 	}	
+
 	return 0;
 }
 
@@ -60,11 +61,18 @@ int checkString( char  string[],  int * combinedAlphabetic,
 				int * combinedNumeric, int * combinedAlphanumeric,
 				int * combinedOther )
 {
+	//Get string length and output for the user.
 	int stringLength = getStringLength(string);
+	printf("The length of this string is %i.\n", stringLength);
+
+	//Check to make sure the string ist't to short, or there
+	// would be no point in counting the characters.
 	if( stringLength < 15 )
 	{
 		return -1;
 	}	
+
+	//Instantiate values to check just this string.
 	int alphabetic = 0, lowercase = 0, uppercase = 0, numeric = 0,
 		 alphanumeric = 0, other = 0;
 	
@@ -110,6 +118,14 @@ int checkString( char  string[],  int * combinedAlphabetic,
 			combinedAlphanumeric += alphanumeric;
 			combinedNumeric += numeric;
 			combinedOther += other;
+			printf("This current string has:\n"
+				   " %i lowercase values\n"
+				   "%i uppercase values\n"
+				   "%i alphabetic values\n"
+				   "%i alphanumeric values\n"
+				   "%i numeric values\n"
+				   "%i other values\n", lowercase, uppercase, alphabetic,
+					numeric, other);
 		}
 		else
 		{
