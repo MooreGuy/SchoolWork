@@ -120,9 +120,14 @@ int checkString( char  string[],  int * combinedAlphabetic,
 	return 0;
 }	
 
-int getStringLength( char string[])
+int getStringLength( char string[] )
 {
-	return 0;
+	int i;
+	while(string[i])
+	{
+		i++;
+	} 
+	return i;
 }	
 
 // Returns 1 if everything has a value, or returns 0 if something
