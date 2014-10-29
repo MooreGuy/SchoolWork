@@ -12,9 +12,12 @@
 
 void getString( char string[] );
 int checkString( char  string[],  int * combinedAlphabetic, 
-				int * combinedLowerCase, int * combinedNumeric, 
-				int * combinedAlphanumeric, int * combinedOther );
+				int * combinedLowerCase, int * combinedUpperCase,
+				int * combinedNumeric, int * combinedAlphanumeric,
+				int * combinedOther );
 int getStringLength( char string[]);
+int checkIfZero(int lowercase, int uppercase, int alphabetic, 
+				int alphanumeric, int numeric, int other);
 
 int main(int argc, char * argv)
 {
@@ -23,6 +26,7 @@ int main(int argc, char * argv)
 
 	int combinedAlphabetic = 0;	
 	int combinedLowerCase = 0;
+	int combinedUpperCase = 0;
 	int combinedNumeric = 0;
 	int combinedAlphanumeric = 0;
 	int combinedOther = 0;
@@ -33,11 +37,13 @@ int main(int argc, char * argv)
 	{
 		getString(string);
 		checkString( string, &combinedAlphabetic, &combinedLowerCase,
-			 &combinedNumeric, &combinedAlphanumeric, &combinedOther );
+			 &combinedUpperCase, &combinedNumeric, &combinedAlphanumeric,
+			 &combinedOther );
 	}	
 	return 0;
 }
 
+//Gets a string from input.
 void getString( char string[] )
 {
 	int i = 0;
@@ -48,10 +54,11 @@ void getString( char string[] )
 	string[i] = '\0';
 }
 
-
-int checkString( char string[], int * combinedAlphabetic,
-					int * combinedLowerCase, int * combinedNumeric,
-					int * combinedAlphanumeric, int * combinedOther)
+//Checks if the string is valid and the characters within it.
+int checkString( char  string[],  int * combinedAlphabetic, 
+				int * combinedLowerCase, int * combinedUpperCase,
+				int * combinedNumeric, int * combinedAlphanumeric,
+				int * combinedOther )
 {
 	int stringLength = getStringLength(string);
 	if( stringLength < 15 )
@@ -93,6 +100,21 @@ int checkString( char string[], int * combinedAlphabetic,
 		{
 			other++;
 		}
+		
+		if (checkIfZero(lowercase, uppercase, alphabetic, alphanumeric,
+			numeric, other))	
+		{
+			combinedLowerCase += lowercase;
+			combinedUpperCase += uppercase;
+			combinedAlphabetic += alphabetic;
+			combinedAlphanumeric += alphanumeric;
+			combinedNumeric += numeric;
+			combinedOther += other;
+		}
+		else
+		{
+			return -1;
+		}	
 	}
 	
 	return 0;
@@ -101,4 +123,12 @@ int checkString( char string[], int * combinedAlphabetic,
 int getStringLength( char string[])
 {
 	return 0;
+}	
+
+// Returns 1 if everything has a value, or returns 0 if something
+// doesn't.
+int checkIfZero(int lowercase, int uppercase, int alphabetic, 
+				int alphanumeric, int numeric, int other)
+{
+	return 1;
 }	
