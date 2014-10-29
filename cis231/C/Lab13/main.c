@@ -135,5 +135,18 @@ int getStringLength( char string[] )
 int checkIfZero(int lowercase, int uppercase, int alphabetic, 
 				int alphanumeric, int numeric, int other)
 {
-	return 1;
+	if(other)
+		return 0;
+	else if(alphanumeric)
+		return 0;
+	else if(alphabetic)
+		return 0;
+	else if(numeric)
+		return 0;
+	else if(lowercase)
+		return 0;
+	else if(uppercase)
+		return 0;
+	else
+		return 1;
 }	
