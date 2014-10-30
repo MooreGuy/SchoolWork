@@ -35,11 +35,14 @@ int main(int argc, char * argv)
 	int i;
 	for( i = 0; i < NUM_OF_STRINGS; i++ )
 	{
-		getString(string);
-		checkString( string, &combinedAlphabetic, &combinedLowerCase,
-			 &combinedUpperCase, &combinedNumeric, &combinedAlphanumeric,
-			 &combinedOther );
-	}	
+		while( checkString( string, &combinedAlphabetic,
+			   &combinedLowerCase, &combinedUpperCase,
+			   &combinedNumeric, &combinedAlphanumeric,
+			   &combinedOther )
+		{
+			getString(string);
+		}
+	}		
 
 	return 0;
 }
@@ -124,8 +127,8 @@ int checkString( char  string[],  int * combinedAlphabetic,
 				   "%i alphabetic values\n"
 				   "%i alphanumeric values\n"
 				   "%i numeric values\n"
-				   "%i other values\n", lowercase, uppercase, alphabetic,
-					numeric, other);
+				   "%i other values\n", lowercase, uppercase,
+					 alphabetic, numeric, other);
 		}
 		else
 		{
@@ -166,3 +169,14 @@ int checkIfZero(int lowercase, int uppercase, int alphabetic,
 	else
 		return 1;
 }	
+
+void printValues(
+{
+	printf(" has:\n"
+		   " %i lowercase values\n"
+		   "%i uppercase values\n"
+		   "%i alphabetic values\n"
+		   "%i alphanumeric values\n"
+		   "%i numeric values\n"
+		   "%i other values\n", lowercase, uppercase, alphabetic,
+			 numeric, other);
