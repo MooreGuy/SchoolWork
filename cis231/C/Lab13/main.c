@@ -77,7 +77,7 @@ int checkString( char  string[],  int * combinedAlphabetic,
 {
 	//Get string length and output for the user.
 	int stringLength = getStringLength(string);
-	printf("The length of this string is %i.\n", stringLength);
+	printf("The length of the string is %i.\n", stringLength);
 
 	//Check to make sure the string ist't to short, or there
 	// would be no point in counting the characters.
@@ -193,11 +193,11 @@ int checkIfZero(int lowercase, int uppercase, int alphabetic,
 void printValues(int lowercase, int uppercase, int alphabetic, 
 				 int alphanumeric, int numeric, int other)
 {
-	printf("%i lowercase values\n"
-		   "%i uppercase values\n"
-		   "%i alphabetic values\n"
-		   "%i alphanumeric values\n"
-		   "%i numeric values\n"
-		   "%i other values\n\n", lowercase, uppercase, alphabetic,
-			 alphanumeric, numeric, other);
+	printf("%i alphabetic\n"
+		   "%i lowercase\n"
+		   "%i uppercase\n"
+		   "%i numeric\n"
+		   "%i alphanumeric\n"
+		   "%i other\n\n", alphabetic, lowercase, uppercase, 
+			 numeric, alphanumeric, other);
 }
