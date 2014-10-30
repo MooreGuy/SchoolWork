@@ -67,6 +67,10 @@ void getString( char string[] )
 		i++;
 	}	
 	string[i] = '\0';
+	
+	//Flush left over data.
+	char leftOver;
+	while(leftOver = getchar() != '\n' && leftOver != EOF);	
 }
 
 //Checks if the string is valid and the characters within it.
