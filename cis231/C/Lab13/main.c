@@ -79,7 +79,7 @@ int checkString( char  string[],  int * combinedAlphabetic,
 	int stringLength = getStringLength(string);
 	printf("The length of the string is %i.\n", stringLength);
 
-	//Check to make sure the string ist't to short, or there
+	//Check to make sure the string isn't too short, or there
 	// would be no point in counting the characters.
 	if( stringLength < 15 )
 	{
