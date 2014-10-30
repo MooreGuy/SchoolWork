@@ -18,6 +18,8 @@ int checkString( char  string[],  int * combinedAlphabetic,
 int getStringLength( char string[]);
 int checkIfZero(int lowercase, int uppercase, int alphabetic, 
 				int alphanumeric, int numeric, int other);
+void printValues(int lowercase, int uppercase, int alphabetic, 
+				 int alphanumeric, int numeric, int other);
 
 int main(int argc, char * argv)
 {
@@ -31,18 +33,27 @@ int main(int argc, char * argv)
 	int combinedAlphanumeric = 0;
 	int combinedOther = 0;
 
+	
 	//Loop stringChecker	
 	int i;
 	for( i = 0; i < NUM_OF_STRINGS; i++ )
-	{
+	{	
+		getString(string);
 		while( checkString( string, &combinedAlphabetic,
 			   &combinedLowerCase, &combinedUpperCase,
 			   &combinedNumeric, &combinedAlphanumeric,
-			   &combinedOther )
+			   &combinedOther ))
 		{
+			printf("Enter a valid string.\n");
 			getString(string);
 		}
 	}		
+	
+	//Finished, print out data.	
+	printf("The combined string values are:\n");	
+	printValues(combinedLowerCase, combinedUpperCase,
+					combinedAlphabetic, combinedAlphanumeric,
+						combinedNumeric, combinedOther);
 
 	return 0;
 }
@@ -72,7 +83,9 @@ int checkString( char  string[],  int * combinedAlphabetic,
 	// would be no point in counting the characters.
 	if( stringLength < 15 )
 	{
-		return -1;
+		printf("\nError! Invalid string length. String must be at least"
+			  " 15 characters!\n");
+		return 1;
 	}	
 
 	//Instantiate values to check just this string.
@@ -80,10 +93,10 @@ int checkString( char  string[],  int * combinedAlphabetic,
 		 alphanumeric = 0, other = 0;
 	
 	int i;
+	char currentVal;
 	for( i = 0; i < stringLength; i ++ )
 	{
-		char currentVal = string[i];  
-		
+		currentVal = string[i];  
 		if( currentVal >= 65 && currentVal <= 122 )
 		{
 			if( currentVal <= 90 )
@@ -92,7 +105,7 @@ int checkString( char  string[],  int * combinedAlphabetic,
 				alphabetic++;
 				alphanumeric++;
 			}
-			else if( currentVal >= 122 )
+			else if( currentVal >= 97 )
 			{
 				lowercase++;
 				alphabetic++;
@@ -106,42 +119,43 @@ int checkString( char  string[],  int * combinedAlphabetic,
 		else if( currentVal >= 48 && currentVal <= 57 )
 		{
 			numeric++;
+			alphanumeric++;
 		}
 		else
 		{
 			other++;
 		}
+	}	
+
+	//Now check to make sure the string contains the needed characters
+	if (checkIfZero(lowercase, uppercase, alphabetic, alphanumeric,
+		numeric, other))	
+	{
+		* combinedLowerCase += lowercase;
+		* combinedUpperCase += uppercase;
+		* combinedAlphabetic += alphabetic;
+		* combinedAlphanumeric += alphanumeric;
+		* combinedNumeric += numeric;
+		* combinedOther += other;
 		
-		if (checkIfZero(lowercase, uppercase, alphabetic, alphanumeric,
-			numeric, other))	
-		{
-			combinedLowerCase += lowercase;
-			combinedUpperCase += uppercase;
-			combinedAlphabetic += alphabetic;
-			combinedAlphanumeric += alphanumeric;
-			combinedNumeric += numeric;
-			combinedOther += other;
-			printf("This current string has:\n"
-				   " %i lowercase values\n"
-				   "%i uppercase values\n"
-				   "%i alphabetic values\n"
-				   "%i alphanumeric values\n"
-				   "%i numeric values\n"
-				   "%i other values\n", lowercase, uppercase,
-					 alphabetic, numeric, other);
-		}
-		else
-		{
-			return -1;
-		}	
+		printf("This current string has:\n");
+		printValues(lowercase, uppercase, alphabetic, alphanumeric,
+					numeric, other);
 	}
-	
+	else
+	{
+		printf("\nError! The string must contain a lowercase, uppercase"
+			   ", number and other\ncharacter\n");
+		return 1;
+	}	
+
+	//If the string is good to go, then return 0.		
 	return 0;
 }	
 
 int getStringLength( char string[] )
 {
-	int i;
+	int i = 0;
 	while(string[i])
 	{
 		i++;
@@ -154,29 +168,36 @@ int getStringLength( char string[] )
 int checkIfZero(int lowercase, int uppercase, int alphabetic, 
 				int alphanumeric, int numeric, int other)
 {
-	if(other)
+	if( ! other)
+	{
 		return 0;
-	else if(alphanumeric)
+	}
+	else if( ! lowercase)
+	{
 		return 0;
-	else if(alphabetic)
+	}
+	else if( ! uppercase)
+	{
 		return 0;
-	else if(numeric)
+	}
+	else if( ! numeric)
+	{
 		return 0;
-	else if(lowercase)
-		return 0;
-	else if(uppercase)
-		return 0;
+	}
 	else
+	{
 		return 1;
+	}
 }	
 
-void printValues(
+void printValues(int lowercase, int uppercase, int alphabetic, 
+				 int alphanumeric, int numeric, int other)
 {
-	printf(" has:\n"
-		   " %i lowercase values\n"
+	printf("%i lowercase values\n"
 		   "%i uppercase values\n"
 		   "%i alphabetic values\n"
 		   "%i alphanumeric values\n"
 		   "%i numeric values\n"
-		   "%i other values\n", lowercase, uppercase, alphabetic,
-			 numeric, other);
+		   "%i other values\n\n", lowercase, uppercase, alphabetic,
+			 alphanumeric, numeric, other);
+}
