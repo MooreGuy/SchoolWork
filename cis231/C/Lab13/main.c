@@ -62,7 +62,7 @@ int main(int argc, char * argv)
 void getString( char string[] )
 {
 	int i = 0;
-	while((string[i] = getchar()) != '\n' && i < ARRAY_LENGTH)
+	while((string[i] = getchar()) != '\n' && i < ARRAY_LENGTH - 1)
 	{
 		i++;
 	}	
