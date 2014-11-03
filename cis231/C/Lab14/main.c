@@ -7,21 +7,32 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_ARRAY_LENGTH 20
 
 void strInput(char str[], int maxChars);
 void tokenizeArray(char str[], char * tokens[], int maxChars, 
 					int * numOfInts);
+void tokensToInts( char * tokens[], int ** intTokens, int numOfInts);
 
 int main(int argc, char * argv)
 {
 	char str[MAX_ARRAY_LENGTH + 1];
 	char * tokens[MAX_ARRAY_LENGTH + 1];
 	int * intTokens;
-	int numOfInts = 0;
+	int numOfInts;
+
 	strInput(str, MAX_ARRAY_LENGTH);
 	tokenizeArray(str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
+	tokensToInts( tokens, &intTokens, numOfInts );	
+	
+	int i = 0;
+	while( i < numOfInts)
+	{
+		printf("This is the token %i: %i.\n", i, intTokens[i]);
+		i++;
+	}	
 	
 }
 
@@ -52,5 +63,20 @@ void tokenizeArray(char str[], char * tokens[], int maxChars,
 		i++;
 	}	
 
-	* numOfInts = i - 1;	
+	* numOfInts = i;	
 }	
+
+void tokensToInts( char * tokens[], int ** intTokens, int numOfInts)
+{
+	*intTokens = malloc( numOfInts * sizeof *intTokens );
+	int i = 0;
+	while( i < numOfInts )
+	{
+		//This is the syntax for both subscript and pointer addition,
+		//They are seperate so I can reference this if I have problems
+		//in the future.
+		*((*intTokens)+ i) = atoi(tokens[i]);	
+		printf("This is the delimiter %i: %i.\n", i, (* intTokens)[i]);
+		i++;
+	}
+}
