@@ -1,6 +1,6 @@
 /*
  *  Guy Moore
- *  Lab13 | CIS 231 B 
+ *  Lab14 | CIS 231 B 
  *  Cuesta College | Randy Scovil 
  *  Due: 12:00 30/10/2014 
  */
@@ -8,17 +8,21 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_ARRAY_LENGTH 10
+#define MAX_ARRAY_LENGTH 20
 
 void strInput(char str[], int maxChars);
-void tokenizeArray(char str[], char * tokens[], int maxChars);
+void tokenizeArray(char str[], char * tokens[], int maxChars, 
+					int * numOfInts);
 
 int main(int argc, char * argv)
 {
 	char str[MAX_ARRAY_LENGTH + 1];
 	char * tokens[MAX_ARRAY_LENGTH + 1];
+	int * intTokens;
+	int numOfInts = 0;
 	strInput(str, MAX_ARRAY_LENGTH);
-	tokenizeArray(str, tokens, MAX_ARRAY_LENGTH); 
+	tokenizeArray(str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
+	
 }
 
 void strInput(char str[], int maxChars)
@@ -37,19 +41,16 @@ void strInput(char str[], int maxChars)
 	str[i + 1] = '\0';
 }
 
-void tokenizeArray(char str[], char * tokens[], int maxChars)
+void tokenizeArray(char str[], char * tokens[], int maxChars, 
+					int * numOfInts)
 {
-	int i = 0;
-	while( (tokens[i] = strtok( str, " " )) != '\0')
-	{
-		printf("Did something %s \n", &tokens[i]);	
-		i++;
-	}
+	tokens[0] = strtok( str, ", " );
 	
-	i = 0;
-	while( tokens[i] != '\0' )
+	int i = 1;
+	while( (tokens[i] = strtok( '\0', ", " )) != '\0')
 	{
-		printf("Here are your tokens %s\n", tokens[i]);
 		i++;
-	}
+	}	
+
+	* numOfInts = i - 1;	
 }	
