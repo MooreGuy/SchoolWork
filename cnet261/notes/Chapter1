@@ -1,0 +1,84 @@
+The borderless switched network
+
+Can be split into: Core, Distribution, and Access.
+
+Core is the core backbone
+Distribution is the connection between core and access
+Access is the connection to the user or, connection into or outside
+	the network.
+
+Fundamentals of network design have changed from flat to hierarchical
+
+A switched LAN allows:
+	more flexibility
+	traffic management
+	quality of service
+	additional security
+	support for wireless networking and connectivity
+	support for new technologies, such as ip telephony and mobility
+		services
+
+LAN Design
+	Switch selection based off of:
+		fixed, or modular
+		stackable, or non-stackable
+		thickness of the switch (rack units) | switch form factors
+	Business Considerations
+		Cost-is dependent on features
+		Port-Density-Needs to support appropiate number of devices
+		Power-Using PoE to power other things
+			  Or redundant power supplies
+		Reliability- Needs to provide continuous access
+		Port-Speed-concerns speed provided to end-users
+		Frame Buffers- Important if there are congested ports to servers
+		Scalability- Should provide opportunity for growth
+	
+Fixed Configuration Switches
+	Non upgradable.
+
+Modular Configuration Switches
+	Are upgradable
+	Can have different size chasis for more upgrades etc.
+		Can have added line cards and are expansion slots like pc would
+		have
+Stackable Configuration Switches
+	Switches that can be stacked and connected using a cable
+		This stacking technology fron cisco is called StackWise
+			Allows up to nine switches
+	Stacked switches effectively opperate as a single larger switch
+	Stacked switches are good where bandwidth and fault tolerance are
+		needed but it is too costly to implement a modular switch.
+	Can be daisy chained, but also cross-connected
+		if cross-connected then the network can recover quickly if a
+			single switch fails.
+	Stacked switches use a special port for the stacking cables.
+	Stackpower technology allows power sharing among stack members.
+
+The Switched Enviroment
+	The concept of switching is universal and can apply to these fields
+		LANS, WANS, PSTN(public switched telephone network)
+
+Switching is a decision based on two criteria
+	Ingress Port (Where the frame enters the device on a port)
+	Destination address 
+		This is the destination MAC address of the frames
+
+	The switch looks up the destination port in it's MASTER SWITCHING
+		TABLE
+
+Switches build MAC Table using CAM(content addressable memory) table
+	CAM is a special type of memory used in high-speed searching
+		applications.
+	This table is built by recording each address of each device
+		connected to it.
+	
+When a switch recieves a frame with a destination address not in its 
+	master switching table.
+	The switch forwards the packet out to all ports but the ingress por
+		This is called flooding.
+	When the device responds to the flood, the switch adds its address
+		to the MAC address table.
+	
+In a network with many interconnected switches, the MAC address table
+	contains multiple MAC addresses for a single port connected to the
+	other switches.
