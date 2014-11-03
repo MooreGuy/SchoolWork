@@ -1,0 +1,74 @@
+CSS stands for Cascading Style Sheets
+
+CSS is a styling language that defines layout of HTML documents.
+
+HTML is used for structuring content, and CSS is used for formatting
+the structured content.
+
+selector
+{
+	property: value;
+}
+
+Applying CSS
+	Method 1: External (optimal)
+	
+		This is done by linking the external css document in the html 
+		head
+		<link type='text/css' rel='stylesheet' href='css/style.css' />
+
+	Method 2: Internal (sloppy)
+	
+		Put style inbetween <style></style> tags in the head of the
+		html document.
+	
+	Method 3: In-Line (frowned-upon
+		
+		this is just done by setting style as an attribute to the html
+		tag.
+		<h2 style="width: 33%; color: red;"
+	Method 4: Javascript
+		You can access html elements in javascript.
+
+Lengths and Percentages
+	px: is a unit for pixels
+	em: is the unit for a calculated size of font.
+	pt: is unit for points usually used in printed media.
+	%: is a unit for percentages.
+
+Colors
+	either predefined or hex with rgb, #rrggbb
+
+Text Properties
+	font-family: the font
+	font-size: the font size
+	font-weight: bold or normal font weight
+	font-style: italic or normal font style.
+
+Text Properties
+	text-decoration: underline, does what you would expect
+	text-decoration: overline, places a line above the text.
+	text-decoration: line-trhough.
+	text-decoration: none, no line (to remove underline from links)
+	
+	text-transformation: capatilze, turns the first letter of every word
+						 into uppercase
+	text-transformation: uppercase, turns everything into uppercase
+	text-transformation: lowercase, turns everything into lowercase.
+	text-transformation: none, nothing!
+
+Spacing
+	letter-spacing: spacing between letters
+	word-spacing: spacing between words
+	
+	line-height: sets the height of the lines without adjusting font.
+	text-align: aligns text left, right, center or justify.
+	text-indent: will indent the first line of a paragraph.
+
+Positioning
+	The position property is used to define whether a box is absolute,
+	relative, static, or fixed.
+	
+	static: is the default value and renders a box in the normal order
+			of things, as they appear in the HTML.
+

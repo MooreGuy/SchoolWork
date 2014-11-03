@@ -1,0 +1,95 @@
+Tags
+	<!DOCTYPE html>
+		This tag will set the type of document it is, otherwise the
+		browser will assume that it is an old type of html that should
+		be loaded with the css quirks mode enabled.
+	<html></html>
+		This tag has everything except the doctype in it.
+	<head></head>
+		This tag will hold information about the page, such as links 
+		used in the page, the tile, meta data like the charset.
+	<meta charset="UTF-8">
+		This tag will set the character set for the page.
+	<title></title>
+		The title tag sets the tile of the page, and is often displayed
+		at the top of the browser.
+	<body></body>
+		The body tag holds everything that gets displayed.
+	<div></div>
+		The div tag seperates content.
+	<p></p>
+		Can be used to section up text based on paragraphs.
+	<strong></strong>
+		This will make text bold.
+	<em></em>
+		This will italicise text.
+	<span></span>
+		The span tag is like a div, however inline instead of block.
+	<ul></ul>
+		This creates an unordered list. It will hold li or list items
+	<li></li>
+		Is a list item, and is used in any list.
+	<h1-6></h1-6>
+		The header tags can be assigned 1-6 and will have different
+		sizes based on the number, the smaller the number, the larger.
+	<a href="link"></a>
+		The a tag is a link, and href is the hyper reference.
+	<img src="srource" alt="alternate" />
+		The image is a self closing tag that holds an image for content.
+	<form method='POST' action='process.php'></form>
+		The form element will make a submission or form for someone
+		to fill out.
+	<label for='first_name'>First Name</label>
+		The label that is used to identify the input field in the form.
+	<input type='text' name='first_name' />
+		self closing, input field for a form.
+	<table></table>
+		This creates a table.
+	<tr></tr>
+		This creates a row in a table. put td or columns in here.
+	<td></td>
+		Table data, but really just a column, put data between the
+		tags.
+HTML attributes
+	id="id"
+		The id is a unique identifier to the element, that can only 
+		occur once per html document. It is accessed in css with the 
+		"#" operator.
+	class="class"
+		The class is like an id, however it is not unique. It is
+		accessed from css using the "." operator.
+
+Block vs Inline Tags
+
+	Block: Takes up full width available, with a new line before and 
+			after.
+			In css ( display: block; )
+			Block tags include: <div>, <h1>...<h6>, <p>, <ul>, <ol>
+								<li>, <table>, <blockquote>, <pre>,
+								<form>
+	Inline: Takes up only as much width as it needs, and does not
+			force new lines.
+			In css ( display: inline; )
+			Inline tags include: <span>, <a>, <strong>, <em>, <img />
+								 <br>, <input>
+HTML 5 features and tags
+	<canvas>
+		For 2d drawing
+	<video> and <audio>	
+		playback media
+	supports local storage
+	content specific tags
+		<article>, <footer>, <header>, <nav>, <section>
+	New form controls
+		calendar, date, time, email, url, search
+
+HTML Folder Structure
+	site/
+		index.html
+		img/
+			galacat.jpg
+			felinova.jpg
+		css/
+			main.css
+		js/
+			script.js
