@@ -6,20 +6,25 @@
  */
 
 #include <stdio.h>
+#include <string.h>
+
+#define MAX_ARRAY_LENGTH 10
 
 void strInput(char str[], int maxChars);
+void tokenizeArray(char str[], char * tokens[], int maxChars);
 
 int main(int argc, char * argv)
 {
-	char str[80];
-	strInput(str, 10);
-	printf("Input: %s\n", str);
+	char str[MAX_ARRAY_LENGTH + 1];
+	char * tokens[MAX_ARRAY_LENGTH + 1];
+	strInput(str, MAX_ARRAY_LENGTH);
+	tokenizeArray(str, tokens, MAX_ARRAY_LENGTH); 
 }
 
 void strInput(char str[], int maxChars)
 {
 	//Clear buffer.
-	while( getchar() != '\0');
+	//while( getchar() != '\0');
 
 	//Get input.
 	int i = 0;
@@ -31,3 +36,20 @@ void strInput(char str[], int maxChars)
 	}	
 	str[i + 1] = '\0';
 }
+
+void tokenizeArray(char str[], char * tokens[], int maxChars)
+{
+	int i = 0;
+	while( (tokens[i] = strtok( str, " " )) != '\0')
+	{
+		printf("Did something %s \n", &tokens[i]);	
+		i++;
+	}
+	
+	i = 0;
+	while( tokens[i] != '\0' )
+	{
+		printf("Here are your tokens %s\n", tokens[i]);
+		i++;
+	}
+}	
