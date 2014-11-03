@@ -82,3 +82,4 @@ When a switch recieves a frame with a destination address not in its
 In a network with many interconnected switches, the MAC address table
 	contains multiple MAC addresses for a single port connected to the
 	other switches.
+LEFT OFF AT: 1.2.1.3
