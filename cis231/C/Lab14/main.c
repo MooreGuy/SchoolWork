@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_ARRAY_LENGTH 20
+#define MAX_ARRAY_LENGTH 180
 
 void strInput(char str[], int maxChars);
 void tokenizeArray(char str[], char * tokens[], int maxChars, 
@@ -18,26 +18,29 @@ void tokensToInts( char * tokens[], int ** intTokens, int numOfInts);
 void printData( int * intTokens, int numOfInts );
 
 int main(int argc, char * argv)
-{
+{	
 	char str[MAX_ARRAY_LENGTH + 1];
 	char * tokens[MAX_ARRAY_LENGTH + 1];
 	int * intTokens;
 	int numOfInts;
 
-	strInput( str, MAX_ARRAY_LENGTH );
-	tokenizeArray( str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
-	tokensToInts( tokens, &intTokens, numOfInts );	
-	
-	printData( intTokens, numOfInts );
+	do
+	{	
+		strInput( str, MAX_ARRAY_LENGTH );
+		tokenizeArray( str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
+		tokensToInts( tokens, &intTokens, numOfInts );	
+		
+		printData( intTokens, numOfInts );
+		printf("\nPress (y) to run the program again\n");
+	}
+	while(getchar() == 'y');
 	
 }
 
 void strInput(char str[], int maxChars)
 {
-	//Clear buffer.
-	//while( getchar() != '\0');
-
 	//Get input.
+	getchar();
 	int i = 0;
 	char currentCharacter;
 	while( ( currentCharacter = getchar() ) != '\n' && i <= maxChars )
