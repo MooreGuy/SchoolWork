@@ -15,6 +15,7 @@ void strInput(char str[], int maxChars);
 void tokenizeArray(char str[], char * tokens[], int maxChars, 
 					int * numOfInts);
 void tokensToInts( char * tokens[], int ** intTokens, int numOfInts);
+void printData( int * intTokens, int numOfInts );
 
 int main(int argc, char * argv)
 {
@@ -23,16 +24,17 @@ int main(int argc, char * argv)
 	int * intTokens;
 	int numOfInts;
 
-	strInput(str, MAX_ARRAY_LENGTH);
-	tokenizeArray(str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
+	strInput( str, MAX_ARRAY_LENGTH );
+	tokenizeArray( str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
 	tokensToInts( tokens, &intTokens, numOfInts );	
 	
 	int i = 0;
-	while( i < numOfInts)
+	while( i < numOfInts )
 	{
 		printf("This is the token %i: %i.\n", i, intTokens[i]);
 		i++;
 	}	
+	printData( intTokens, numOfInts );
 	
 }
 
@@ -55,10 +57,10 @@ void strInput(char str[], int maxChars)
 void tokenizeArray(char str[], char * tokens[], int maxChars, 
 					int * numOfInts)
 {
-	tokens[0] = strtok( str, ", " );
+	tokens[0] = strtok( str, " ,.-" );
 	
 	int i = 1;
-	while( (tokens[i] = strtok( '\0', ", " )) != '\0')
+	while( (tokens[i] = strtok( '\0', " ,.-" )) != '\0')
 	{
 		i++;
 	}	
@@ -73,10 +75,43 @@ void tokensToInts( char * tokens[], int ** intTokens, int numOfInts)
 	while( i < numOfInts )
 	{
 		//This is the syntax for both subscript and pointer addition,
-		//They are seperate so I can reference this if I have problems
-		//in the future.
+		//This is here for future reference:
+		//       (* intTokens)[i] = *((*intTokens)+ i)
 		*((*intTokens)+ i) = atoi(tokens[i]);	
 		printf("This is the delimiter %i: %i.\n", i, (* intTokens)[i]);
 		i++;
 	}
+}
+
+void printData( int * intTokens, int numOfInts )
+{
+	int i, high = intTokens[0], low = intTokens[0], sum = 0, currentInt;
+	for( i = 0; i < numOfInts; i++ )
+	{
+		currentInt = intTokens[i];	
+
+		sum += currentInt;	
+			
+		if( currentInt < low )
+		{
+			low = currentInt;
+		}
+		if( currentInt > high )
+		{
+			high = currentInt;
+		}
+	}
+	
+	//Print everything.
+	printf("\n\nThere were a total of %i numbers input.\n", numOfInts);
+	printf("These are the numbers in the order of their input: ");
+	for( i = 0; i < numOfInts; i++ )
+	{
+		printf("%i ", intTokens[i]);
+	}
+	printf("\n");
+	printf("The sum of the numbers is %i.\n", sum);
+	printf("The average of the numbers is %i.\n", sum/numOfInts);
+	printf("The highest number was %i.\n", high);
+	printf("The lowest number was %i.\n", low);
 }
