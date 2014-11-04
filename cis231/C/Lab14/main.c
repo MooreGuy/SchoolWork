@@ -23,6 +23,7 @@ int main(int argc, char * argv)
 	char * tokens[MAX_ARRAY_LENGTH + 1];
 	int * intTokens;
 	int numOfInts;
+	char runAgain;
 
 	do
 	{	
@@ -32,15 +33,17 @@ int main(int argc, char * argv)
 		
 		printData( intTokens, numOfInts );
 		printf("\nPress (y) to run the program again\n");
+		
+		runAgain = getchar();
+		getchar();
 	}
-	while(getchar() == 'y');
+	while( runAgain == 'y' );
 	
 }
 
 void strInput(char str[], int maxChars)
 {
 	//Get input.
-	getchar();
 	int i = 0;
 	char currentCharacter;
 	while( ( currentCharacter = getchar() ) != '\n' && i <= maxChars )
