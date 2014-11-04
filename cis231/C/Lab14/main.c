@@ -28,12 +28,6 @@ int main(int argc, char * argv)
 	tokenizeArray( str, tokens, MAX_ARRAY_LENGTH, &numOfInts); 
 	tokensToInts( tokens, &intTokens, numOfInts );	
 	
-	int i = 0;
-	while( i < numOfInts )
-	{
-		printf("This is the token %i: %i.\n", i, intTokens[i]);
-		i++;
-	}	
 	printData( intTokens, numOfInts );
 	
 }
@@ -78,7 +72,6 @@ void tokensToInts( char * tokens[], int ** intTokens, int numOfInts)
 		//This is here for future reference:
 		//       (* intTokens)[i] = *((*intTokens)+ i)
 		*((*intTokens)+ i) = atoi(tokens[i]);	
-		printf("This is the delimiter %i: %i.\n", i, (* intTokens)[i]);
 		i++;
 	}
 }
