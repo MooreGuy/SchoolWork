@@ -51,7 +51,7 @@ void strInput(char str[], int maxChars)
 		str[i] = currentCharacter;
 		i++;
 	}	
-	str[i + 1] = '\0';
+	str[i] = '\0';
 }
 
 void tokenizeArray(char str[], char * tokens[], int maxChars, 

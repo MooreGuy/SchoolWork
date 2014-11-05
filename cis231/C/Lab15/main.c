@@ -6,9 +6,11 @@
 
 #include <stdio.h>
 
-#define CITY_STRING_LENGTH 31
+#define CITY_STRING_LENGTH 30
 #define DAY_MAX 366
 #define DAY_MIN 1
+#define DATA_MIN 1
+#define DATA_MAX 20
 
 struct TempInfo
 {
@@ -21,28 +23,50 @@ struct TempInfo
 struct TempInfo inputTempInfo( struct TempInfo info );
 double convertFahrToCels( double fahrTemp );
 void strInput( char str[], int maxChars ); 
-void printTempInfo();
+void printTempInfo( struct TempInfo info );
 int intInput( int min, int max );
 double doubleInput();
+int getRange( int rangeMin, int rangeMax );
+
 
 int main(int argc, char * argv )
 {
 	struct TempInfo myInfo[20];
 
 //TESTING
+
 	struct TempInfo testStruct;
-	printf("This is the day %i.\n", inputTempInfo(testStruct).day);
+
+	int range = getRange( DATA_MIN, DATA_MAX );
+	int i;
+	for( i = 0; i < range; i++ )
+	{
+		myInfo[i] = inputTempInfo( testStruct );
+		printTempInfo( myInfo[i] );		
+	}
+
+	
 //TESTING
+
 	return 0;
 }
 
 struct TempInfo inputTempInfo( struct TempInfo info )
-{			
-	//char input[DAY_STRING_LENGTH];
-
+{	
+	/*
+		//Clear buffer.
+		char temp;
+		while( (temp = getchar()) != '\n' && temp != EOF );
+	*/
+	
+	getchar();
+	//Get the city.
+	printf("Please enter the city name.\n");
+	strInput( info.city, CITY_STRING_LENGTH );	
+	 
 	//Get day.
 	printf("Please enter the day.\n");	
-	info.day = intInput(DAY_MIN, DAY_MAX);	
+	info.day = intInput( DAY_MIN, DAY_MAX );	
 	
 	//Get the temperature.
 	printf("Please enter the temperature.\n");
@@ -62,24 +86,24 @@ double convertFahrToCels(double fahrTemp)
 
 
 void strInput(char str[], int maxChars) 
- { 
-     //Get input. 
-     int i = 0; 
-     char currentCharacter; 
-     while( ( currentCharacter = getchar() ) != '\n' && i <= maxChars ) 
-     { 
-         str[i] = currentCharacter; 
-         i++; 
-    }    
-     str[i + 1] = '\0'; 
+{ 
+	//Get input. 
+	int i = 0; 
+	char currentCharacter; 
+	while( ( currentCharacter = getchar() ) != '\n' && i <= maxChars ) 
+	{
+		str[i] = currentCharacter; 
+		i++; 
+	}    
+	str[i] = '\0'; 
 }
 
 void printTempInfo( struct TempInfo info )
 {
 	printf("The city is %s, ", info.city);
 	printf("the day is %i, ", info.day);
-	printf("the temperature in Fahrenheit is %.2lf ", info.tempFahr);
-	printf("the temperature in Celsius is %.2lf\n", info.tempCels);
+	printf("the temperature in Fahrenheit is %.1lf ", info.tempFahr);
+	printf("the temperature in Celsius is %.1lf\n", info.tempCels);
 }
 
 int intInput( int min, int max )
@@ -101,3 +125,12 @@ double doubleInput()
 	scanf("%lf", &temp);
 	return temp;
 }	
+
+int getRange( int rangeMin, int rangeMax ) 
+{ 
+    printf("Specify how many information sets you would like to enter" 
+           " from %i to %i\n", rangeMin, rangeMax); 
+   
+	return intInput( rangeMin, rangeMax ); 
+}
+
