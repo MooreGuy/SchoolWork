@@ -44,6 +44,13 @@ struct TempInfo inputTempInfo( struct TempInfo info )
 	printf("Please enter the day.\n");	
 	info.day = intInput(DAY_MIN, DAY_MAX);	
 	
+	//Get the temperature.
+	printf("Please enter the temperature.\n");
+	info.tempFahr = doubleInput();
+
+	//Convert Fahrenheit to Celsius.
+	info.tempCels =  convertFahrToCels(info.tempFahr);
+
 	return info;
 }
 
@@ -67,8 +74,12 @@ void strInput(char str[], int maxChars)
      str[i + 1] = '\0'; 
 }
 
-void printTempInfo()
+void printTempInfo( struct TempInfo info )
 {
+	printf("The city is %s, ", info.city);
+	printf("the day is %i, ", info.day);
+	printf("the temperature in Fahrenheit is %.2lf ", info.tempFahr);
+	printf("the temperature in Celsius is %.2lf\n", info.tempCels);
 }
 
 int intInput( int min, int max )
@@ -78,8 +89,15 @@ int intInput( int min, int max )
 	
 	while( temp < min && temp > max )
 	{
-		printf("Sorry that was not valid, please enter an integer between "
-			   "the range of %i and %i.\n", min, max); 		
+		printf("Sorry that was not valid, please enter an integer "
+			   "between the range of %i and %i.\n", min, max); 		
 		scanf("%i", &temp);
 	}
 }
+
+double doubleInput()
+{
+	double temp;
+	scanf("%lf", &temp);
+	return temp;
+}	
