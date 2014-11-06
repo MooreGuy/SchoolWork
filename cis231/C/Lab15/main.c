@@ -116,13 +116,15 @@ int intInput( int min, int max )
 	
 	while( temp < min || temp > max )
 	{		
-		getchar();  //prevents scanf from going bonkers
+		getchar();  //prevents scanf from getting caught in a loop.
+
 		printf("Sorry that was not valid, please enter an integer "
 			   "between the range of %i and %i.\n", min, max); 		
 		scanf("%i", &temp);
 	}
 }
 
+//Take any double.
 double doubleInput()
 {
 	double temp;
@@ -130,6 +132,7 @@ double doubleInput()
 	return temp;
 }	
 
+//Get the ammount that will be input.
 int getRange( int rangeMin, int rangeMax ) 
 { 
     printf("Specify how many information sets you would like to enter" 
