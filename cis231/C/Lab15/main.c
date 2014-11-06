@@ -132,7 +132,7 @@ double doubleInput()
 	return temp;
 }	
 
-//Get the ammount that will be input.
+//Get the amount that will be input.
 int getRange( int rangeMin, int rangeMax ) 
 { 
     printf("Specify how many information sets you would like to enter" 
