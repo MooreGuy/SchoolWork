@@ -42,6 +42,7 @@ int main(int argc, char * argv )
 	int i;
 	for( i = 0; i < range; i++ )
 	{
+		printf("\nEnter information for temperature number %i:\n", i);
 		myInfo[i] = inputTempInfo( myStruct );
 	}
 	
@@ -103,8 +104,9 @@ void printTempInfo( struct TempInfo info )
 {
 	printf("In the city %s, ", info.city);
 	printf("on day number %i, ", info.day);
-	printf("the temperature in Fahrenheit was %.1lf ", info.tempFahr);
-	printf("the temperature in Celsius was %.1lf\n", info.tempCels);
+	printf("the temperature in Fahrenheit was %.1lf", info.tempFahr);
+	printf(", and the temperature in Celsius was %.1lf\n",
+		 info.tempCels);
 }
 
 int intInput( int min, int max )
