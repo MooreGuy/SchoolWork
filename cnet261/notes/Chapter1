@@ -157,5 +157,67 @@ Cut-Through Switching:
 		No latency increase from cut-through, and has a form of error
 			checking.
 	
+Switching Domains:
+	
+	Collision Domains:
 
+		Physical layer.
 
+		Also known as Ethernet Segments, LAN Segments
+		
+		Ethernet Segments that are hub based devices must take turns
+			transmitting to avoid collision.	
+		
+		Collision domains can be segmented by using switches or routers
+			to go up to the network access layer in the TCP/IP model
+			
+			Each new segment is its own collision domain.
+	
+			Another name for this segmentation is microsegmentation.
+	
+	Broadcast Domains:
+	
+		Data-Link Layer.
+
+		The broadcast domain, also known s the MAC broadcast domain,
+			is the domain where broadcasts will be recieved.
+
+		Broadcast domains can be segmented with network layer devices,
+			such as a router.
+
+		A broadcast frame has all 1's in the MAC Address destination.
+			
+			All 1's in the MAC address field is recieved by all devices
+				in the broadcast domain.
+			
+			When a switch receives a broadcast frame it forwards it out
+				of all of the ports except the ingress port.
+
+			Broadcasts are necessary for locating other devices, but
+				can take up network bandwidth as they are ineffcient.
+
+Switch benefits:
+	
+	Allow segmentation of collision domains, as each port is its own
+		collision domain to provide full bandwidth to the device.
+
+	Provide full-duplex communication between devices.
+		
+		Full-Duplex means that the device can send and recieve at the
+			same time.
+		
+		Full-Duplex is required for 1 GB/s and higher speeds.
+
+	Switches interconnect collision domains.
+
+	High port density = lots of devices.
+
+	Large frame buffers alleviates congested ports.
+
+	Multiple port speeds, the flexibility of the switch allows multiple
+		speeds.
+
+	Fast internal switching, fast internal forwarding capabilities using
+		fast internal busses or shared memory.
+
+	Low per-port cost, higher-port density for a lower cast.
