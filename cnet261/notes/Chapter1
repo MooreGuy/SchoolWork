@@ -1,3 +1,6 @@
+Automated attendant feature on a converged network adds:
+	call routing
+
 The borderless switched network
 
 Can be split into: Core, Distribution, and Access.
@@ -76,6 +79,12 @@ When a switch recieves a frame with a destination address not in its
 	When the device responds to the flood, the switch adds its address
 		to the MAC address table.
 	
+When a switch recieves a frame from source address not in its master
+	switching table:
+		
+		It first adds the source address to the table and then it will
+			flood the frame if the destination address is not in the
+			MAC table.
 In a network with many interconnected switches, the MAC address table
 	contains multiple MAC addresses for a single port connected to the
 	other switches.
