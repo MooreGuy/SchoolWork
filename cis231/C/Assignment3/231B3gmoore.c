@@ -231,8 +231,7 @@ void printStandardDeviation(const double temps[], int arraySize,
 {
 	//If the data set is equal to zero, then it doesn't deviate,
 	//so outputing zero is valid and also avoids divide by zero
-	if(!arraySize)
-	{
+	if( arraySize < 2 ) {
     	printf("Standard Deviation:%11.1lf\n", 0);
 	}
 	else
@@ -243,17 +242,12 @@ void printStandardDeviation(const double temps[], int arraySize,
 		//Find how far each temperature deviates from the average.
 		for( i = 0; i < arraySize; i++ )
 		{
-		deviation += pow(temps[i] - average, 2);
+			deviation += pow(temps[i] - average, 2);
 		} 
 
-<<<<<<< HEAD
 		//Finally print the deviation divided by the number of temperatures.
-		printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
+		printf("Standard Deviation:%11.1lf\n", sqrt( deviation / ( arraySize - 1 ) ) );
 	}
-=======
-    //Finally print the deviation divided by the number of temperatures.
-    printf("Standard Deviation:%11.1lf\n", sqrt(deviation/arraySize));
->>>>>>> 90617b3692a485961238ef1af7784d6e5828c2ad
 }
 
 
