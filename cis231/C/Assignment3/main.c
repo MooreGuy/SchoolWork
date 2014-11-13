@@ -70,25 +70,25 @@ void getNumber(int * numTemps)
 void getTemps(double temps[], int numTemps)
 {
     printf("Now enter Fahrenheit temperatures from -200.0 to 300.0"
-           "(.\n");
+           ".\n");
 
     int i;
     for ( i = 0; i < numTemps; i++)
     {
         printf("Please enter a value for temperature %i.\n", i);
-	scanf("%lf", &temps[i]);
+		scanf("%lf", &temps[i]);
         
-	//Check for valid input, and request a new number if invalid
-	while(!(temps[i] >= -200.0) || !(temps[i] <= 300.0))
-	{
-	    printf("Invalid input!\n");
-	    printf("The range of the temperature can only be between"
-		   " -200.0 and 300.0 Fahrenheit.\n");
-	    printf("\nEnter a valid temperature\n");
-	    
-	    getchar(); 
-	    scanf("%lf", &temps[i]); 
-	}
+		//Check for valid input, and request a new number if invalid
+		while(!(temps[i] >= -200.0) || !(temps[i] <= 300.0))
+		{
+			printf("Invalid input!\n");
+			printf("The range of the temperature can only be between"
+				   " -200.0 and 300.0 Fahrenheit.\n");
+			printf("\nEnter a valid temperature\n");
+			
+			getchar(); 
+			scanf("%lf", &temps[i]); 
+		}
     }
 }
 
@@ -127,9 +127,9 @@ void printTemps(const double temps[], int arraySize)
     int i;
     for( i = 0; i < arraySize; i++)
     {
-	printf("%30.1lf", temps[i]);
-	printf("%10.1lf", convertFahrToCels(temps[i]));
-	printf("\n");
+		printf("%30.1lf", temps[i]);
+		printf("%10.1lf", convertFahrToCels(temps[i]));
+		printf("\n");
     }	
 
     //Print the divider again to show the end of the temperature values
@@ -153,8 +153,9 @@ void getAverage(const double temps[], int arraySize,
     int i;
     for( i = 0; i < arraySize; i++)
     {
-	*average += temps[i];	
+		*average += temps[i];	
     }
+
     *average = *average/arraySize;
 }
 
@@ -164,51 +165,58 @@ void getAverage(const double temps[], int arraySize,
  */
 void printAverage(double average)
 {
-    printf("Average:%22.1lf%10.1lf\n\n",average, convertFahrToCels(average));
+    printf("Average:%22.1lf%10.1lf\n\n",
+		average, convertFahrToCels(average));
 }
 
 
 /*
  *  
- *  Finds and prints the range of the numbers and their range in relation to average.
- *	First is the highest and lowest temperatures and then outputs how many
- *  temperatures are either above, below or equal to the average.
+ *  Finds and prints the range of the numbers and their range in
+ *  relation to average.
+ *	First is the highest and lowest temperatures and then outputs how 
+ *  many temperatures are either above, below or equal to the average.
  */
 void printDataRanges(const double temps[], int arraySize,
     double average)
 {
-    int i, numAboveAverage = 0, numBelowAverage = 0, numEqualToAverage = 0;
+    int i, numAboveAverage = 0, numBelowAverage = 0,
+		 numEqualToAverage = 0;
+
     double high = -200.0, low = 300.0, currentValue;
     
     for( i = 0; i < arraySize; i++)
     {
-	currentValue = temps[i];
-	
-	//Find the highest and lowest temperatures.	
-	if( currentValue > high )
-	{
-	    high = currentValue;
-	}
-	if( currentValue < low )
-	{
-	    low = currentValue;
-	}
-	
-	//Find the amount of temperatures above, below, or
-	//equal to the average.
-	if( currentValue > average )
-	{
-	    numAboveAverage++;
-	}
-	else if( currentValue < average )
-	{
-	    numBelowAverage++;
-	}
-	else
-	{
-	    numEqualToAverage++;
-	}
-	
+		currentValue = temps[i];
+		
+		//Find the highest and lowest temperatures.	
+		if( currentValue > high )
+		{
+			high = currentValue;
+		}
+
+		if( currentValue < low )
+		{
+			low = currentValue;
+		}
+		
+		//Find the amount of temperatures above, below, or
+		//equal to the average.
+		if( currentValue > average )
+		{
+			numAboveAverage++;
+		}
+
+		else if( currentValue < average )
+		{
+			numBelowAverage++;
+		}
+
+		else
+		{
+			numEqualToAverage++;
+		}
+		
     }	 
     
     //Print highest and lowest values. 
@@ -234,6 +242,7 @@ void printStandardDeviation(const double temps[], int arraySize,
 	if( arraySize < 2 ) {
     	printf("Standard Deviation:%11.1lf\n", 0);
 	}
+
 	else
 	{
 		double deviation = 0;
@@ -245,8 +254,10 @@ void printStandardDeviation(const double temps[], int arraySize,
 			deviation += pow(temps[i] - average, 2);
 		} 
 
-		//Finally print the deviation divided by the number of temperatures.
-		printf("Standard Deviation:%11.1lf\n", sqrt( deviation / ( arraySize - 1 ) ) );
+		//Finally print the deviation divided by the number of
+		//temperatures.
+		printf("Standard Deviation:%11.1lf\n",
+			 sqrt( deviation / (arraySize - 1 ) ) );
 	}
 }
 
@@ -257,6 +268,7 @@ void printStandardDeviation(const double temps[], int arraySize,
 void sortTempArray(double temps[], int arraySize)
 {
 	double temporary, currentVal;	
+
 	int i, k, low;
 	for(i = 0; i < arraySize-1; i++)
 	{
