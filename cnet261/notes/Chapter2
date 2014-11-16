@@ -35,3 +35,66 @@ Because of the previous issues, switches must be secure to protect:
 
 To achieve this switch security, port security is one of the security
 	features that manged switches provide.
+
+
+/*************************
+ 	SWITCH BOOT SEQUENCE 
+*************************/
+
+When the switch is powered on it goes through the following boot 
+	sequence.
+
+	1. POST ( power-on-self-test) is loaded from ROM to check
+		CPU subsystems:
+			CPU
+			DRAM
+			portion of the flash device that makes up the flash file
+				system
+
+	2. Loads boot loader:
+		Small program stored in ROM
+		Runs immediately after POST successfully completes
+
+	3. Boot loader performs low-level CPU initilization:
+		initializes the CPU registers
+			these control where physical memory:
+
+				where it is mapped
+				the quantity
+				speed
+
+	4. Boot loader initializes the flash file system on the system 
+			board.
+
+	5. Boot loader Locates and loads a default IOS operating system 
+			software image into memory and hands control of the switch
+			over to the IOS.
+
+Boot Loader finds the Cisco IOS image:
+	
+	Switch attempts to automatically boot using informationin the 
+		BOOT enviroment
+		
+		If this variable is not set, attempts to load and execute
+			the first executable file with recursive depth-first search
+			in the flash file system.
+		
+		A depth first search of a directory is each encountered 
+			subdirectory is completely searched before continuing the
+			search in the original directory.
+		
+		On Catalyst 2960 the image file is contained in a directory
+			that has the same name as the image file (excluding the .bin
+			file extension)	
+
+The IOS operating system initializes the interfaces using the Cisco
+	commands found in the configuration file, startup configuration
+	stored in NVRAM
+
+We can set the BOOT enviroment variable by using:
+	
+	boot system (global configuration mode command) 
+
+We can view the current IOS boot file is set to by using:
+	
+	show bootvar (show boot in older IOS versions)
