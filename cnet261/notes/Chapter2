@@ -1,0 +1,37 @@
+﻿/*************************
+  INTRO
+*************************/
+
+Switches connect multiple devices, and are responsible for 
+	directing and controlling the data flow at the access layer	
+	to networked resources.
+
+Cisco switches are "self-configuring" and no additional configurations
+	need to be made out of the box.	
+
+	Cisco switches run Cisco IOS thus can be manually configured:
+		
+		adjusting port speed
+		
+		bandwidth
+
+		security requirements
+
+Cisco switches can be managed remotely or locally.
+
+	remote management requires:
+		IP address
+		default gateway
+
+Switches operate at the access layer. The access layer is:
+
+	Uncomplicated: It departments want uncomplicated access to users.
+	Most vulnerable area: Very exposed to users.
+
+Because of the previous issues, switches must be secure to protect:
+	
+	user data
+	high speed connections
+
+To achieve this switch security, port security is one of the security
+	features that manged switches provide.
