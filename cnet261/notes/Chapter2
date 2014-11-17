@@ -98,3 +98,46 @@ We can set the BOOT enviroment variable by using:
 We can view the current IOS boot file is set to by using:
 	
 	show bootvar (show boot in older IOS versions)
+
+
+/**********************************
+	RECOVERING FROM A SYSTEM CRASH
+***********************************/
+
+The boot loader provides access into the switch if the operating system 
+	is either:
+		missing or damaged system files
+
+	The boot loader has:
+		
+		A command line 
+		access to the files stored in flash memory
+
+To access the boot loader through a console connection follow these
+	 steps.
+	
+	1. connect a PC by console cable to the switch console port.
+		 Configure terminal emulation software to connect to the switch.
+
+	2. Unplug the switch the switch power cord.
+		
+	3. Reconnect the power cord to the switch, within 15 seconds press 
+			and hold down the Mode button while the system LED is still
+			flashing green.
+
+	4. Continue pressing the Mode button until the System LED turns 
+		briefly amber and then solid green, then release it.
+
+	5. The boot loader "switch:" prompt appears in the terminal
+		emulator.
+	
+The boot loader command line supports commands to:
+		
+	format the flash file system
+	reinstall the operating system software
+	recover from a lost or forgotten password
+	
+	the dir command can be used to view a list of files within
+		a specified directory
+
+There are several status LED indicator lights on a Cisco switch.
