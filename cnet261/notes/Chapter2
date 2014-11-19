@@ -140,4 +140,95 @@ The boot loader command line supports commands to:
 	the dir command can be used to view a list of files within
 		a specified directory
 
-There are several status LED indicator lights on a Cisco switch.
+There are several status LED indicator lights on a Cisco switch that can
+	be used to monitor:
+		
+		Switch activity
+		Performance
+
+	MODE button: used to toggle through:
+		
+		port status
+		port duplex
+		port speed
+		PoE (if supported)
+
+	System LED: Shows if the system is functioning properly
+		
+		off= not powered on
+		green= has power and functioning
+		amber= has power but not functioning
+
+	Redundant Power System (RPS) LED: RPS status indicator
+		
+		off= RPS is off or not properly connected
+
+		green= RPS is connected and ready to provide back-up power
+
+		blinking green= RPS is connected but is unavailable, because it is
+
+			providing power to another device.
+		amber= RPS is in standby mode or in a fault condition
+
+		blinking amber= The internal power supply in the switch has failed,
+			and the RPS is providing power.
+
+	Port Status LED: Indicates that the port status mode is selected when 
+		it is green
+			
+		Port LEDs: displays colors with different meanings for the status
+			of an individual port
+
+			off= No link, or port was admistratively shut down
+
+			green= link present
+
+			blinking green= activity and the port is sending or recieving
+				data
+		
+			alternating green-amber= link fault
+		
+			amber= blocked to ensure a loop does not exist in the forwarding
+				domain, and is not forwarding data (ports remain in this 
+				state for the first 30 seconds after being activated)
+
+			blinking amber= blocked to prevent possible loop in forarding
+				domain.
+
+	Port Duplex LED: Indicates the port duplex mode is selected when green.
+
+		off= half-duplex mode
+
+		green= full-duplex
+
+	Port Speed LED: Indicates the port speed mode is selected.
+
+		off= 10Mb/s
+	
+		green= 100Mb/s
+
+		blinking green= 1000Mb/s
+
+	Power over Ethernet (PoE) Mode LED: If supported
+
+		off= PoE mode is not selected and no ports have been denied power
+			or placed in a fault condition.
+
+		blinking amber= PoE is not selected but at least one port
+			has been denied power, or has a PoE fault.
+
+		green= PoE mode is selected and the port LEDs will display colors
+			with different meanings.
+
+		Port LEDs:
+			
+			off= PoE is off
+
+			green= PoE is on
+
+			alternating green-amber= PoE is denied because providing power
+				to the power device will exceed the switch power capacity.
+
+			blinking amber= PoE is off due to a fault
+
+			amber= PoE for the port has been disabled.	
