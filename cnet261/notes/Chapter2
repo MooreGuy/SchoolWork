@@ -140,6 +140,9 @@ The boot loader command line supports commands to:
 	the dir command can be used to view a list of files within
 		a specified directory
 
+/**********************************
+	LEDs	
+***********************************/
 There are several status LED indicator lights on a Cisco switch that can
 	be used to monitor:
 		
@@ -232,3 +235,98 @@ There are several status LED indicator lights on a Cisco switch that can
 			blinking amber= PoE is off due to a fault
 
 			amber= PoE for the port has been disabled.	
+
+/**********************************
+	BASIC SWITCH CONFIGURATION	
+***********************************/
+
+To prepare a switch for remote management access the switch must have:
+	(Standard host ip configuration)
+	
+		IP address
+		Subnet Mask
+		if: the switch is on a remote network
+			must be configured with a default gateway
+
+	An SVI or switch virtual interface should be assigned an IP address
+		
+		SVI is a virtual interface, and not a physical port on the switch.
+
+		SVI uses the concept of VLANS
+			
+			VLANS are numbered logically to groups to which physical ports
+				can be assigned.  
+
+			Configurations and settings applied to VLANS can also applied to
+				all ports assigned to that VLAN
+
+	Default management VLAN is VLAN 1 and all ports are assigned to it by
+		default.
+			
+		Best practice: the management VLAN should be on another VLAN than 1
+
+	IP settings only allow routing, so the switch still can't route layer 3.
+
+Step 1: Configure Management Interface
+
+	From the VLAN interface configuration mode you can configure the:
+
+		IP Address of a SVI
+		Subnet mask of a SVI	
+
+	[COMMANDS]
+		S1(config)# vlan [vlan_id]
+			Creates the vlan with an id of $[vlan_id]	
+
+		S1(config-vlan)# name [vlan_name]
+			Names the vlan to [vlan_name]
+
+		S1(config-vlan)# exit
+			Exits vlan configuration.
+
+		S1(config)# interface [interface_id]
+			Enter interface configuraiton mode to the interface id selected
+
+		S1(config-if)# switchport access vlan [vlan_id]
+			Sets the port as access of the vlan vlan_id	
+
+	Note: the SVI for a VLAN will not appear as "up/up" until it is create
+		and a device is connected to the switch port associated with it.
+
+	[COMMANDS]
+		
+		s1$ configure terminal
+			Enter global configuration mode
+
+		s1 (config)# interface vlan 99
+			Enter interface configuration mode for the SVI
+
+		s1 (config-if)# ip address  172.17.99.11 255.255.255.0
+			configure the management interface IP address
+
+		s1 (config-if)# no shutdown
+			Enable the management interface
+
+		s1 (config-if)# end
+			return to the priveleged EXEC mode
+
+		s1# copy running-config startup-config
+			Save the running config to the startup config	
+
+Step 2: Configure Default Gateway
+
+	This is necessary if it will be managed from remote networks.	
+	
+	The default gateway is the router that the switch is connected to. And
+		is set to the IP address of this router.			
+
+	To set the default gateway use the command:
+	
+		[COMMAND] S1 (config)# ip default-gateway
+
+Step 3: Verify Configuration
+
+	To determine the status of both physical and virtual interfaces use:
+	
+		[COMMAND] S1# show ip interface brief
+
