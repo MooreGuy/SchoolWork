@@ -1,0 +1,84 @@
+/*******************************
+	CONFIGURE SWITCH PORTS
+*******************************/
+
+Full-Duplex vs Half-Duplex Communication
+	
+	Full-Duplex improves the performance of a switched LAN
+
+		Allows both ends to transmit and recieve data simultaneously.
+			(Also called bidirectional)
+
+		Increases effective bandwidth by 200 percent (100 percent in both
+			directions)
+
+		Most Ethernet and Fast Ethernet NICs are sold today offer
+			 full-duplex.
+
+		Gigabit Ethernet and 10Gb NICs require full-duplex connections
+
+		In full-duplex, collision detection circuit on the NIC is disabled.
+
+		Method to optimize network performance is called micro-segmentation,
+			which is segmenting the network in to micro-segments
+
+			A micro-segment is when you only have one device connected to a
+				switch port operating at full-duplex.
+
+			Frames that are sent cannot collide because the devices use two
+				seperate cicuits in the network cable.
+
+		Full-duplex requires a switch that supports full-duplex
+			configuration or a direct connection using an Ethernet cable 
+			between two devices.
+
+	Half-duplex creates performance issues in a switched LAN 
+		
+		Unidirectional
+
+		communication cannot send and recieve data simultaneously
+
+		Data can only flow one direction at a time, which often causes
+			collisions.
+
+		Typically seen in older hardware, like hubs. Full-duplex has
+			replaced half-duplex in most hardware.
+
+		Standard, shared hub-based Ethernet configuration efficiency is
+			typically rated at 50 to 60
+		
+Configuring Port Speed and Duplex
+	
+	Switch ports can be manually configured with specific duplex and speed
+		settings
+	
+	Use the duplex interface configuration mode
+		to specify the duplex mode for a switch port. ex. duplex full
+
+	Use the speed interface configuration mode to manually specify the speed
+		of the switch port.			ex. speed 100
+
+		The default setting for both duplex and speed for switch ports on 
+			Catalyst 2960 and 3560 switches is auto.
+
+		Cisco recommends using auto command for both duplex and speed, to
+			avoid connectivity issues between devices.
+
+	The 10/100/1000 ports operate in either half or full duplex mode
+
+		10/100 can operate in either full or half
+	
+		1000 can only operate in full
+
+		All fiber optic ports such as 100BASE-FX ports operate only at one
+			preset speed and are always full-duplex.
+
+	When troubleshooting a device, check the speed and duplex settings.
+
+		Mismatched settings for the duplex mode and speed of switch ports
+			can cause connectivity issues. 
+
+		Auto negotiation failure creates mismatched settings.
+
+
+
