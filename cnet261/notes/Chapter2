@@ -329,4 +329,80 @@ Step 3: Verify Configuration
 	To determine the status of both physical and virtual interfaces use:
 	
 		[COMMAND] S1# show ip interface brief
+		[COMMAND] S1# show vlan brief
+
+
+/**************************************
+	BASIC SWITCH SETTINGS
+**************************************/
+
+The hostname must be set
+	
+	[COMMAND] Switch(config)# hostname S1
+
+Password encryption must be set
+
+	[COMMAND] S1(config)# service password-encryption
+
+A password for priveleged EXEC mode access must be set
+
+	[COMMAND] S1(config)# enable secret class
+
+Prevent unwanted DNS lookups
+
+	[COMMAND] S1(config)# no ip domain-lookup
+
+Configure MOTD banner
+
+	[COMMAND] S1(config)# banner motd # 
+		Unauthorized access is strictly prohibited. #	
+
+Verify your access settings by moving between modes
+	[COMMAND] S1(config)# exit
+	[COMMAND] S1# exit	
+
+
+/**************************************
+	CONFIGURING CONSOLE PORT	
+**************************************/
+
+Console port access should also be restricted. The default configuration
+	is to allow all console connections with no password needed. To 
+	prevent console messages from interrupting commands, use the logging
+	synchronous option.
+
+	[COMMANDS] 
+
+		S1(config)# line con 0 
+		S1(config-line)# password cisco
+		S1(config-line)# login
+		S1(config-line)# logging synchronous
+		S1(config-line)# exit
+
+
+/**************************************
+	CONFIGURING VTY	
+**************************************/
+
+S1(config)# line con 0 
+		S1(config-line)# password cisco
+		S1(config-line)# login
+		S1(config-line)# exit
+
+/**************************************
+	MAC ADDRESS CONFIGURATION	
+**************************************/
+
+To show the mac addresses use:
+
+	[COMMAND] S1# show mac-address-table
+
+To clear the mac address table:
+
+	[COMMAND] S1# clear mac-address-table
+
+To set up a static MAC address:
+
+	[COMMAND] S1(config)# mac-address-table static 0050.56BE.6C89 vlan 99
+		 interface fastethernet 0/6
 
