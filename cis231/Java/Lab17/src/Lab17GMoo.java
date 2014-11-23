@@ -8,8 +8,9 @@ public class Lab17GMoo
 
 		System.out.println("Guy Moore");
 		
-		myNumbers = randomNumbers(2); 
-		System.out.println(myNumbers[0]);
+		myNumbers = randomNumbers(10); 
+		printArray( myNumbers, 2 );
+		System.out.println(getLargest(myNumbers));
 			
 	}
 
@@ -56,5 +57,25 @@ public class Lab17GMoo
 			//Return to next line.	
 			System.out.println("");
 		}
+	}
+
+	/*
+	 * Takes in an integer array and searches for the largest number.
+	 * Walks through the entire array sequentually, and compares the integer
+	 * largest with every index to find the largest value, then returns it.
+	 */
+	public static int getLargest( int[] numbers )
+	{
+		int largest = numbers[0];
+
+		for( int i = 1; i < numbers.length; i++ )
+		{
+			if( largest < numbers[i] )
+			{
+				largest = numbers[i];
+			}
+		}
+		
+		return largest;
 	}
 }
