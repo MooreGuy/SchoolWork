@@ -97,8 +97,7 @@ Auto-MDIX
 	
 	Now we have Automatic medium-depedent interface crossover to eliminate 
 		the need.
-i
-i
+
 	When auto-MDIX is enabled the interface automatically detects the
 		required cable connection type. It then configures the connection
 		appropriately. 
@@ -188,4 +187,81 @@ Network Access Layer Issues
 				whether the data link layer protocol keepalives are being
 				received.
 			
-		 
+		The show interfaces command can show possible problems.
+			
+			if: interface is up and line protocol is down:
+
+				problem exists, there could be an encapsulation type
+				mismatch, the interface on the other end could be 
+				error-disabled, or there could be a hardware problem.
+
+			if: line protocol and interface are both down:
+				
+				cable is not attached or some other interface problem exists
+					like a back-to-back connection is administratively down
+					at the other end
+
+			if: interface is administratively down, it has been manually
+				disabled in the active configuration
+
+		show interfaces also shows important counters and statistics
+			for the interfaces
+
+			Some issues are not enough to cause the circuit to fail, but
+				do cause disruptions
+
+			"input errors" is the sum of all errors in datagrams that
+				were received on the interface being examined
+
+				This includes:
+				
+					runts
+					giants
+					CRC
+					no buffer
+					frame
+					overrun
+					ignored counts
+
+				Runts: frames shorter than the 64-byte minimum.
+					Malfunctioning NICs are the usual cause of runt frames,
+					but can also be caused by excessive collisions
+
+				Giants: frames longer than the maximum allowed length
+					Caused by the same issues as runts
+
+				CRC errors: On Ethernet and Seriel interfaces, CRC errors
+					are caused by cabling errors:
+	
+					electrical interference
+					loose or damaged connections 
+					incorrect cabling type	
+						
+					if you have too many CRC errors, there is too much noise
+						on the link and you should inspect the cable for
+						damage and length. Should do this when possible. 
+
+			"output errors" is the sum of all errors that prevented the
+				final transmission of datagrams out of the interface that is
+				being examined
+
+				Collisions: Normal in half-duplex should not be a worry,
+					however a full-duplex(properly designed) network should
+					 never have them.
+
+				Late collisions: A late collision refers to a collision that
+					occurs after 512 bits of the frame have been transmitted
+					
+					Excessive cable lengths are the most common cause.
+
+					Duplex misconfigurations is another cause.
+						Where one end is full-duplex and the other is half
+						the end with half will have late collisions.
+
+					Properly designed network should never have these
+
+
+				
+Trouble Shooting Network Access Layer Issues
+
+	
