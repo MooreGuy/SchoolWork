@@ -45,11 +45,13 @@ public class Lab17GMoo
 	 */
 	public static void printArray( int[] numbers, int numPerLine )
 	{
-		//Goes through entire array..
-		for( int i = 0; i < numbers.length; i++ )
+		//Goes through entire array. Doesn't increment i, because it is
+		//printed in the next loop.
+		for( int i = 0; i < numbers.length; )
 		{
 			//Keeps track of how many numbers should be printed per line.
-			for( int k = 0; k < numPerLine; k++ )
+			//Note that it must increment both i and k.
+			for( int k = 0; k < numPerLine; k++, i++ )
 			{
 				System.out.print(numbers[i] + " ");
 			} 
