@@ -10,7 +10,8 @@ public class Lab17GMoo
 		
 		myNumbers = randomNumbers(10); 
 		printArray( myNumbers, 2 );
-		System.out.println(getLargest(myNumbers));
+		System.out.println( "\nThe largest number was: " + 
+			getLargest( myNumbers ) );
 			
 	}
 
