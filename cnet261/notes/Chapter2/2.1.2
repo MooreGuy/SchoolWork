@@ -80,5 +80,112 @@ Configuring Port Speed and Duplex
 
 		Auto negotiation failure creates mismatched settings.
 
+Auto-MDIX
+
+	Until recenetly, either straight-through or crossover cables were
+		required when connecting devices
+
+		when connecting switches without the auto-MDIX feature:
+	
+			straight-through:
+				
+				servers, workstations, or routers
+
+			crossover:
+			
+				switches, repeaters		
+	
+	Now we have Automatic medium-depedent interface crossover to eliminate 
+		the need.
+i
+i
+	When auto-MDIX is enabled the interface automatically detects the
+		required cable connection type. It then configures the connection
+		appropriately. 
+
+		the mdix auto interface configurtion mode enables the feature
+
+		When using auto-MDIX on an interface, the interface speed and 
+			duplex must be set to auto so that the feature operates
+			correctly
+	
+		auto-MDIX is enabled by default on Catalyst 2960 and Catalyst 3569
+			switches but is not available on the older catalyst 2950
+			and 3550 switches.
+
+	[COMMANDS]
+
+			S1# configure terminal
+
+			S1(config)# interface fastethernet 0/1
+
+			S1(config-if)# duplex auto
+
+			S1(config-if)# speed auto
+
+			S1(config-if)# mdix auto
+
+			S1(config-if)# end
 
 
+
+	To examine auto-MDIX setting for a specific interface use:
+
+		show controllers ethernet-controller
+			use with the phy keyword.
+
+		To limit the output to lines referencing auto-MDIX, use:
+			
+			include Auto-MDIX
+		
+		[COMMAND]show controllers ethernet-controller fa 0/1 phy | include
+			Auto-MDIX
+
+Verifying Switch Port Configuration
+
+	These are some helpful show commands
+
+		[COMMAND] S1# show interfaces [interface-id]
+			display interface status and configuration
+				frequently used when configuring and monitoring network	
+				devices
+
+		[COMMAND] S1# show startup-config
+			display current startup configuration
+
+		[COMMAND] S1# show running-config
+			display current running configuration
+
+		[COMMAND] S1# show flash
+			display information about flash file system
+
+		[COMMAND] S1# show version
+			display system hardware and software status
+
+		[COMMAND] S1# show history
+			display history of commands entered
+
+		[COMMAND] S1# show ip [interface-id]
+			display information about an interface
+	
+		[COMMAND] S1# show mac-address-table OR show mac address-table
+			Display the MAC address table
+
+Network Access Layer Issues
+
+	show interfaces: command can be used to detect common media issues.
+
+		most important output is the display of line and data link protocol
+			status
+	
+		First parameter of show interfaces:	
+			FastEthernet0/1 is up- refers to the hardware layer and reflects
+				on whether the interface is receiving the carrier detect
+				signal from the other end.
+
+		Second parameter of show interfaces:
+			line protocol is up- refers to the data link layer and reflects
+				whether the data link layer protocol keepalives are being
+				received.
+			
+		 
