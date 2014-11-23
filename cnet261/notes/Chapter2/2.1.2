@@ -264,4 +264,60 @@ Network Access Layer Issues
 				
 Trouble Shooting Network Access Layer Issues
 
+	Most issues happen at original implementation, however:
+
+		cables can get damaged
+		configurations change 
+		new devices are connected to the switch that require switch 
+			configuration changes.	
+
+		So ongoing maintenance and troubleshooting of the network 
+			infastructure is required
+
+	To troubleshoot when  you have no connection or a bad connection between
+		a switch and another device, follow this process:
+
+		Use show interface command to check the interface status
+
+			if it is down:
+		
+				check to make sure that the proper cables are being used
+				
+				check the cable and the connections for damage
+
+				replace if needed.
+
+			if the interface is still down:
 	
+				check mismatch in speed setting
+					normally auto-negotiate, but if there is an error it
+					will bring the interface down
+				
+				manually set the speed if a problem with speed is suspected
+
+			if the interface is up, but issues with connectivity present
+
+				check for indications for excessive noise from show
+					interface command
+
+					indications include:
+			
+						increase in runt counters
+						increase in giant counters
+						increase in CRC errors.
+
+					if there is noise, remove noise
+
+					check to make sure the cable is not too long, and then
+						check the type, for copper, category 5 is
+						recommended.
+
+				if noise is not an issue, check for excessive collisions
+
+					if there are collisions or late collisions then verify
+						duplex settings
+
+					duplex settings should be auto, but set manually if the
+						problem is suspected with duplex
+	
+					full-duplex is recommended if both devices support it.
