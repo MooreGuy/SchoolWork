@@ -30,3 +30,20 @@ SSH Operation
 Configuring SSH
 
 	1. Verify SSH support		
+
+		use show ip ssh to see if the command exists.
+
+	2. Configure the IP domain
+
+		configure this in global configuration mode using the 
+			ip domain-name command ie. cisco.com
+
+		[COMMAND] S1(config)# ip domain-name cisco.com
+
+	3. Generate RSA key pairs
+
+		Not all versions of the Cisco IOS default SSh
+		SSH version 1 has known flaws
+		
+		So to configure we use ip ssh version 2 in global configuration mode
+		
