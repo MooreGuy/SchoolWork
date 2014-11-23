@@ -1,0 +1,32 @@
+SSH Operation
+
+	Secure Shell (SSH) is more secure than telnet
+
+		SSH should replace telnet
+
+		SSH provides an encrypted management connection to a remote device
+	
+		Attackers cannot grab authentication information if monitoring a 
+			connection
+
+		SSH is assigned to port 22
+		
+		to enable ssh, on a catalyst 2960 switch, the switch must be using
+			the version of IOS software inculding cryptographic features
+			and capabilities.
+
+			[COMMAND] S1> show version
+
+			if the ios filename includes the combination "k9" then it
+				supports encryption
+	
+	Telnet sends unencrypted login authentication in plain text
+
+		Telnet is assigned to port 23
+
+		If an attacker is monitoring a connection using telnet, they can 
+			easliy grab any authentication information that is communicated
+
+Configuring SSH
+
+	1. Verify SSH support		
