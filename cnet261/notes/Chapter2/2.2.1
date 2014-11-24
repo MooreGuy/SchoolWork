@@ -46,4 +46,87 @@ Configuring SSH
 		SSH version 1 has known flaws
 		
 		So to configure we use ip ssh version 2 in global configuration mode
+
+		To make the keys we use crypto key generate rsa
+			
+			Cisco recommends a minimum of 1024 modulus length
 		
+		Generating keys, automatically turns on ssh.
+
+		To remove keys use, crypto key zeroize rsa
+
+		Removing keys automatically turns off ssh.
+
+	4. Configure user authentication
+
+		SSH server can authenticate users locally or from remote server.
+
+		To use local authentication create username and password pair
+
+		Use, username [username] secret [secret] in global configuration.
+
+	5. Configure the VTY lines
+
+		VTY lines on cisco 2960 range from 0 to 15.
+			
+		To configure a line use the command: line vty
+
+			Done from global configuration mode
+
+		To enable SSH on VTY lines use the command: transport input ssh.	
+	
+			Done from line configuration mode (config-line)
+	
+			This configuration prevents non-ssh (telnet) from being used
+
+			Switch only accepts SSH
+
+		To make authentication local use: login local			
+
+			Done from the line configuration mode
+
+	6. Enable SSH version 2
+
+		SSH supports version 1 an 2
+
+		To show the version supported use: show ip ssh
+
+		Version 1 of ssh has known vulnerabilities and should not be used.
+	
+			So use version 2
+
+		Enable SSH version 2 with: ip ssh version 2
+
+			From global configuration mode.
+	
+		[COMMANDs] 
+			S1(config)# ip domain-name cisco.com
+				sets the domain name
+
+			S1(config)# crypto key generate rsa
+				creates a new   		 
+
+			S1(config)# ip ssh version 2
+				configures ssh version 2
+
+			S1(config)# username admin secret ccna
+				creates a user with the name admin and password ccna
+
+			S1(config)# line vty 0 15
+				line configuration mode
+	
+			S1(config-line)# transport input ssh
+				Sets the authentication method to ssh
+
+			S1(config-line)# login local
+				Authentication is locally done
+
+			S1(config)# crypto key zeroize rsa
+				removes all keys and stops ssh server	
+
+
+Verifying SSH
+
+	To verify SSH is running use: show ip ssh
+
+	To check SSH connections to the device use: show ssh
