@@ -1,0 +1,190 @@
+Disable Unused Ports
+
+	Securing unused ports is a simple fix to secure the network
+
+	Disable all unused port on a switch
+
+	[COMMANDS]
+
+		$S1(config)# interface range [type] [module/first-number - last]
+
+		$s1(config)# no shutdown ORRR shutdown
+			shutdown 
+
+DHCP Snooping
+
+	Determines which switch ports can respond to DHCP requests
+
+	Untrusted ports can only source requests
+
+	If a rogue device attempts to send a DHCP request, the port is shutdown
+
+	DHCP options in which switch information, such as the port ID of the
+		DHCP request, can be inserted into the DHCP request packet.
+
+	Untrusted ports are those not explicitly configured as trusted
+
+	A DHCP binding table is built for untrusted ports
+
+		Each entry contains a client MAC address, IP Address, lease time,
+			binding type, VLAN number, and port ID recorded as clients
+			make DHCP requests.
+
+		The table is then used to filter subsequent DHCP traffic
+
+		untrusted access ports should not send any DHCP server responses.
+
+	1. Enable DHCP snooping using: ip dhcp snooping, global configuration
+
+	2. Enable DHCP snooping for specific VLANS using:
+
+		ip dhcp snooping vlan [number] command
+
+	3. Define ports as trust at the interface level by defining the trusted
+		ports using:
+		
+		ip dhcp snooping trust
+
+	4. (optional) Limit the rate at which an attacker can continually send
+		bogus DHCP requests through untrusted ports to the DHCP server
+		using:
+
+		ip dhcp snooping limit rate [rate]
+
+	[COMMANDS]
+
+		S1(config)# ip dhcp snooping
+
+		S1(config)# ip dhcp snooping vlan 10,20
+
+		S1(config)# interface fastethernet 0/1
+
+		S1(config-if)# ip dhcp snooping trust
+
+		S1(config)# interface fastethernet 0/2
+
+		S1(config-if)# ip dhcp snooping limit rate 5
+
+Port Security
+
+	All switch ports (interfaces) should be secured before the switch is deployed for production use. One way to secure ports is by implementing a feature called port security. Port security limits the number of valid MAC addresses allowed on a port. The MAC addresses of legitimate devices are allowed access, while other MAC addresses are denied.
+
+Port security can be configured to allow one or more MAC addresses. If the number of MAC addresses allowed on the port is limited to one, then only the device with that specific MAC address can successfully connect to the port.
+
+If a port is configured as a secure port and the maximum number of MAC addresses is reached, any additional attempts to connect by unknown MAC addresses will generate a security violation. Figure 1 summarizes these points.
+
+Secure MAC Address Types
+
+There are a number of ways to configure port security. The type of secure address is based on the configuration and includes:
+
+    Static secure MAC addresses - MAC addresses that are manually configured on a port by using the switchport port-security mac-address mac-address interface configuration mode command. MAC addresses configured in this way are stored in the address table and are added to the running configuration on the switch.
+
+    Dynamic secure MAC addresses - MAC addresses that are dynamically learned and stored only in the address table. MAC addresses configured in this way are removed when the switch restarts.
+
+    Sticky secure MAC addresses - MAC addresses that can be dynamically learned or manually configured, then stored in the address table and added to the running configuration.
+
+Sticky Secure MAC addresses
+
+To configure an interface to convert dynamically learned MAC addresses to sticky secure MAC addresses and add them to the running configuration, you must enable sticky learning. Sticky learning is enabled on an interface by using the switchport port-security mac-address sticky interface configuration mode command.
+
+When this command is entered, the switch converts all dynamically learned MAC addresses, including those that were dynamically learned before sticky learning was enabled, to sticky secure MAC addresses. All sticky secure MAC addresses are added to the address table and to the running configuration.
+
+Sticky secure MAC addresses can also be manually defined. When sticky secure MAC addresses are configured by using the switchport port-security mac-address sticky mac-address interface configuration mode command, all specified addresses are added to the address table and the running configuration.
+
+If the sticky secure MAC addresses are saved to the startup configuration file, then when the switch restarts or the interface shuts down, the interface does not need to relearn the addresses. If the sticky secure addresses are not saved, they will be lost.
+
+If sticky learning is disabled by using the no switchport port-security mac-address sticky interface configuration mode command, the sticky secure MAC addresses remain part of the address table, but are removed from the running configuration.
+
+Figure 2 shows the characteristics of sticky secure MAC addresses.
+
+Note that port security feature will not work until port security is enabled on the interface using the switchport port-security command. 
+
+Port Secuirty Violation Modes
+
+
+
+It is a security violation when either of these situations occurs:
+
+    The maximum number of secure MAC addresses have been added to the address table for that interface, and a station whose MAC address is not in the address table attempts to access the interface.
+
+    An address learned or configured on one secure interface is seen on another secure interface in the same VLAN.
+
+An interface can be configured for one of three violation modes, specifying the action to be taken if a violation occurs. The figure presents which kinds of data traffic are forwarded when one of the following security violation modes are configured on a port:
+
+    Protect - When the number of secure MAC addresses reaches the limit allowed on the port, packets with unknown source addresses are dropped until a sufficient number of secure MAC addresses are removed, or the number of maximum allowable addresses is increased. There is no notification that a security violation has occurred.
+
+    Restrict - When the number of secure MAC addresses reaches the limit allowed on the port, packets with unknown source addresses are dropped until a sufficient number of secure MAC addresses are removed, or the number of maximum allowable addresses is increased. In this mode, there is a notification that a security violation has occurred.
+
+    Shutdown - In this (default) violation mode, a port security violation causes the interface to immediately become error-disabled and turns off the port LED. It increments the violation counter. When a secure port is in the error-disabled state, it can be brought out of this state by entering the shutdown and no shutdown interface configuration mode commands.
+
+To change the violation mode on a switch port, use the switchport port-security violation {protect | restrict |shutdown} interface configuration mode command.
+
+
+Port Security Configuring
+
+Figure 1 summarizes the default port security configuration on a Cisco Catalyst switch.
+
+Figure 2 shows the Cisco IOS CLI commands needed to configure port security on the Fast Ethernet F0/18 port on the S1 switch. Notice that the example does not specify a violation mode. In this example, the violation mode is shutdown (the default mode).
+
+Figure 3 shows how to enable sticky secure MAC addresses for port security on Fast Ethernet port 0/19 of switch S1. As stated earlier, the maximum number of secure MAC addresses can be manually configured. In this example, the Cisco IOS command syntax is used to set the maximum number of MAC addresses to 50 for port 0/19. The violation mode is set to shutdown, by default.
+
+Port Security Verifying
+
+
+
+
+Verify Port Security
+
+After configuring port security on a switch, check each interface to verify that the port security is set correctly, and check to ensure that the static MAC addresses have been configured correctly.
+
+Verify Port Security Settings
+
+To display port security settings for the switch or for the specified interface, use the show port-security [interface interface-id] command. The output for the dynamic port security configuration is shown in Figure 1. By default, there is one MAC address allowed on this port.
+
+The output shown in Figure 2 shows the values for the sticky port security settings. The maximum number of addresses is set to 50, as configured.
+
+Note: The MAC address is identified as a sticky MAC.
+
+Sticky MAC addresses are added to the MAC address table and to the running configuration. As shown in Figure 3, the sticky MAC for PC2 has been added to the running configuration for S1.
+
+Verify Secure MAC Addresses
+
+To display all secure MAC addresses configured on all switch interfaces, or on a specified interface with aging information for each, use the show port-security address command. As shown in Figure 4, the secure MAC addresses are listed along with the types.
+
+
+Ports in Error Disabled State
+
+
+
+
+When a port is configured with port security, a violation can cause the port to become error disabled. When a port is error disabled, it is effectively shut down and no traffic is sent or received on that port. A series of port security related messages display on the console (Figure 1).
+
+Note: The port protocol and link status is changed to down.
+
+The port LED will change to orange. The show interface command identifies the port status as err-disabled (Figure 2). The output of the show port-security interface command now shows the port status as secure-shutdown. Because the port security violation mode is set to shutdown, the port with the security violation goes to the error disabled state.
+
+The administrator should determine what caused the security violation before re-enabling the port. If an unauthorized device is connected to a secure port, the port should not be re-enabled until the security threat is eliminated. To re-enable the port, use the shutdown interface configuration mode command (Figure 3). Then, use the no shutdown interface configuration command to make the port operational.
+
+
+Network Time Protocol (NTP)
+
+
+
+Having the correct time within networks is important. Correct time stamps are required to accurately track network events such as security violations. Additionally, clock synchronization is critical for the correct interpretation of events within syslog data files as well as for digital certificates.
+
+Network Time Protocol (NTP) is a protocol that is used to synchronize the clocks of computer systems over packet-switched, variable-latency data networks. NTP allows network devices to synchronize their time settings with an NTP server. A group of NTP clients that obtain time and date information from a single source will have more consistent time settings.
+
+A secure method of providing clocking for the network is for network administrators to implement their own private network master clocks, synchronized to UTC, using satellite or radio. However, if network administrators do not wish to implement their own master clocks because of cost or other reasons, other clock sources are available on the Internet. NTP can get the correct time from an internal or external time source including the following:
+
+    Local master clock
+
+    Master clock on the Internet
+
+    GPS or atomic clock
+
+A network device can be configured as either an NTP server or an NTP client. To allow the software clock to be synchronized by an NTP time server, use the ntp server ip-address command in global configuration mode. A sample configuration is shown in the Figure 1. Router R2 is configured as an NTP client, while router R1 serves as an authoritative NTP server.
+
+To configure a device as having an NTP master clock to which peers can synchronize themselves, use the ntp master [stratum] command in global configuration mode. The stratum value is a number from 1 to 15 and indicates the NTP stratum number that the system will claim. If the system is configured as an NTP master and no stratum number is specified, it will default to stratum 8. If the NTP master cannot reach any clock with a lower stratum number, the system will claim to be synchronized at the configured stratum number, and other systems will be willing to synchronize to it using NTP.
+
+Figure 2 displays the verification of NTP. To display the status of NTP associations, use the show ntp associations command in privileged EXEC mode. This command will indicate the IP address of any peer devices that are synchronized to this peer, statically configured peers, and stratum number. The show ntp status user EXEC command can be used to display such information as the NTP synchronization status, the peer that the device is synchronized to, and in which NTP strata the device is functioning.
+
