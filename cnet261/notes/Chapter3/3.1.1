@@ -1,0 +1,221 @@
+/***************************************************************************
+	VLAN Definitions
+***************************************************************************/
+
+In Switched Network VLANs provide
+	
+	provide segmentation and organizational flexibility
+
+	Group devices within a LAN
+	
+		Grouped devices communicate as if attached to same wire.
+
+	Logical Connections, instead of physical
+
+
+Allows Admin to segment network based on: 
+
+	Function
+
+	Project Team
+
+	Application
+
+	And	Not on physical location of the device
+
+
+Devices in VLAN act as if they are on their own independent network, despite
+	common infastructure with other VLANS
+
+
+Any Switch port can only do the following within the VLAN:
+
+	Belong to a VLAN
+
+	unicast packets
+
+	broadcast packets
+
+	multicast packets	
+
+
+Each VLAN = separate logical network, so packets going outside the VLAN
+	need to be forwarded through a device that supports routing.
+
+VLANs do the following:
+
+	create logical broadcast domain; can span multiple physical LAN segments
+		
+	improve network performance by separating large broadcast domains	
+
+	Broadcast frames are recieved by everyone on that VLAN, but not other 
+		VLANS
+
+	Enable the implementation of access security policies by user groupings
+
+Each port on a VLAN can only be assigned to one VLAN, 
+	EXCEPT port connected to:  IP phone, or Switch
+
+/***************************************************************************
+	Benefits of VLANS
+***************************************************************************/
+
+User Productivity and network adaptability are important to business
+
+VLANS provide:
+
+	Security:
+	
+		Groups with sensative data can be separated from others.
+
+		This reduces the chance of a breach of sensative data.
+
+	Cost Reduction:
+
+		reduced need for expensive network upgrades
+
+		efficient use of existing bandwidth and uplings
+
+	Better Performance:
+		
+		Divide to logical workgroups (broadcast domains) reduce unnecessary
+			traffic
+
+	Shrink Broadcast Domains:
+
+	Improved IT Staff Efficiency:
+
+		Easier to manage netowrk
+
+		policies and precudures configured for VLANs on new switch when
+			ports are assigned.
+
+		easy to identify; can be assigned a name
+
+	Simpler Project and Application Management:
+
+		aggregate devices to support business or geographic requirements
+
+		has seperate functions; managing a project or working with a
+			specialized application easier
+
+
+Hierarchical network-addressing scheme;
+
+	each VLAN = IP network
+
+	Design must take into considerations hierarchical network-addressing
+		scheme
+
+	Hierarchical network addressing = IP network numbers are applied to the
+		network segments in an orderly fashion that takes the network as a
+		whole into consideration.
+
+	Blocks of contiguous network addressing are reserved for and configured
+		on devices in a specific area of the network.
+
+
+/***************************************************************************
+	TYPES OF VLANS
+***************************************************************************/
+
+Defined by traffic classes, or by function they serve.
+
+DATA VLAN:
+
+	Configured to carry user-generated traffic.
+
+	WOULD NOT BE A VLAN carrying voice, or management traffic
+
+		Common practice to seperate these two from data
+
+	Sometimes referred to as User VLAN.
+
+	Used to seperate the network into groups of users or devices
+
+Default VLAN:
+
+	All switch ports become part of the default VLAN after switch loading
+		default configuration
+
+	The default VLAN for cisco switches is VLAN 1
+
+	VLAN 1 has all the features of any VLAN except it cannot be renamed or
+		deleted.
+
+	By default all Layer 2 control traffic is associated with VLAN 1
+
+Native VLAN:
+
+	A native VLAN is assigned to an 802.1Q trunk port.
+
+	Trunk ports are the links between switches that support the transmission
+		of traffic associated with more than one VLAN
+
+	An 802.1Q trunk port supports traffic coming from many VLANS(tagged
+		traffic), as well as traffic that does not come from a VLAN
+		(untagged traffic)
+
+	An 802.1Q trunk port places untagged traffic on the native VLAN, which
+		by default is VLAN 1
+
+	Native VLANS are defined in the IEEE 802.1Q specification to maintain
+		backward compatibility with untagged traffic common to legacy LAN
+		scenarios.
+
+	A native VLan serves as a common identifier on opposite ends of a trunk
+		link.
+
+	It is best practice to configure the native VLAN as an unused VLAN,
+		distinct from VLAN 1 and other VLANS. In fact, is is not
+		unusual to dedicate a fixed VLAN to serve the role of the native
+		VLAN for all trunk ports in the switched domain.
+
+Management VLAN
+
+	Any VLAN configured to access management capabilities of a switch.
+
+	VLAN 1 is the management VLAN by default.
+
+	To create the management VLAN, the switch virtual interface (SVI)
+		is assigned an IP address and a subnet mask which allows the switch
+		to be managed by: HTTP, Telnet, SSH, or SNMP.
+
+	Since cisco out-of-the-box is VLAN 1 as the default VLAN, VLAN 1 would
+		be a bad choice for the management VLAN
+
+	In the past, the management VLAN for a 2960 switch was the only active
+		SVI.
+
+	On  15.x versions for 2960 it is possible to have more than one active
+		SVI
+
+	On 15.x the active SVI must be documented.
+
+	Theoretically a switch can have more than one SVI, but increases
+		exposure to network attacks.
+
+/***************************************************************************
+	VOICE VLANS	
+***************************************************************************/
+
+A separate VLAN is needed to support(VoIP).
+
+VoIP traffic requires:
+
+    Assured bandwidth to ensure voice quality
+
+    Transmission priority over other types of network traffic
+
+    Ability to be routed around congested areas on the network
+
+    Delay of less than 150 ms across the network
+
+To meet these requirements, the entire network has to be designed to support
+	VoIP.
+
+ The details of how to configure a network to support VoIP are beyond the
+	 scope of this course, but it is useful to summarize how a voice VLAN
+	 works between a switch, a Cisco IP phone, and a computer.
+
+In the figure, VLAN 150 is designed to carry voice traffic. The student computer PC5 is attached to the Cisco IP phone, and the phone is attached to switch S3. PC5 is in VLAN 20, which is used for student data.
