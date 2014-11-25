@@ -1,6 +1,6 @@
 /*
      Guy Moore
-     Assignment 2 | CIS 231 B
+     Lab 17 | CIS 231 B
      Cuesta College | Randy Scovil
      Due: 12:00 25/11/2014
  */
