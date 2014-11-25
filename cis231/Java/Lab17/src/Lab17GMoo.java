@@ -6,7 +6,7 @@
  */
 
 
-import java.util.*;
+import java.util.Random;
 
 public class Lab17GMoo
 {
@@ -17,7 +17,9 @@ public class Lab17GMoo
 		System.out.println("Guy Moore");
 		
 		myNumbers = randomNumbers(10); 
+
 		printArray( myNumbers, 2 );
+
 		System.out.println( "\nThe largest number was: " + 
 			getLargest( myNumbers ) );
 			
