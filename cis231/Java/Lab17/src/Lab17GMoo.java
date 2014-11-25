@@ -25,14 +25,14 @@ public class Lab17GMoo
 			
 	}
 
-	/* Takes in a integer parameter and returns an integer array filled
+	/* Takes in an integer parameter and returns an integer array filled
 	 * with randomly created values the size of the parameter.
 	 * 
 	 * First creates the array, then creates a Random object to create the
 	 * random numbers to fill the array.
 	 * Next, it loops through the array adding randomly generated numbers
 	 * to each element
-	 * Finaly, the method returns the arary.
+	 * Finally, the method returns the array.
 	 */	
 	public static int[] randomNumbers( int size )
 	{
@@ -74,7 +74,7 @@ public class Lab17GMoo
 
 	/*
 	 * Takes in an integer array and searches for the largest number.
-	 * Walks through the entire array sequentually, and compares the integer
+	 * Walks through the entire array sequentially, and compares the integer
 	 * largest with every index to find the largest value, then returns it.
 	 */
 	public static int getLargest( int[] numbers )
