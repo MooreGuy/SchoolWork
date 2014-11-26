@@ -1,0 +1,168 @@
+/***************************************************************************
+	VLAN TRUNKS
+***************************************************************************/
+
+A VLAN Trunk = point-to-point link between two network devices that carries
+	more than one VLAN
+
+	Extends Vlans accross an entire network.
+
+	Cisco Supports IEE 802.1Q for coordinating trunks on:
+
+		Fast Ethernet
+
+		Gigabit Ethernet
+
+		10-Gigabit Ethernet interfaces
+
+	
+	VLANS would not be very useful without VLAN trunks
+
+	Allows all VLAN traffic to propagate between switches, and the same VLAN
+	
+	Allows traffic to communicate without the intervention of a router.
+
+A VLAN trunk doesn't belong to a specific VLAN
+
+	It is conduit for multiple VLANS between switches and routers.
+
+	A trunk could als be used between a network device and another device
+		equiped with an appropriate 802.1Q-capable NIC, like a server
+
+	By default Cisco Catalyst: all VLANS are supported on a trunk port
+
+Network without VLANS
+
+	In normal operation a broadcast is forwarded out all ports on the switch
+		except the port it was recieved on. 
+
+Network with VLANS
+	
+
+	With VLANS, the broadcast domain is segmented to VLANs, so broadcasts
+		will only be forwarded to those ports on the VLAN the broadcast
+		was recieved from
+
+	Transmission of Unicast, Multicast, and Broadcast traffic is limitted
+		to the VLAN of the host that sent it.
+
+
+VLAN Frame Tagging
+
+	The standard Ethernet frame header does not contain information about
+		VLAN to which the frame belongs.
+
+		When a frame is placed on the a trunk then the VLAN it belongs to
+			must be added.
+		
+			This is called Tagging
+			
+			Accomplished by using IEEE 802.1Q header: specified by standard
+
+			802.1Q header includes a 4-byte tag inserted within the original
+				Ethernet frame header
+
+		When the switch recieves a frame on a port configured in access mode
+		
+			inserts VLAN tag in the frame header
+
+			recalculates the FCS
+
+			Sends the tagged frame out of a trunk port
+
+	
+VLAN Tag Field Details
+
+	VLAN Tag consists of a: Field Type, Priority Field, Canonical Format and
+		VLAN ID fields
+
+		Type: 2-byte value called the tag protocol ID (TPID) vlaue.
+			For Ethernet it is set to hexadecimal 0x8100
+
+		User Priority: A3-bit vlaue that supports level of service
+			implementation
+
+		Canonical Format Identifier (CFI) - A 1-bit identifier that enables
+			Token Ring frames to be carried across Ethernet links
+
+		VLAN ID (VID) - A 12-bit VLAN identification number that supports
+			up to 4096 VLAN IDs
+
+	The order the switch works is:
+
+		Inserts Type and tag control information fields
+
+		Recalculates the FCS values
+
+		Inserts the new FCS into the frame
+
+Tagged Frames on the Native VLAN
+
+	Some devices that support trunking, add a VLAN tag to native VLAN 
+		traffic.
+
+	Control traffic sent on the native VLAN should not be tagged.
+
+	If an 802.1Q trunk port receives a tagged frame with the VLAN ID the
+		 same as the native VLAN, it drops the frame.
+
+	Consequently, when configuring a switch port on a Cisco switch, 
+		configure devices so that they do not send tagged frames on the 
+		native VLAN.
+
+	Devices from other vendors that support tagged frames on the native 
+		VLAN include IP phones, servers, routers, and non-Cisco switches. 
+
+Untagged Frames On The Native VLAN
+
+	When a Cisco switch trunk port receives untagged frames (which are 
+		unusual in a well-designed network), it forwards those frames to 
+		the native VLAN.
+
+	If there are no devices associated with the native VLAN (which is not 
+		unusual) and there are no other trunk ports (which is not
+		unusual), then the frame is dropped.
+
+	The default native VLAN is VLAN 1. 
+
+	When configuring an 802.1Q trunk port, a default Port VLAN ID (PVID)
+		is assigned the value of the native VLAN ID. 
+
+	All untagged traffic coming in or out of the 802.1Q port is forwarded 
+		based on the PVID value.
+
+	For example, if VLAN 99 is configured as the native VLAN, the PVID is 
+		99 and all untagged traffic is forwarded to VLAN 99.
+
+	If the native VLAN has not been reconfigured, the PVID value is set to 
+		VLAN 1. 
+
+	This scenario reflects poor network design for several reasons:
+		 it uses a hub,
+		 it has a host connected to a trunk link,
+		 it implies that the switches have access ports assigned to the 
+			native VLAN.
+
+	 But it illustrates the motivation for the IEEE 802.1Q specification 
+		for native VLANs as a means of handling legacy scenarios.
+
+Voice VLAN Tagging
+
+	The Cisco IP Phone contains an integrated three-port 10/100 switch.
+
+	The ports provide dedicated connections to these devices.
+
+		Port 1: connects to the switch or other VoIP device
+
+		Port 2: is an internal 10/100 interface that carries the IP phone 
+			trafic
+	
+		Port 3: (access port) connects to a PC or other device
+
+	SEE 3.1.2.5 FOR DETAILED PICTURES ON WHAT THE HECK THESE THINGS DO
+
+	When the switch port has been configured with a voice VLAN, the link 
+		between the switch and the IP phone acts as a trunk to carry both 
+		the tagged voice traffic and untagged data traffic. Communication 
+		between the switch and IP phone is facilitated by the Cisco 
+		Discovery Protocol (CDP). 
