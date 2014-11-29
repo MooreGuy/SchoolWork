@@ -65,30 +65,4 @@ Resetting The Trunk to Default State
 
 					look for Administrative Mode: either static access or 
 						trunk
-
-Dynamic Trunking Protocol (DTP)
-
-	Trunk interfaces support different trunk modes.
-
-		trunking, nontrunking, or negotiate trunking
-
-	DTP is
 	
-		point to point
-
-		Cisco proprietary protocol.
-
-			Other vendors do not support it.
-
-		Automatically enabled on Catalyst 2960, and 3560
-
-			This is enabled as [dynamic auto]
-
-		Manages trunk negotiation only if the other switch port is
-			configured in a trunk mode that supports DTP.
-
-		CAUTION: Some devices might forward DTP frames improperly, which
-			can cause misconfigurations. Turn off DTP to devices that 
-			don't support it.
-
-		
