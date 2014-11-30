@@ -1,0 +1,31 @@
+Troubleshooting
+
+	Addressing issues:
+
+		Each VLAN must correspond to a unique IP subnet
+
+		If two devices in the same VLAN have different subnet addresses,
+			they cannot communicate.
+
+			common problem, easy to solve. Identify incorrect config and
+				change the subnet address to the correct one
+
+	Missing VLANS
+
+		If no connectivity between VLANS and Addressing issues have been 
+			ruled out then it could be a missing vlan.
+
+		First check if the port is in the vlan
+
+			If it isn't add it
+
+		Then check if the VLAN is in the VLAN database
+
+			If it isn't add it
+
+		If it is in the VLAN database verify the connection of the devices
+			in the VLAN
+
+Troubleshooting Trunks	
+
+	
