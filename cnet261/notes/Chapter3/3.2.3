@@ -23,3 +23,40 @@ Dynamic Trunking Protocol (DTP)
             can cause misconfigurations. Turn off DTP to devices that 
             don't support it. 
 
+			For devices that don't support DTP use this to make them a trunk
+				but not send DTP frames:
+
+				[COMMANDS] S1(config-if)# switchport mode trunk
+			
+				[COMMANDS] S1(config-if)# switchport nonegotiate 
+
+Interface Modes
+
+	/*BEST PRACTICE*/
+
+		Configure trunk links statically whenever possible.
+		
+		Set  trunks to trunk and nonegotiate when a trunk link is required.
+
+		On links where trunking is not intended, DTP should be turned off
+
+		Default DTP is dependent on the Cisco IOS version and the platform.
+
+			To determine current DTP mode use:
+
+				[COMMAND]S1# show dtp interface
+
+	/*BEST PRACTICE*/
+
+	switchport mode access : permanent nontrunking mode
+
+			limited connectivity with a trunk port connected to it
+		
+	switchport mode trunk : permanent trunking mode
+
+			limited connectivity with a access port connected to it.
+		
+	switchport mode dynamic auto : Auto configures, prefers trunks
+
+	switchport mode dynamic desirable : Auto configures, prefers access
+		
