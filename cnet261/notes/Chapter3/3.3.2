@@ -1,0 +1,38 @@
+Don't leave ports on default VLAN 1
+
+	Put unused ports on a different VLAN than 1 too (black-hole VLAN)
+
+Shut down ports not being used
+
+Seperate management and user data traffic
+	
+	Default VLAN 1, but should be changed
+
+To communicate remotely with a Cisco switch for management it must have:
+
+	IP address configured on the management VLAN
+
+Users would not be able to try remote acceess if they aren't in the
+	management VLAN, so it provides another layer of security
+
+Change native VLAN from 1, and it shouldn't be used for anything else
+
+	Should be the same on all ends
+
+DTP offers four modes
+
+	access
+
+	trunk
+	
+	dynamic auto
+
+	dynamic desirable
+
+Disable autonegotiate
+
+Don't use dynamic auto or dynamic desirable
+
+Voice traffic has QoS requirements so it should be seperated from data
+	traffic
+
