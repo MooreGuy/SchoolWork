@@ -1,0 +1,206 @@
+First about networks...
+
+	Networks impact our lives...
+
+	Networks allow us to: (I swear, I should just copy paste this stuff)
+
+		communicate, collaborate, interact in ways we never did before
+
+		We use it in many ways:
+
+			web apps, IP telephony, video conferencing, interactive gaming,
+				electronic commerce, education, and more
+
+
+	Network characteristics:
+
+		Topology - 
+		
+			physical: arrangement of the cables, network devices and end
+						systems. describes how things are wired.
+
+			logical: describes how the network devices appear connected to
+						network users, or the path which data is transfered
+
+		Speed -
+
+			data rate in bits per second (b/s) of a given link in
+				the network
+
+			should not vary
+
+			not network bandwidth
+
+		Cost - 
+
+			general expense for purchasing of network
+				components, and installation and maintenance of the network
+
+		Security - 
+
+			how protected the network is, including the information that 
+				is sent on the network.
+
+			Important, and contantly evolving.
+
+
+		Availability - 
+
+			measure of the probability that the network is available for use
+				when it is required
+
+		Scalability -
+
+			how easy network can accommodate more users.
+			
+			can be very expensive if a network is not scalable.
+
+		Reliability -
+
+			dependability of the components that make up the network,
+				
+			measured as a probability of failure as the mean time between
+				failures (MTBF)
+
+Why Routing? (YEAH WHY NOT USE DOGES? DOGES ARE MUCH, VERY, and SO BETTER)	
+
+	Communication between networks would not be possible without a router
+
+	(well that was simple..)
+
+Routers are computers (WHAAAAA???!?!?!?!)
+
+	Most network devices need the following to operate
+
+		CPU, OS, Memory and storage (RAM, ROM, NVRAM, Flash, Hard Drive
+
+		So router is specialized computer (like doge is specialized dog)
+	
+Routers use the following to store things and here is why
+
+	RAM (Random Access Memory) -
+	
+		Temporary storage for: Appilcations, processes, IOS, running-config,
+			various tables(routing table, arp table), buffers
+
+		Volatile; loses contents when powered off
+
+	ROM (Read-Only Memory) -
+
+		Permanent storage for: bootup instructions, basic diagnostic
+			software, limited IOS in case router can't load full IOS
+
+		Non-volatile; Firmware; doesn't lose contents when powered off
+
+	NVRAM (Non-Volatile Random Access Memory) 
+
+		Permanent storage for: startup-config
+
+		Non-volatile; doesn't lose contents when powered off
+
+	Flash -
+
+		permanent storage for: IOS and other system-related files.
+
+			IOS is copied from flash into RAM during the bootup process.
+
+		Non-volatile; doesn't lose contenst when powered off
+
+Routers connect networks (Yes enough already..oh.. it might be on the test?)
+
+	Connects multiple networks- so multiple interfaces can be used
+
+		can connect to final destination, or another router used to reach
+			the destination network
+
+	Normally each network requires an interface
+
+		connect a combination of both LANs and WANs
+
+Routers choose best paths
+
+	Determine best path, then forward packets based on those decisions.
+
+	Uses routing table to determine best path.
+		
+		These are built using static and dynamic routing protocols to learn
+			about networks
+		
+	Examines destination address of packet then looks at routing table
+
+	Router can forward and recieve packets in different encapsulation types
+
+		such as : Ethernet, PPP, Frame Relay, DSL, cable, and 802.11
+
+Packet Forwarding Mechanisms
+
+	Routers support three packet-forwarding mechanisms
+
+	Process Switching -
+
+		older, still available for cisco routers
+
+		When packet arrives on an interface:
+
+			forwarded to the control plane where CPU matches the destination
+				address with an entry in its routing table
+
+			determines exit interface and forwards the packet
+
+			This is performed for every packet, even if it is in a stream
+
+		very slow
+
+	Fast switching -
+
+		common packet forwarding mechanism
+
+		uses fast-switching cache to store next-hop information
+
+		When a packet arrives on an interface:
+
+			forwarded to the control plane where cPU searches for a match in
+				the fast-switching cache
+
+				if it is not there, it process-switched and forwarded to the
+					exit interface
+
+		Flow information for the packet is also stored in the fast-switching
+			cache so if another packet going to the same destination arrives
+			on an interface, the next-hop information in the cache is 
+			re-used without CPU intervention
+
+		Cisco Express Forwarding(CEF) -
+
+			CEF most recent and prefered Cisco forwarding mechanism
+
+			Builds a Forwarding Information Base (FIB) like fast switching
+
+				FIB contains pre-computed reverse lookups, next hop
+					information for routes including the interface and 
+					layer 2 information
+
+			Builds an adjacency table.
+
+			Table entries are not packet-triggered like fast switching, 
+				but change-triggered, such as network topology changing
+
+			When a network has converged, FIB and adjacency tables contain
+				all the information a router would have to consider when
+				forwarding a packet.
+	
+			Fastest forwarding mechanism and the preferred choice for
+				cisco routers.
+
+			Cisco Analogies for them:
+
+				Process switching solves a problem by doing math long hand,
+					even if it is the identical problem
+
+				Fast switching solves a problem by doing math long hand
+					one time and remembering the answer for subsequent
+					identical problems
+		
+				CEF solves every possible problem ahead of time in a
+					spreadsheet
+
