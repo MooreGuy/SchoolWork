@@ -1,0 +1,60 @@
+Intro
+
+Networks.. (And here comes buzzword bingo)
+
+	Networks allow people to:
+	
+		communicate
+
+		collaborte
+
+		interact
+
+	Networks are used to access:
+
+		web pages
+
+		talk using IP telephones
+
+		participate in video conferences
+
+		compete in interactive gaming
+
+		shop using the internet
+
+		complete online coursework
+
+		more... (I really hate these lists)
+
+Ethernet switches only forward things at layer 2 within the same network
+	but IP source/destination are on different networks, frame must be
+	routed
+
+	Router does:
+
+		Connects one network to another
+
+		responsible for delivery of packets acrooss different networks
+
+		uses routing table to determine best path to forward a packet
+
+		responsibility of the routers to deliver those packets in a timely
+			manner
+
+		Effectiveness of internetwork communications depends on ability of
+			routers to forward packets in the most efficient way
+
+	How work?
+
+		When a host sends a packet to a device on different IP network
+	
+			Packet is forwarded to the default gateway since host can't
+				communicate directly with devices outside of local network
+
+				Default gateway is the destination that routes traffic from
+					the local network to devices on remote networks.
+
+					Often used to connect a local network to the internet.
+
+				
+			
