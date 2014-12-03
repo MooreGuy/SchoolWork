@@ -1,0 +1,70 @@
+Configure Basic Router Settings
+
+	Cisco Routers and switches have: modal operating system, similar
+		command structures, similiar initial configuration steps and many
+		 of the same commands, in common
+
+	When configuring a router basic tasks are:
+
+		Name the device: Distinguish it from other routers
+
+		Secure management access- secures privileged EXEC, user EXEC, and
+									Telnet access, and encrypts passwords
+									to their highest level.
+
+		Configure a banner - provides legal notification of unauthorized
+							access.
+
+		Save changes, then verify configuration
+
+Configure an IPv4 Router Inerface
+
+	distinguishing feature between switch and router is the type of 
+		interfaces supported by each.
+
+		Switches support LANS and have multiple FE and GE ports
+
+	
+		Routers support LANs and WANs and can interconnect different types
+			of networks and have man interfaces
+
+			like G2 ISRs, have one or two integrated Gigabit Ethernet
+			
+			 High-Speed WAN Interface Card (HWIC) to accomidate others like
+				Serial, DSL, and cable interfaces
+
+
+	To be available an interface must be:
+
+		configured with iPv4 address and subnet mask
+
+		activated, issue no shutdown, and make sure it is on at the 
+			physical layer (there is another device that is connected)
+
+			by default LAN and WAN interfaces are not activated
+
+
+		OPTIONAL: could have a short description
+
+			Good practice to make one for each interface
+
+			Limited to 240 chars.
+
+			In production can be helpful for troubleshooting like:
+
+				information on: type of network the interface is connected
+					to
+
+				if it connects to third party or ISP or service carrier,
+					helpful to put in contact info
+
+		Depending on type of interface, could have more parameters.
+
+			Serial DCE must be configured with clock rate command
+
+				NOTE:NOT DTE, provideds error %Error: This command only...
+
+Configure an IPv6 Router Interface
+
+	
+	
