@@ -17,7 +17,6 @@ Configure Basic Router Settings
 
 		Save changes, then verify configuration
 
-Configure an IPv4 Router Inerface
 
 	distinguishing feature between switch and router is the type of 
 		interfaces supported by each.
@@ -34,6 +33,8 @@ Configure an IPv4 Router Inerface
 				Serial, DSL, and cable interfaces
 
 
+Configure an IPv4 Router Inerface
+
 	To be available an interface must be:
 
 		configured with iPv4 address and subnet mask
@@ -42,7 +43,6 @@ Configure an IPv4 Router Inerface
 			physical layer (there is another device that is connected)
 
 			by default LAN and WAN interfaces are not activated
-
 
 		OPTIONAL: could have a short description
 
@@ -66,5 +66,245 @@ Configure an IPv4 Router Inerface
 
 Configure an IPv6 Router Interface
 
+	Similar to IPv4
+
+	IPv6 must be configured with an address and a subnet mask
+	[COMMANDS]R1(config-if)# ipv6 address [ipv6-address/prefix-length]
+		[link-local | eui-64]
+
+	must be activated	
+
+		no shutdown
+
+	Interface can generate its own IPv6 link-local address without having a
+		global unicast address by using:
+
+		[COMMANDS]R1(config-if)# ipv6 enable
+
+	IPv6 typically have more than one IPv6 address
+
+		Minimum, must have link-local
+		
+		could have global unicast address.
+
+	IPv6 supports interface having multiple IPv6 global unicast addresses
+		from the same subnet
+
+	Commands to statically create a global unicast or link-local IPv6
+		address
+
+		[COMMANDS]
+
+			ipv6 address [ipv6-address] [prefix-length]
+				
+				creates a global unicast IPv6 address as specified
+
+			ipv6 address [ipv6-address] [prefix-length] eui-64
+
+				configures a global unicast IPv6 address with an interface
+					IP in the low-order 64 bits of the IPv6 address using
+					the EUI-64 process
+
+			ipv6 address [ipv6 address] [prefix-length] link-local
+			
+				configures a static link-local address on the interface
+					that is used instead of the link-local address that
+					is automatically configured when the global unicast
+					IPv6 address is assigned to the interface or enabled
+					using the ipv6 enable interface command. Recall the
+					ipv6 enable interface command is used to automaticaly
+					create an IPv6 link-local address whether or not an
+					IPv6 global unicast address has been assigned
+
+	When a router is configured with:
+		[COMMAND]R1(config)#ipv6 unicast-routing 
+
+		router begins sending ICMPv6 Router Advertisement messages out the
+			interface
+
+			enables a PC connected to the interface to automatically
+				configure an IPv6 address and to set the default gateway
+				without needing the services of a DHCPv6 server.
+
+			Alternatively, PC connected to the IPv6 network can get
+				its IPv6 address statically assigned
+
+	Default Gateway is IPv6 global unicast address of Rrouter interface
+
+Configure IPv4 Loopback interface
+
+	Common configuration
+
+	Loopback interface is logical interface internal to the router
+
+		Not assigned to a physical port
+
+		can therefore never be connected to any other device
+
+		considered software interface that is automatically placed in an 
+			UP state, as long as the router is functioning
+
+	Loopback is useful for:
+
+		testing, and managing Cisco device b/c ensures that at least one
+			interface will always be available
+
+		example: can be used for testing purposes: testing internal routing
+			processes by emulating networks behind the router
+
+	IPv4 address asigned to it can be significant to processes on the
+		router that use an interface address for identifacction
+
+		OSPF routing process.
+
+	By enabling loopback, router will always use the available loopback
+		interface address for identification, rather than a phyiscal 
+		port that could go down.
+
+	Multiple loopback interfaces can be enabled on a router
 	
+	the address for each loopback interface must be unique and unused by
+		 any other interface
+
+	[COMMANDS]
+
+		R1(config)# interface loopback [number]
+
+		R1(config-if)# ip address [ip-address] [subnet-mask]
+
+		R1(config-if)# exit
+
+Verify Connectivity of Directly Connected Networks
+
+	Use commands these three commands to verify:
+
+		show ip interface brief - display summary of all interfaces
+			including IPv4 addresses of the interface and current 
+				Operation status
+
+		show ip route - displays the contents of IPv4 routing table stored
+			in RAM. In Cisco IOS 15, active interfaces should appear in
+			the routing table with two related entries identified by the
+			code 'C' (connected) or 'L' (Local). In previous versions
+			only a single entry with the 'C' code appear
+
+		show running-config interface [interface-id] - Displays the
+			commands configured on the specified interface
+
+	show ip interface brief: Status of "up" and protocol "up" means it is
+		good, anything else would be down. Either configuration or cabling
+
+	show ip route: local host route has an administrative distance of 0
+		also has /32 mask for IPv4 and /128 mask for IPv6. Local host
+		route is for routes on the router owning the IP address, used
+		to allow the router to process packets destined to that IP.
+
+	show running-config interface: Output displays current commands on
+		interface
+
+	If you need more info
+
+		show interface - info about packet flow count for all interfaces
+
+		show ip interface - displays IPv4 related information for all
+			interfaces on a router
+
+Verify IPv6
+
+	show ipv6 interface brief: the up/up shows layer1/layer2 status same as
+		IPv4 status and protocol columsn
+
+	if two configured IPv6 addresses per interface are show,
+
+		one is for global unicast that was manually entered, 
+		
+		the other, which begins with FE80, is the link-local unicast
+			address for the interface
+
+			this is added whenever a global unicast address is assigned
+
+			IPv6 network interface is required to have link-local but not
+				necessarily a global unicast address
+
+	show ipv6 interface gigabit ethernet 0/0: displays interface status
+		and all IPv6 addresses belonging to the interface.
+
+		Also shows multicast addresses assigned to the interface, beginning
+			with prefix FF02
+
+	show ipv6 route : used to verify IPv6 networks and specific IPv6
+		interface addresses have been installed in the IPv6 routing table
+		
+		only displays IPv6 routes, not IPv4
+
+		In routing table 'C' is directly connected network
+
+		When a router is configured with a global unicast address and is
+			in the "up/up" state, the IPv6 prefix and prefix length is
+			added to the IPv6 routing table as a connected route
+
+		The IPv6 global unicast address configured on the interface is also
+			installed in the routing table as a local route. The local
+			route has a /128 prefix. Local routes are used by routing
+			tables to efficiently process packets with the interface
+			address of the router as the destination
+
+	ping command for ipv6 is identical to ipv4 except an ipv6 address is 
+		used.
+
+Filtering show commands
+
+	commands that generate multiple lines of output are by default paused
+		after 24 lines. 
+
+		at the end of the pause the --More-- text displays
+
+		pressing enter displays the next line adn pressing the spacebar
+		displays the next set of lines.
+
+
+	Use: [COMMAND] terminal length [number] command to specify the number
+		of lines to be displayed
+
+		A value of 0 prevents the prouter from pausing between screens
+			of output	
+
+	Filter commands to display sections of out put with the pipe (|)
+		after the show command and then enter a filtering parameter
+		and a filtering expression
+
+		Filtering parameters:
+
+			section - show entire section that start with the expression
+
+			include - include all output lines that match expression
+
+			exclude - exculdes all lines matching expression
+
+			begin - shows output lines from certain point starting with
+					line matched by expression
+
+Command History
+
+	temporarily stores list of executed commands to be recalled
+
+	To recall commands: press Ctrl+P or the Up Arrow key
+
+		begins with most recent command
+
+		repeat key sequence to recall successively oldrer commands
+
+	To return to more recent commands: Ctrl+N, or Down Arrow key
+		
+		repeat to get more new commands
+
+	Default: history is enabled and captures last 10 commands
+
+	Use:[COMMAND]R1# show histor // to display the contents of the buffer
+
+	Practical to increase buffer for current term session only.
+
+		Use [COMMAND]R1# terminal history size [size]
+		
+			increase or decrease
 	
