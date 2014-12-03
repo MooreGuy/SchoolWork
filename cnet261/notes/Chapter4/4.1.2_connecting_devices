@@ -159,4 +159,11 @@ Console Access
 
 	If the computer doesn't have serial, then use USB adapter.
 
+Enable IP on a switch
+
+	devices require IP addresses to be remotely managed.
+
+	Switch doesn't have IP address information for an interface, instead
+		configure an SVI to have an IP address.
+
 	
