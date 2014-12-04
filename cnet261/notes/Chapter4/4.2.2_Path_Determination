@@ -1,0 +1,118 @@
+Routing Decisions
+
+	Primary function of router is to determine best path
+
+	To determine best path,router searches routing table for a network
+		address that matches the destination IP address of the packet
+
+	Can be one of the three
+
+		Directly connected Network -
+	
+			if it is directly connected to one
+			of the interfaces of the router, packet is forwarded
+			directly to the destination device. 
+
+			Same network.
+
+		Remote network -
+
+			 If it is remote, it is forwarded to another router
+
+			Can only be reached by forwarding packets to another router.
+
+		No route determined - 
+
+			If it is not in the routing table
+
+			If there is Gateway of Last Resort (Default Route)
+
+				forwards it there
+
+			If not it discards and returns ICMP unreachable message to
+				the source IP address of the packet
+
+Best Path
+
+	Determine best path by evaluating multiple paths to the same destination
+
+		select optimum or shortest path to reach that network
+
+	Whenever multiple paths to the same network exist, each path uses a
+		different exit interface on the router to reach that network
+
+	Best path is selected by a routing protocol based on the value or metric
+		it uses to determine the distance to reach a network.
+
+		metric is the quantitative value used to measure the distance to
+			a given network
+
+		Best path has lowest metric
+
+
+	Dyamic routing protocols use their own values to update routing tables
+		
+		Metrics can be based on single characterstic or multiples of the
+			path
+
+		Protocols that use multiple factors and combine them into a single
+			metric
+
+	Dynamic protocols:
+
+		Routing Information Protocol (RIP) - Hops count
+
+		Open Shortest Path First (OSPF) - Cisco's cost based on cumalitive
+			bandwidth from source to destination
+
+		Enhanced Interior Gateway Routing Protocol (EIGRP) - Bandwidth,
+			delay, load, reliability
+
+Load Balancing
+
+	IF two or more paths have the same metric then the router uses both
+		paths equally to load balance.
+
+	Increases effectiveness and performance of the network
+
+	Can be configured with both dynamic routing protocols as well as 
+		static routes.
+
+Administrative distance
+
+	Router can have multiple routing protocols enabled, and also have static
+		routes
+
+	RIP and EIGRP could find the same network, but use different paths, so
+		Cisco IOS uses administrative distance (AD) to determine the route.
+		to install into the IP routing table. 
+
+	AD represents the trustworthiness of the route.
+
+		lower = more trustworthy
+
+		lower takes precedence
+
+Metrics:
+
+	Connected - 0
+
+	Static - 1
+
+	EiGRP summary route - 5
+
+	External BGP - 20
+
+	Internal EIGRP - 90
+
+	IGRP - 100
+
+	OSPF - 110
+
+	IS-IS - 115
+
+	RIP - 120
+
+	External EIGRP - 170
+
+	Internal BGP - 200
