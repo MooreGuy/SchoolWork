@@ -1,0 +1,89 @@
+Router Switching Function
+
+	Router Primary Function = Switch packets to destination
+
+		accomplished using a switching function:
+			process used by arouter to accept packet on one interface
+			and forward it out of another.
+
+		Key responsibility is encapsulate packe with appropriate data
+			link frame type for the outgoing data link
+
+		Moving source to destination, not layer 2 switching
+
+	After router determines exit interface using path determination
+		function, the router encapsulates packet with data linke frame
+		of the outgoing interface
+
+	Steps in router switching:
+
+	1. De-encapsulates the Layer 2 frame header and trailer to expose
+			the Layer 3 packet
+
+	2. Examines the destination IP address of the IP packet to find the best
+			path in the routing table
+
+	3. If the router finds a path to the destination, it encapsulates the
+			layer 3 packet into a new Layer 2 frame then forawards the frame
+			out the exit interface.
+
+	Layer 3 addresses do not change, but layer 2 data link addresses change
+		at every hop as the packet is de-encapsulated and re-encapsulated
+		in a new frame by each router.
+
+	Could be a different type of frame possibilities when forwarded
+		
+		Could be ethernet then PPP another time.
+
+Send a Packet
+
+	If the destination address is the same as the sender, then the sender
+		uses it's ARP cache to search for the MAC address of the destination
+	
+		If it can't find it, then it generates an ARP request
+
+	If it is on a different network, then it forwards it to the default
+		gateway
+
+	To determine default gateway MAC address, must check ARP table again
+		and go through the same process.
+
+	FOR IPv6: similiar but instead of ARP, it uses IPv6 address resolution
+		using ICMPv6 Neighbor Solicitation and Neighbor Advertisement
+		messages.
+
+		The IPv6-to-MAC address mappings are kept in a table similar to ARP
+			cache, but called neighbor cache
+
+Forward to the Next Hop
+	
+	1. R1 gets a packet with the destination MAC address matching its 
+		receiving interface, so it copies the frame to its buffer.
+
+		If this is PPP then it doesn't have a MAC address
+
+	2. R1 sees Ethernet field type as 0x800, meaning it contains IPv4 in
+		the data portion of the frame
+		
+		Doesn't do this if it is PPP
+
+	3. de-encapsulates the ethernet frame
+
+	4. Doesn't find destination IPv4 address as directly connected, so must
+		go to routing table.
+
+			If it does find it, then it sends it off to the destination
+
+	5. Finds next hop for the destination IPv4 address, then Encapsulates
+		in a neew ethernet frame with the destination MAC address of the
+		IPv4 address of the next-hop router
+
+			Must resolve this using ARP
+
+	6. After using arp or the arp cache to find the MAC address of the next
+		hop interface, the packet is encapsulated with a new ethernet
+		frame and forwarded out the interface to get to the next hop. 
+
+	Checks both MAC address and IPv4 if it has it
+
+	
