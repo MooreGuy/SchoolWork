@@ -1,0 +1,49 @@
+Static Routes
+
+	After direct routes are added, then static or dynamic routes can be
+		added
+
+	Static routes are manually configured
+
+	Define an explicit path between two networking devices
+
+	Unlike dynamic routing protocol, static routes are not automatically
+		updated
+
+		must be manually reconfigured if the topology changes
+			
+			this is the main disadvantage
+
+		no CPU cycles are used to calculate and communicate routes
+
+		Identified in routing table with 'S'
+
+	Two types of static routes
+
+		Static route to a specific network
+
+		Default static routes
+
+	To make a static route
+
+		[COMMANDs]
+
+		R1(config)# ip route [network] [mask] [next-hop-ip | exit intf]
+
+	Default static route is similar to default gateway on a host
+
+		default static route specifies the exit point to use when the 
+			routing tbale does not contain a path for the destination
+			network
+
+	Default static route is useful when a router has only one exit point
+		to another router. like connecting to central router or service
+		router
+
+	to configure a static route use:
+
+		[COMMANDS]
+
+		R1(config)# ip route 0.0.0.0 0.0.0.0 [exit-intf | next-hop=ip]	
+
+		
