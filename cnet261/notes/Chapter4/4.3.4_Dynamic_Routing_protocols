@@ -1,0 +1,66 @@
+Dynamic Routing
+
+	Dynamic routing is used by routers share information about reachability
+		and status of remote networks
+
+		Perform several actions, network discovery, maintain routing tables
+
+	Network discovery: ability to share information about the networks
+		that a routing protocol knows about.
+
+		automatically learn about these networks
+		
+		then added to routing table
+
+	During network discovery routers exchange routes, and update their 
+		routing tables, routers have converged after they have finished
+		exchanging and updating their routing tables. Routers then maintain
+		the networks in their routing tables
+
+IPv4 Routing protocols
+
+	picks best path
+
+	Can also pick best path if initial path is unusable(if topology change)
+
+	dynamic routing protocols automatically share routing information
+		with other routers and compensate for any topology changes
+
+Cisco ISR routers can support a variety of dynamic IPv4 routing protocols
+	including
+
+	EIGRP- Enhanced Interior Gateway Routing Protocol
+
+	OSPF - Open Shortest Path First
+
+	IS-IS - Intermediate System-to-Intermediate System
+
+	RIP - Routing information Protocol
+
+	To determine which routing protocols are supported by the IOS, use
+
+	[COMMAND]R1(config)# router ?
+
+	Example
+
+		D - EIGRP route
+
+		* - means it is a candidate for Default Route
+
+		EX - means it is an external route forwarded by EIGRP
+
+IPv6 routing protocols
+
+	RIPng(Rip next generation)
+
+	OSPFv3
+	
+	EIGRP for IPv6
+
+	To enable IPv6 routers to forward traffic, you must configure the
+
+		[COMMAND]R1(config)# ipv6 unicast-routing
+
+	To show iPv6 routes use:
+
+		[COMMANd]R1# show ipv6 route
