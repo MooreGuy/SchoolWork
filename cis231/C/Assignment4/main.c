@@ -194,3 +194,37 @@ void sortTemps( int * temps, int numTemps)
 		}
 	}
 }
+
+
+void printTemps( int * temps, int numTemps )
+{
+	
+}
+void printName()
+{
+
+}
+void getMean( int average, int numTemps )
+{
+
+}
+void getAverage( int * temps, int numTemps )
+{
+
+}
+void getAboveBelow( int * temps, int numTemps, int average )
+{
+
+}
+void getStandardDeviation( int * temps, int numTemps, int average )
+{
+
+}
+void getMedian()
+{
+
+}
+void getMode()
+{
+
+}
