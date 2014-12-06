@@ -17,6 +17,12 @@ int getTemps( int ** temps );
 void promptStrInp( char str[] );
 void getTokens( char str[], int **temps, int *totalTemps, int *currentSize);
 void sortTemps( int * temps, int numTemps );
+void getHighLow( int * temps, int numTemps );
+void convertFahrToCels( int temp );
+void getMean( int average, int numTemps );
+void getAverage( int * temps, int numTemps );
+void getAboveBelow( int * temps, int numTemps, int average );
+void getStandardDeviation( int * temps, int numTemps, int average );
 
 int main()
 {
