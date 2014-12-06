@@ -2,7 +2,7 @@
  *	Guy Moore
  *	Assignment 4 | CIS 231 B
  *	Cuesta College | Randy Scovil
- 	Due: 12/9 start of class
+ *	Due: 12/9 start of class
  */
 
 #include <stdio.h>
@@ -13,54 +13,51 @@
 
 
 void strInput(char str[], int maxChars);
-struct node *  getTemps(  );
+int getTemps(  );
 void promptStrInp( char str[] );
-struct node * getTokens( char str[] );
+void getTokens( char str[] );
 
 int main()
 {
-	int * temps;
-	
-	getTemps();
+	int * temps;	
+
+	int totalTemps = getTemps( &temps );
 
 	return 0;
 }
 
 void strInput(char str[], int maxChars)
 {
-	//Get input.
+	//Loop through until either we are at the max allowed characters, or 
+	// a newline is entered.
 	int i = 0;
 	while( i <= maxChars && ( str[i]  = getchar() ) != '\n' )
 	{
 		i++;
 	}	
+
 	str[i] = '\0';
-	printf("Finished getting the string\n");
 }
 
-struct node * getTemps()
+int getTemps( int ** temps )
 {
 
+	char tempString[STRING_LENGTH];              //String for input.
+	int currentSize = 10;                        //Current size of malloc.
+	int totalTemps = 0;                          //Total temps in malloc.
+	
+	//Assign the initial temperature array to a size of 10
+	*temps = malloc( 10 * ( sizeof **temps ) ); 	
+
 	//Get the first input.	
-	char tempString[STRING_LENGTH];
-
 	promptStrInp( tempString );	
-
-	if( tempString[0] != '\0')
-	{
-		//Set the head of the temperature linked list.
-		head = getTokens( tempString );
-	}	
-	current = head;
 
 	//Continue to get input until user enters an empty string
 	while ( tempString[0] != '\0' )
 	{		
 		//Get the tokens from the string
-		new = getTokens( tempString );	
+		getTokens( tempString, &(*temps), &totalTemps, &currentSize );	
 		
-		current->next = new;
-
 		//Get string with prompted input.
 		promptStrInp( tempString );	
 	}
@@ -86,7 +83,7 @@ void promptStrInp( char str[] )
  * Create a token, then convert it to an int. Put this int in to the
  * temperatures.
  */
-int getTokens( char str[], int **temps, int totalTemps, int currentSize)
+void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 {
 	//Temporary storage of the string
 	char * currentString;
@@ -97,16 +94,17 @@ int getTokens( char str[], int **temps, int totalTemps, int currentSize)
 	//Check to make sure this string, and consecutive strings, are not null.
 	while( currentString != '\0' )
 	{
-		if( totalTemps > currentSize ) 
+		//If we don't have enough space for another temp, then rellaoc
+		if( *totalTemps > *currentSize ) 
 		{
-			realloc( *temps, ( sizeof **temps ) * ( totalTemps * 2 ) );
+			realloc( *temps, ( sizeof *(*temps) ) * ( *totalTemps *= 2 ) );
 		}
-		//Assign the temperature integer to the pointer at the next temp
-		//number.
-		(*temps)[ **totalTemps ] = atoi(currentString);
 
+		//Assign the temperature integer to the pointer with an index that
+		//is one after the previous total temps.
+		(*temps)[ ++(*totalTemps) ] = atoi(currentString);
+
+		//Get next string.
 		currentString = strtok( NULL, "	 -" );
-	}
-	
-	return ;
+	}	
 }	
