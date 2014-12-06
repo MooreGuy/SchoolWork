@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #define STRING_LENGTH 81
+#define OUTPUT_FILE "/home/gmoore/Git/SchoolWork/cis231/C/Assignment4/CHANGETHIS.txt"
 
 
 void strInput(char str[], int maxChars);
@@ -17,36 +18,26 @@ int getTemps( int ** temps );
 void promptStrInp( char str[] );
 void getTokens( char str[], int **temps, int *totalTemps, int *currentSize);
 void sortTemps( int * temps, int numTemps );
-void printTemps( int * temps, int numTemps );
-void getHighLow( int * temps, int numTemps );
-void convertFahrToCels( int temp );
-void printName();
-void getMean( int average, int numTemps );
-void getAverage( int * temps, int numTemps );
-void getAboveBelow( int * temps, int numTemps, int average );
-void getStandardDeviation( int * temps, int numTemps, int average );
-void getMedian();
-void getMode();
+void printTemps( int * temps, int numTemps, FILE * file );
+void getHighLow( int * temps, int numTemps, FILE * file );
+void printName( FILE * file );
+FILE*  openFile( );
+void getMean( int average, int numTemps, FILE * file );
+int getAverage( int * temps, int numTemps, FILE * file );
+void getAboveBelow( int * temps, int numTemps, int average, FILE * file );
+void getStandardDeviation( int * temps, int numTemps, int average, FILE * file );
+void getMedian( int * temps, int numTemps, FILE * file );
+void getMode( int * temps, int numTemps, FILE * file );
 
 int main()
 {
 	int * temps;	
 	int totalTemps = getTemps( &temps );
+	FILE * outputFile = openFile();
 
-	int i = 0;
-	for( i = 0; i < totalTemps; i++ )
-	{
-		printf( "%i \n", temps[i] );	
-	}
-
+	printName( outputFile );
 	sortTemps( temps, totalTemps );
-
-	for( i = 0; i < totalTemps; i++ )
-	{
-
-		printf(" %i \n", temps[i] );
-	}
-	
+			
 	
 	return 0;
 }
@@ -195,36 +186,64 @@ void sortTemps( int * temps, int numTemps)
 	}
 }
 
-
-void printTemps( int * temps, int numTemps )
+FILE*  openFile( )
 {
+	FILE * file = fopen( OUTPUT_FILE, "w");
+	if( file == NULL )
+	{
+		printf("Could not open file to write.\n");
+	}
 	
+	return file;
 }
-void printName()
+
+void printTemps( int * temps, int numTemps, FILE * file )
+{
+		
+}
+void printName( FILE * file )
+{
+	printf("Guy Moore\n");
+	fprintf( file, "Guy Moore\n");
+}
+
+void getMean( int average, int numTemps, FILE * file )
 {
 
 }
-void getMean( int average, int numTemps )
+
+int getAverage( int * temps, int numTemps, FILE * file )
+{
+	int i, sum = 0;
+	
+	for( i = 0; i < numTemps; i++ )
+	{
+		sum += temps[i];
+	}
+
+	return sum/numTemps;
+}
+
+void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 {
 
 }
-void getAverage( int * temps, int numTemps )
+
+void getStandardDeviation( int * temps, int numTemps, int average, FILE * file )
 {
 
 }
-void getAboveBelow( int * temps, int numTemps, int average )
+
+void getMedian( int * temps, int numTemps, FILE * file )
 {
 
 }
-void getStandardDeviation( int * temps, int numTemps, int average )
+void getMode( int * temps, int numTemps, FILE * file )
 {
 
 }
-void getMedian()
-{
 
-}
-void getMode()
+void getHighLow( int * temps, int numTemps, FILE * file )
 {
 
 }
