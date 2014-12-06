@@ -2,27 +2,26 @@
  *	Guy Moore
  *	Assignment 4 | CIS 231 B
  *	Cuesta College | Randy Scovil
- *	Due: 12/9 start of class
+ 	Due: 12/9 start of class
  */
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define STRING_LENGTH 81
 
-struct node 
-{
-	int temperature;
-	temp * next;
-};
 
 void strInput(char str[], int maxChars);
-int * temps getTemps(  );
-void promptStrInp( char[] str );
-int * getTokens( char[] str );
+struct node *  getTemps(  );
+void promptStrInp( char str[] );
+struct node * getTokens( char str[] );
 
 int main()
 {
-
+	int * temps;
+	
+	getTemps();
 
 	return 0;
 }
@@ -36,39 +35,46 @@ void strInput(char str[], int maxChars)
 		i++;
 	}	
 	str[i] = '\0';
+	printf("Finished getting the string\n");
 }
 
-void getTemps()
+struct node * getTemps()
 {
-	//String with defined string length to hold integer temperatures.
-	char tempString[STRING_LENGTH];
-	//HEAD of temperature linked list
-	temp * head;
-	//Size of the integer temp string;
-	int tempSize = 10;
 
-	//Get the first input.
+	//Get the first input.	
+	char tempString[STRING_LENGTH];
+
 	promptStrInp( tempString );	
+
+	if( tempString[0] != '\0')
+	{
+		//Set the head of the temperature linked list.
+		head = getTokens( tempString );
+	}	
+	current = head;
 
 	//Continue to get input until user enters an empty string
 	while ( tempString[0] != '\0' )
 	{		
-		//Tokens
-		getTokens( tempString, &tempSize );
-	
+		//Get the tokens from the string
+		new = getTokens( tempString );	
+		
+		current->next = new;
+
 		//Get string with prompted input.
 		promptStrInp( tempString );	
 	}
 	
+	return head;
 }
 
-void promptStrInp( char[] str )
+void promptStrInp( char str[] )
 {	
 	//Prompt input on the same line it is to be entered.
-	printf("Please enter a value:", i);
+	printf("Please enter a value:");
 
 	//Get string input.
-	strInput( myString, STRING_LENGTH );	
+	strInput( str, STRING_LENGTH );	
 	
 	//Seperate input lines
 	printf("\n");
@@ -80,20 +86,27 @@ void promptStrInp( char[] str )
  * Create a token, then convert it to an int. Put this int in to the
  * temperatures.
  */
-struct node * getTokens( char[] str )
+int getTokens( char str[], int **temps, int totalTemps, int currentSize)
 {
-	//Head of the current string of temperatures.
-	struct node * head;		
 	//Temporary storage of the string
 	char * currentString;
+	
+	//initial tokenization of the string
+	currentString = strtok( str, "	 -" );		
 
-	currentString = strtok(str, "	 -");
+	//Check to make sure this string, and consecutive strings, are not null.
 	while( currentString != '\0' )
 	{
-		struct node * newNode = malloc( sizeof newNode );
-		newNode->temperature = atoi(currentString);
+		if( totalTemps > currentSize ) 
+		{
+			realloc( *temps, ( sizeof **temps ) * ( totalTemps * 2 ) );
+		}
+		//Assign the temperature integer to the pointer at the next temp
+		//number.
+		(*temps)[ **totalTemps ] = atoi(currentString);
+
+		currentString = strtok( NULL, "	 -" );
 	}
 	
-	return head;
-}
+	return ;
 }	
