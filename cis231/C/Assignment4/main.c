@@ -13,9 +13,9 @@
 
 
 void strInput(char str[], int maxChars);
-int getTemps(  );
+int getTemps( int ** temps );
 void promptStrInp( char str[] );
-void getTokens( char str[] );
+void getTokens( char str[], int **temps, int *totalTemps, int *currentSize);
 
 int main()
 {
@@ -61,8 +61,16 @@ int getTemps( int ** temps )
 		//Get string with prompted input.
 		promptStrInp( tempString );	
 	}
-	
-	return head;
+
+	//If the array has empty space shrink it down.
+	if( currentSize != totalTemps )
+	{
+		//Reallocate to the ammount of temperatures.
+		*temps = realloc( *temps, ( totalTemps * ( **temps ) ) );
+	}
+
+	//Return the total ammount of temperatures put into the temp pointer.
+	return totalTemps;	
 }
 
 void promptStrInp( char str[] )
@@ -97,7 +105,8 @@ void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 		//If we don't have enough space for another temp, then rellaoc
 		if( *totalTemps > *currentSize ) 
 		{
-			realloc( *temps, ( sizeof *(*temps) ) * ( *totalTemps *= 2 ) );
+			*temps = realloc( *temps,
+				 ( sizeof *(*temps) ) * ( *totalTemps *= 2 ) );
 		}
 
 		//Assign the temperature integer to the pointer with an index that
