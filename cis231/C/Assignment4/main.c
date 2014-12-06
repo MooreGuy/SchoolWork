@@ -16,13 +16,28 @@ void strInput(char str[], int maxChars);
 int getTemps( int ** temps );
 void promptStrInp( char str[] );
 void getTokens( char str[], int **temps, int *totalTemps, int *currentSize);
+void sortTemps( int * temps, int numTemps );
 
 int main()
 {
 	int * temps;	
-
 	int totalTemps = getTemps( &temps );
 
+	int i = 0;
+	for( i = 0; i < totalTemps; i++ )
+	{
+		printf( "%i \n", temps[i] );	
+	}
+
+	sortTemps( temps, totalTemps );
+
+	for( i = 0; i < totalTemps; i++ )
+	{
+
+		printf(" %i \n", temps[i] );
+	}
+	
+	
 	return 0;
 }
 
@@ -47,8 +62,12 @@ int getTemps( int ** temps )
 	int totalTemps = 0;                          //Total temps in malloc.
 	
 	//Assign the initial temperature array to a size of 10
-	*temps = malloc( 10 * ( sizeof **temps ) ); 	
-
+	*temps = malloc( 10 * ( sizeof *(*temps) ) ); 	
+	if(* temps == NULL)
+	{
+		 printf("Couldn't Allocate Memory\n");
+	}
+	
 	//Get the first input.	
 	promptStrInp( tempString );	
 
@@ -65,10 +84,20 @@ int getTemps( int ** temps )
 	//If the array has empty space shrink it down.
 	if( currentSize != totalTemps )
 	{
-		//Reallocate to the ammount of temperatures.
-		*temps = realloc( *temps, ( totalTemps * ( **temps ) ) );
+		int * buffer;
+	
+		buffer = realloc( *temps,  totalTemps *  sizeof *buffer );
+		
+		if( buffer == NULL )
+		{
+			printf("Couldn't allocate memory!\n");
+		}
+		else
+		{
+			//Reallocate to the ammount of temperatures.
+			*temps = buffer; 
+		}	
 	}
-
 	//Return the total ammount of temperatures put into the temp pointer.
 	return totalTemps;	
 }
@@ -103,17 +132,55 @@ void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 	while( currentString != '\0' )
 	{
 		//If we don't have enough space for another temp, then rellaoc
-		if( *totalTemps > *currentSize ) 
+		if( *totalTemps == (*currentSize)-1 ) 
 		{
-			*temps = realloc( *temps,
-				 ( sizeof *(*temps) ) * ( *totalTemps *= 2 ) );
+			int * buffer;
+
+			buffer = realloc( *temps, ( (*currentSize) *=2 )
+				 * sizeof *buffer );
+			
+			if( buffer == NULL )
+			{
+				printf("Couldn't allocate memory!\n");
+			}
+			else
+			{	
+				*temps = buffer; 
+			}
+
 		}
 
 		//Assign the temperature integer to the pointer with an index that
 		//is one after the previous total temps.
-		(*temps)[ ++(*totalTemps) ] = atoi(currentString);
+		(*temps)[ (*totalTemps)++ ] = atoi(currentString);
+		printf("Total is: %i\n", *totalTemps);
 
 		//Get next string.
 		currentString = strtok( NULL, "	 -" );
 	}	
 }	
+
+void sortTemps( int * temps, int numTemps)
+{
+	int i, compare, low, temp;	
+
+	for( i = 0; i < numTemps - 1; i++ )
+	{
+			
+		low = i;
+			
+		for( compare = i + 1; compare < numTemps; compare++ )
+		{
+			if( temps[compare] < temps[low] )
+			{
+				low = compare;
+			}
+			if( low != i )
+			{
+				temp = temps[low]; 
+				temps[low] = temps[i];
+				temps[i] = temp;	
+			}
+		}
+	}
+}
