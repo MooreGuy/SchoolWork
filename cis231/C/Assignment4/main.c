@@ -9,7 +9,7 @@
 
 #define STRING_LENGTH 81
 
-struct temp 
+struct node 
 {
 	int temperature;
 	temp * next;
@@ -42,8 +42,8 @@ void getTemps()
 {
 	//String with defined string length to hold integer temperatures.
 	char tempString[STRING_LENGTH];
-
-	int 
+	//HEAD of temperature linked list
+	temp * head;
 	//Size of the integer temp string;
 	int tempSize = 10;
 
@@ -80,6 +80,20 @@ void promptStrInp( char[] str )
  * Create a token, then convert it to an int. Put this int in to the
  * temperatures.
  */
-struct temp * getTokens( char[] str )
+struct node * getTokens( char[] str )
 {
+	//Head of the current string of temperatures.
+	struct node * head;		
+	//Temporary storage of the string
+	char * currentString;
+
+	currentString = strtok(str, "	 -");
+	while( currentString != '\0' )
+	{
+		struct node * newNode = malloc( sizeof newNode );
+		newNode->temperature = atoi(currentString);
+	}
 	
+	return head;
+}
+}	
