@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define STRING_LENGTH 81
 #define OUTPUT_FILE "/home/gmoore/Git/SchoolWork/cis231/C/Assignment4/CHANGETHIS.txt"
@@ -271,9 +272,35 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 			
 }
 
-void getStandardDeviation( int * temps, int numTemps, int average, FILE * file )
+/*
+ *Finds and prints the Standard Deviation
+ */
+void getStandardDeviation( int * temps, int numTemps, int average,
+	 FILE * file )
 {
+	//If the data set is equal to zero, then it doesn't deviate,
+	//so outputing zero is valid and also avoids divide by zero
+	if( numTemps < 2 )
+	{
+    	printf("Standard Deviation:%11.1i\n", 0);
+	}
 
+	else
+	{
+		double deviation = 0;
+		int i;    
+		
+		//Find how far each temperature deviates from the average.
+		for( i = 0; i < numTemps; i++ )
+		{
+			deviation += pow( temps[i] - average, 2);
+		} 
+
+		//Finally print the deviation divided by the number of
+		//temperatures.
+		printf("Standard Deviation:%11.1lf\n",
+			 sqrt( deviation / (numTemps - 1 ) ) );
+	}
 }
 
 void getMedian( int * temps, int numTemps, FILE * file )
