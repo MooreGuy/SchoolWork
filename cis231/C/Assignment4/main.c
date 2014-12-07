@@ -21,8 +21,7 @@ void sortTemps( int * temps, int numTemps );
 void printTemps( int * temps, int numTemps, FILE * file );
 void getHighLow( int * temps, int numTemps, FILE * file );
 void printName( FILE * file );
-FILE*  openFile( );
-void getMean( int average, int numTemps, FILE * file );
+FILE* openFile( );
 int getAverage( int * temps, int numTemps, FILE * file );
 void getAboveBelow( int * temps, int numTemps, int average, FILE * file );
 void getStandardDeviation( int * temps, int numTemps, int average, FILE * file );
@@ -35,10 +34,19 @@ int main()
 	int totalTemps = getTemps( &temps );
 	FILE * outputFile = openFile();
 
+	//Out put my name.
 	printName( outputFile );
+	//Sort the temps so other functions work properly.
 	sortTemps( temps, totalTemps );
-			
-	
+	//Print out all of the temperatures in descending order.
+	printTemps( temps, totalTemps, outputFile );
+	//Decalre the average for use in other functions requiring it.
+	int average = getAverage( temps, totalTemps, outputFile );
+	//Get all of the output above, below or equal to the average.
+	getAboveBelow( temps, totalTemps, average, outputFile );
+	//Get the highest and lowest values.
+	getHighLow( temps, totalTemps, outputFile );
+
 	return 0;
 }
 
@@ -199,7 +207,13 @@ FILE*  openFile( )
 
 void printTemps( int * temps, int numTemps, FILE * file )
 {
-		
+	printf("Temperatures in degrees Fahrenheit:");
+
+	int i;
+	for( i = 0; i < numTemps; i++ )
+	{
+		printf("%i\n", temps[i]); 
+	}		
 }
 void printName( FILE * file )
 {
@@ -207,26 +221,54 @@ void printName( FILE * file )
 	fprintf( file, "Guy Moore\n");
 }
 
-void getMean( int average, int numTemps, FILE * file )
-{
-
-}
-
 int getAverage( int * temps, int numTemps, FILE * file )
 {
-	int i, sum = 0;
-	
+	int i, sum = 0;	
+	//Get the sum.
 	for( i = 0; i < numTemps; i++ )
 	{
 		sum += temps[i];
 	}
+	
+	//The average is now stored in sum.
+	sum /= numTemps;
 
-	return sum/numTemps;
+	printf("Average: %i\n", sum);
+	fprintf( file, "Average: %i\n", sum);
+
+	return sum;
 }
 
 void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 {
-
+	//If the difference of temp and average is greater than the 0.01
+	//margin, then increment above. Now check if it is greater than the
+	// lower end of the margin, if it is the set it to equals, otherwise,
+	// it will be below. 
+	int below = 0, above = 0, equal = 0, i;
+	for( i = 0; i < numTemps; i++ )
+	{
+		if( temps[i] - average >= 0.01 )
+		{
+			above++;
+		}
+		else if( temps[i] - average > -0.01 )
+		{
+			equal++;
+		}
+		else
+		{
+			below++;
+		}
+	}
+	
+	//Output data to console.
+	printf("Above\n========\n%i\n\nBelow\n========\n%i\n\nEqual\n========"
+		   "\n%i\n\n", above, below, equal);
+	//Output data to file.	
+	fprintf( file, "Above\n========\n%i\n\nBelow\n========\n%i\n\nEqual\n"	
+				   "========\n%i\n\n", above, below, equal);
+			
 }
 
 void getStandardDeviation( int * temps, int numTemps, int average, FILE * file )
@@ -236,14 +278,33 @@ void getStandardDeviation( int * temps, int numTemps, int average, FILE * file )
 
 void getMedian( int * temps, int numTemps, FILE * file )
 {
+	//Get median, divide in half, integer division will make the left value,
+	//the chosen value in case of an odd number.
+	int median = temps[ numTemps / 2 ];
 
+	//print mediant to console.
+	printf( "Median\n======\n%i\n\n", median );
+	//print median to file.
+	fprintf( file, "Median\n======\n%i\n\n", median );
 }
+
 void getMode( int * temps, int numTemps, FILE * file )
 {
 
 }
 
+/*
+ *	Output the highest and lowest values in the array.
+ *  since it is sorted, we can grab the first and last values instead of
+ *  iterating.
+ */
 void getHighLow( int * temps, int numTemps, FILE * file )
 {
-
+	//Output first value in array (low) then last value (high).
+	printf("Low:\n======\n%i\n\nHigh:\n======\n%i\n\n", temps[0],
+		temps[numTemps-1]);
+	//Output high then low to file.
+	fprintf( file, "Low:\n======\n%i\n\nHigh:\n======\n%i\n\n", temps[0],
+		temps[numTemps-1]);
 }
+
