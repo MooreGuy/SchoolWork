@@ -315,9 +315,13 @@ void getMedian( int * temps, int numTemps, FILE * file )
 	fprintf( file, "Median\n======\n%i\n\n", median );
 }
 
+/*
+ *	Gets the most occuring character by creating an array of assosciated
+ *	tuples
+ */
 void getMode( int * temps, int numTemps, FILE * file )
 {
-
+	int * occurrences = malloc( ( numTemps * 2 ) * sizeof *occurrences );
 }
 
 /*
