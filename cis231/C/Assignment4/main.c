@@ -1,7 +1,6 @@
 /*
  *	Guy Moore
- *	Assignment 4 | CIS 231 B
- *	Cuesta College | Randy Scovil
+ *	Assignment 4 | CIS 231 B *	Cuesta College | Randy Scovil
  *	Due: 12/9 start of class
  */
 
@@ -30,6 +29,7 @@ void getMedian( int * temps, int numTemps, FILE * file );
 void getMode( int * temps, int numTemps, FILE * file );
 int getOccurrenceIndex( int currentTemp , int *numOccurrences,
 	 int * occurrences );
+int getHighestOccurrence( int numOccurrences, int * occurrences );
 
 int main()
 {
@@ -49,6 +49,9 @@ int main()
 	getAboveBelow( temps, totalTemps, average, outputFile );
 	//Get the highest and lowest values.
 	getHighLow( temps, totalTemps, outputFile );
+	//Get the most common number
+	printf("getting mode\n");
+	getMode( temps, totalTemps, outputFile );
 
 	return 0;
 }
@@ -339,39 +342,57 @@ void getMedian( int * temps, int numTemps, FILE * file )
  */
 void getMode( int * temps, int numTemps, FILE * file )
 {
-	int i, occurrenceIndex, numOccurrences;
+	int i, occurrenceIndex, numOccurrences = 0;
 
 	//Array holding first the number, then the number of occurrences.
 	//So [occurrence]index holds the value and [occurrence + 1] holds the
 	//number of occurrences
-	int * occurrences = malloc( ( numTemps * 2 ) * sizeof *occurrences );
-	
+
+	int * occurrences = malloc( ( numTemps * 2 ) * sizeof  *occurrences );
+
 	//First get where the number occurs in the occurrence array.
-	for( i = 0; i < numTemps * 2; i += 2 )
+	for( i = 0; i < numTemps; i++ )
 	{	
 		//Get the index in the occurrences array.
 		occurrenceIndex = getOccurrenceIndex( temps[i], &numOccurrences,
 			occurrences);
 
+		printf("Found the occurrance: %i at index: %i, going to increment to %i\n", temps[i], occurrenceIndex, occurrences[occurrenceIndex + 1]+1);
 		//Increment the occurrences.
-		occurrences[occurrenceIndex + 1]++;
+		occurrences[occurrenceIndex + 1] += 1;
+
+		printf("\n");
 	}	
 
-	//Stores the value of the highest occurrence number.
-	int highest = 0;
+	int highest = getHighestOccurrence( numOccurrences, occurrences );
 
-	i = 0;
-	while( i < numOccurrences )
+	printf("counted all occurrances\n");
+	//Stores the value of the highest occurrence number.
+	
+	printf( "Mode\n======\n%i\n\n", highest );
+	fprintf( file, "Mode\n======\n%i\n\n", highest);
+}
+
+int getHighestOccurrence( int numOccurrences, int * occurrences )
+{	
+	printf("\n\ncounting things\n");
+	int highest = 0, highNumber = 0;
+
+	int i = 0;
+	while( i < numOccurrences * 2)
 	{
+		printf("%i time going through the loop, checking the occurrence: %i, at the index %i, it has %i occurrences\n", i/2, occurrences[i], i, occurrences[i+1]); 
 		if( occurrences[i + 1] > highest )
 		{
-			highest = i;
+			printf("%i is higher than %i, so we set it to the highest, and the highest number is now %i\n", occurrences[i+1], highest, highNumber);
+			highNumber = occurrences[i];
+			printf("The high number is %i\n", highNumber);
+			highest = occurrences[i+1];
 		}
 		i += 2;
 	}
-	
-	printf( "Mode\n======\n%i\n\n", occurrences[highest] );
-	fprintf( file, "Mode\n======\n%i\n\n", occurrences[highest] );
+
+	return highNumber;
 }
 
 /*
@@ -383,14 +404,17 @@ int getOccurrenceIndex( int currentTemp , int *numOccurrences,
 {
 	int i = 0;
 	
-	while ( i < *numOccurrences && currentTemp != occurrences[ i ] )	
+	printf("This is the: %i time, numOccurrences is: %i, currentTemp is: %i\n", i, *numOccurrences, currentTemp);
+	while ( i/2 < *numOccurrences && currentTemp != occurrences[ i ] )	
 	{
+		printf("Checking for: %i, the current occurrence in the array being checked is: %i, at index; %i\n", currentTemp, occurrences[i], i);
 		i += 2;
 	}
 
-	if( i == *numOccurrences - 1 )
+	if( i/2 == *numOccurrences )
 	{
-		*numOccurrences += 2;
+		printf("We added in our new temperature.\n");
+		*numOccurrences += 1;
 		occurrences[i] = currentTemp;
 	}
 	
