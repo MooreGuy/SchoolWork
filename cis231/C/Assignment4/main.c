@@ -28,6 +28,8 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file );
 void getStandardDeviation( int * temps, int numTemps, int average, FILE * file );
 void getMedian( int * temps, int numTemps, FILE * file );
 void getMode( int * temps, int numTemps, FILE * file );
+int getOccurrenceIndex( int currentTemp , int *numOccurrences,
+	 int * occurrences );
 
 int main()
 {
@@ -114,8 +116,8 @@ int getTemps( int ** temps )
 
 void promptStrInp( char str[] )
 {	
-	//Prompt input on the same line it is to be entered.
-	printf("Please enter a value:");
+	//Prompt input for the next line.
+	printf("Please enter integer values, 80 characters maximum:\n");
 
 	//Get string input.
 	strInput( str, STRING_LENGTH );	
@@ -163,7 +165,6 @@ void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 		//Assign the temperature integer to the pointer with an index that
 		//is one after the previous total temps.
 		(*temps)[ (*totalTemps)++ ] = atoi(currentString);
-		printf("Total is: %i\n", *totalTemps);
 
 		//Get next string.
 		currentString = strtok( NULL, "	 -" );
@@ -197,15 +198,22 @@ void sortTemps( int * temps, int numTemps)
 
 FILE*  openFile( )
 {
+	//Open the file that is defined in symbolic constant.
 	FILE * file = fopen( OUTPUT_FILE, "w");
+
+	//Check to make sure we could open the file.
 	if( file == NULL )
 	{
 		printf("Could not open file to write.\n");
 	}
 	
+	//Return the pointer to the opened file.
 	return file;
 }
 
+/*
+ *	Print all of the tempseratures in order that they exist in the array.
+ */
 void printTemps( int * temps, int numTemps, FILE * file )
 {
 	printf("Temperatures in degrees Fahrenheit:");
@@ -216,12 +224,19 @@ void printTemps( int * temps, int numTemps, FILE * file )
 		printf("%i\n", temps[i]); 
 	}		
 }
+
+/*
+ *	Print out my name.
+ */
 void printName( FILE * file )
 {
 	printf("Guy Moore\n");
 	fprintf( file, "Guy Moore\n");
 }
 
+/*
+ *	Print out, and return the average for later use.
+ */
 int getAverage( int * temps, int numTemps, FILE * file )
 {
 	int i, sum = 0;	
@@ -303,6 +318,9 @@ void getStandardDeviation( int * temps, int numTemps, int average,
 	}
 }
 
+/*
+ * Print out the median, left value if odd.
+ */
 void getMedian( int * temps, int numTemps, FILE * file )
 {
 	//Get median, divide in half, integer division will make the left value,
@@ -321,8 +339,65 @@ void getMedian( int * temps, int numTemps, FILE * file )
  */
 void getMode( int * temps, int numTemps, FILE * file )
 {
+	int i, occurrenceIndex, numOccurrences;
+
+	//Array holding first the number, then the number of occurrences.
+	//So [occurrence]index holds the value and [occurrence + 1] holds the
+	//number of occurrences
 	int * occurrences = malloc( ( numTemps * 2 ) * sizeof *occurrences );
+	
+	//First get where the number occurs in the occurrence array.
+	for( i = 0; i < numTemps * 2; i += 2 )
+	{	
+		//Get the index in the occurrences array.
+		occurrenceIndex = getOccurrenceIndex( temps[i], &numOccurrences,
+			occurrences);
+
+		//Increment the occurrences.
+		occurrences[occurrenceIndex + 1]++;
+	}	
+
+	//Stores the value of the highest occurrence number.
+	int highest = 0;
+
+	i = 0;
+	while( i < numOccurrences )
+	{
+		if( occurrences[i + 1] > highest )
+		{
+			highest = i;
+		}
+		i += 2;
+	}
+	
+	printf( "Mode\n======\n%i\n\n", occurrences[highest] );
+	fprintf( file, "Mode\n======\n%i\n\n", occurrences[highest] );
 }
+
+/*
+ *	Search for the passed index in the occurrence array and return its
+ *	index when it finds it.
+ */
+int getOccurrenceIndex( int currentTemp , int *numOccurrences,
+	 int * occurrences )
+{
+	int i = 0;
+	
+	while ( i < *numOccurrences && currentTemp != occurrences[ i ] )	
+	{
+		i += 2;
+	}
+
+	if( i == *numOccurrences - 1 )
+	{
+		*numOccurrences += 2;
+		occurrences[i] = currentTemp;
+	}
+	
+	return  i;
+}
+		
+
 
 /*
  *	Output the highest and lowest values in the array.
