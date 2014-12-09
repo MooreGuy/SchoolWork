@@ -67,11 +67,14 @@ int main()
 	//Get the highest and lowest values.
 	getHighLow( temps, totalTemps, outputFile );
 
-	//Get the most common number
-	getMode( temps, totalTemps, outputFile );
-
 	//Get the standard deviation
 	getStandardDeviation( temps, totalTemps, average, outputFile );
+	
+	//Get the median or center value, left value if odd.
+	getMedian( temps, totalTemps, outputFile );
+
+	//Get the most common number
+	getMode( temps, totalTemps, outputFile );
 
 	//Free the memory and file that we were using.
 	freeMem( temps, outputFile );
@@ -227,7 +230,6 @@ void sortTemps( int * temps, int numTemps)
 		{
 			if( temps[compare] > temps[high] )
 			{
-				printf("Swapping %i for %i\n", temps[high], temps[compare]);
 				high = compare;
 			}
 		}
