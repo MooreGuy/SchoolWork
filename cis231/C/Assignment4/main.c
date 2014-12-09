@@ -280,6 +280,10 @@ void printTemps( int * temps, int numTemps, FILE * file )
 	printf("Temperatures in degrees Fahrenheit:");
 	fprintf( file, "Temperatures in degrees Fahrenheit:");
 
+	//Avoid hitting array twice
+	int currentTemp;
+
+	//Loop through and print.
 	int i;
 	for( i = 0; i < numTemps; i++ )
 	{
@@ -290,9 +294,11 @@ void printTemps( int * temps, int numTemps, FILE * file )
 			fprintf( file, "\n" );
 		}
 		
+		currentTemp = temps[i];
+			
 		//print out temperatures.
-		printf( "%*i", TEMP_SPACING, temps[i]); 
-		fprintf( file, "Temperature %-8i%*i\n",i, PRINT_LENGTH - 20, temps[i]);
+		printf( "%*i", TEMP_SPACING, currentTemp); 
+		fprintf( file,"%*i", TEMP_SPACING, currentTemp);
 	}		
 	
 	//Add new line at the end to separate it from next output.
