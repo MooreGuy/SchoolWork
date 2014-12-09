@@ -61,7 +61,7 @@ int main()
 	//Get the highest and lowest values.
 	getHighLow( temps, totalTemps, outputFile );
 
-	//Decalre the average for use in other functions requiring it.
+	//Declare the average for use in other functions requiring it.
 	average = getAverage( temps, totalTemps, outputFile );
 
 	//Get all of the output above, below or equal to the average.
@@ -106,7 +106,7 @@ void printNumTemps( int numTemps, FILE * file )
 void strInput(char str[], int maxChars)
 {
 	//Loop through until either we are at the max allowed characters, or 
-	// a newline is entered.
+	// a new line is entered.
 	int i = 0;
 	while( i <= maxChars && ( str[i]  = getchar() ) != '\n' )
 	{
@@ -162,11 +162,11 @@ int getTemps( int ** temps )
 		}
 		else
 		{
-			//Reallocate to the ammount of temperatures.
+			//Reallocate to the amount of temperatures.
 			*temps = buffer; 
 		}	
 	}
-	//Return the total ammount of temperatures put into the temp pointer.
+	//Return the total amount of temperatures put into the temp pointer.
 	return totalTemps;	
 }
 
@@ -178,12 +178,12 @@ void promptStrInp( char str[] )
 	//Get string input.
 	strInput( str, STRING_LENGTH );	
 	
-	//Seperate input lines
+	//Separate input lines
 	printf("\n");
 }
 
 /*
- * Tokenize the string and add it to the other inputed temperatures.
+ * Tokenize the string and add it to the other input temperatures.
  *
  * Create a token, then convert it to an int. Put this int in to the
  * temperatures.
@@ -199,7 +199,7 @@ void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 	//Check to make sure this string, and consecutive strings, are not null.
 	while( currentString != '\0' )
 	{
-		//If we don't have enough space for another temp, then rellaoc
+		//If we don't have enough space for another temp, then realloc
 		if( *totalTemps == (*currentSize)-1 ) 
 		{
 			int * buffer;
@@ -273,7 +273,7 @@ FILE*  openFile( )
 }
 
 /*
- *	Print all of the tempseratures in order that they exist in the array.
+ *	Print all of the temperatures in order that they exist in the array.
  */
 void printTemps( int * temps, int numTemps, FILE * file )
 {
@@ -295,7 +295,7 @@ void printTemps( int * temps, int numTemps, FILE * file )
 		fprintf( file, "Temperature %-8i%*i\n",i, PRINT_LENGTH - 20, temps[i]);
 	}		
 	
-	//Add new line at the end to seperate it from next output.
+	//Add new line at the end to separate it from next output.
 	printf("\n\n");
 	fprintf(file, "\n\n");
 }
@@ -444,7 +444,7 @@ void getMedian( int * temps, int numTemps, FILE * file )
 }
 
 /*
- *	Gets the most occuring character by creating an array of assosciated
+ *	Gets the most occurring character by creating an array of associated
  *	tuples
  */
 void getMode( int * temps, int numTemps, FILE * file )
