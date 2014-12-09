@@ -311,8 +311,8 @@ double getAverage( int * temps, int numTemps, FILE * file )
 	double average = (double) sum/numTemps;
 
 	//Print average. To console and to file.
-	printf( "Average: %*f\n\n", PRINT_LENGTH - 9, average );
-	fprintf( file, "Average: %*f\n\n", PRINT_LENGTH - 9, average );
+	printf( "Average: %*.1f\n\n", PRINT_LENGTH - 7, average );
+	fprintf( file, "Average: %*.1f\n\n", PRINT_LENGTH - 7, average );
 
 	return sum;
 }
