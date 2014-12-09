@@ -4,14 +4,17 @@
  *	Due: 12/9 start of class
  */
 
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 
+
 #define OUTPUT_FILE "/home/gmoore/Git/SchoolWork/cis231/C/Assignment4/CHANGETHIS.txt"
 #define STRING_LENGTH 81
 #define PRINT_LENGTH 30
+#define TEMP_SPACING 12
 
 
 void strInput(char str[], int maxChars);
@@ -23,7 +26,7 @@ void printTemps( int * temps, int numTemps, FILE * file );
 void getHighLow( int * temps, int numTemps, FILE * file );
 void printName( FILE * file );
 FILE* openFile( );
-int getAverage( int * temps, int numTemps, FILE * file );
+double getAverage( int * temps, int numTemps, FILE * file );
 void getAboveBelow( int * temps, int numTemps, int average, FILE * file );
 void getStandardDeviation( int * temps, int numTemps, int average, FILE * file );
 void getMedian( int * temps, int numTemps, FILE * file );
@@ -31,31 +34,63 @@ void getMode( int * temps, int numTemps, FILE * file );
 int getOccurrenceIndex( int currentTemp , int *numOccurrences,
 	 int * occurrences );
 int getHighestOccurrence( int numOccurrences, int * occurrences );
+void printNumTemps( int numTemps, FILE * file );
+void freeMem( int * temps, FILE * file );
+
+
 
 int main()
 {
 	int * temps;	
 	int totalTemps = getTemps( &temps );
 	FILE * outputFile = openFile();
+	double average;
 
 	//Out put my name.
 	printName( outputFile );
+
+	//Print out the number of temperatures entered.
+	printNumTemps( totalTemps, outputFile );
+
 	//Sort the temps so other functions work properly.
 	sortTemps( temps, totalTemps );
+
 	//Print out all of the temperatures in descending order.
 	printTemps( temps, totalTemps, outputFile );
+
 	//Decalre the average for use in other functions requiring it.
-	int average = getAverage( temps, totalTemps, outputFile );
+	average = getAverage( temps, totalTemps, outputFile );
+
 	//Get all of the output above, below or equal to the average.
 	getAboveBelow( temps, totalTemps, average, outputFile );
+
 	//Get the highest and lowest values.
 	getHighLow( temps, totalTemps, outputFile );
+
 	//Get the most common number
 	getMode( temps, totalTemps, outputFile );
+
 	//Get the standard deviation
 	getStandardDeviation( temps, totalTemps, average, outputFile );
 
+
 	return 0;
+}
+
+
+
+/*
+ *	Prints out the number of integer temperatures entered.
+ */
+void printNumTemps( int numTemps, FILE * file )
+{
+	//Avoid redundant math.
+	int printLength = PRINT_LENGTH - 23;
+
+	//Print out numTemps
+	printf( "Number of Temperatures:%*i\n\n", printLength, numTemps );
+	fprintf( file, "Number of Temperatures:%*i\n\n", printLength, numTemps );	
+
 }
 
 void strInput(char str[], int maxChars)
@@ -178,25 +213,27 @@ void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 
 void sortTemps( int * temps, int numTemps)
 {
-	int i, compare, low, temp;	
+	int i, compare, high, temp;	
 
 	for( i = 0; i < numTemps - 1; i++ )
 	{
 			
-		low = i;
+		high = i;
 			
 		for( compare = i + 1; compare < numTemps; compare++ )
 		{
-			if( temps[compare] < temps[low] )
+			if( temps[compare] > temps[high] )
 			{
-				low = compare;
+				printf("Swapping %i for %i\n", temps[high], temps[compare]);
+				high = compare;
 			}
-			if( low != i )
-			{
-				temp = temps[low]; 
-				temps[low] = temps[i];
-				temps[i] = temp;	
-			}
+		}
+		
+		if( high != i )
+		{
+			temp = temps[high]; 
+			temps[high] = temps[i];
+			temps[i] = temp;	
 		}
 	}
 }
@@ -221,17 +258,27 @@ FILE*  openFile( )
  */
 void printTemps( int * temps, int numTemps, FILE * file )
 {
-	printf("Temperatures in degrees Fahrenheit:\n");
-	fprintf( file, "Temperatures in degrees Fahrenheit:\n");
+	printf("Temperatures in degrees Fahrenheit:");
+	fprintf( file, "Temperatures in degrees Fahrenheit:");
 
 	int i;
 	for( i = 0; i < numTemps; i++ )
 	{
-		printf("Temperature %-8i%*i\n",i, PRINT_LENGTH - 20, temps[i]); 
+		//Make new row every five.
+		if( i % 5 == 0 )
+		{
+			printf("\n");
+			fprintf( file, "\n" );
+		}
+		
+		//print out temperatures.
+		printf( "%*i", TEMP_SPACING, temps[i]); 
 		fprintf( file, "Temperature %-8i%*i\n",i, PRINT_LENGTH - 20, temps[i]);
 	}		
-	printf("\n");
-	fprintf(file, "\n");
+	
+	//Add new line at the end to seperate it from next output.
+	printf("\n\n");
+	fprintf(file, "\n\n");
 }
 
 /*
@@ -246,7 +293,7 @@ void printName( FILE * file )
 /*
  *	Print out, and return the average for later use.
  */
-int getAverage( int * temps, int numTemps, FILE * file )
+double getAverage( int * temps, int numTemps, FILE * file )
 {
 	int i, sum = 0;	
 	//Get the sum.
@@ -255,11 +302,12 @@ int getAverage( int * temps, int numTemps, FILE * file )
 		sum += temps[i];
 	}
 	
-	//The average is now stored in sum.
-	sum /= numTemps;
+	//Void redundant math.
+	double average = (double) sum/numTemps;
 
-	printf( "Average: %*i\n\n", PRINT_LENGTH - 9, sum );
-	fprintf( file, "Average: %*i\n\n", PRINT_LENGTH - 9, sum);
+	//Print average. To console and to file.
+	printf( "Average: %*f\n\n", PRINT_LENGTH - 9, average );
+	fprintf( file, "Average: %*f\n\n", PRINT_LENGTH - 9, average );
 
 	return sum;
 }
@@ -386,8 +434,12 @@ void getMode( int * temps, int numTemps, FILE * file )
 
 	//Stores the value of the highest occurrence number.
 	
-	printf( "Mode:%*i\n\n", PRINT_LENGTH - 5, highest );
-	fprintf( file, "Mode\n======\n%i\n\n", highest);
+	int printLength = PRINT_LENGTH - 5;
+	printf( "Mode:%*i\n\n", printLength, highest );
+	fprintf( file, "Mode:%*i\n\n", printLength, highest);
+
+	//Free memory that we were using.
+	free( occurrences );
 }
 
 int getHighestOccurrence( int numOccurrences, int * occurrences )
@@ -442,14 +494,25 @@ void getHighLow( int * temps, int numTemps, FILE * file )
 {
 
 	//Avoid redundant maths by holding print lengths.
-	int printLength1 = PRINT_LENGTH - 4;
-	int printLength2 = PRINT_LENGTH - 5;
+	int printLength1 = PRINT_LENGTH - 5;
+	int printLength2 = PRINT_LENGTH - 4;
 
 	//Output first value in array (low) then last value (high).
-	printf("Low:%*i\nHigh:%*i\n\n", printLength1, temps[0],
-		printLength2, temps[numTemps-1] );
+	printf("High:%*i\nLow:%*i\n\n", printLength1, temps[0],
+		printLength2,  temps[ numTemps - 1 ]);
 	//Output high then low to file.
-	fprintf( file, "Low:%*i\nHigh:%*i\n\n", printLength1, temps[0],
-		printLength2, temps[numTemps-1]);
+	fprintf( file, "High:%*i\nLow:%*i\n\n", printLength1,
+		temps[0], printLength2, temps[ numTemps - 1 ]);
 }
 
+/*
+ *	Free up memory and close file.
+ */
+void freeMem( int * temps, FILE * file )
+{
+	//Free the memory used to store temps.
+	free(temps);
+	
+	//Close file that we were writing to.
+	fclose(file);
+}
