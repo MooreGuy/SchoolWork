@@ -100,6 +100,9 @@ void printNumTemps( int numTemps, FILE * file )
 
 }
 
+/*
+ * Safe string input method, fisrt seen in Lab13.
+ */
 void strInput(char str[], int maxChars)
 {
 	//Loop through until either we are at the max allowed characters, or 
@@ -113,6 +116,12 @@ void strInput(char str[], int maxChars)
 	str[i] = '\0';
 }
 
+/*
+ *	Get all of the temperatures that the user wants to enter and insert 
+ *	them into the integer the pointer temps.
+ * 	First allocate memory for temps. Then get a string from the user,
+ * 	tokenize the string, then put it into our temps.
+ */
 int getTemps( int ** temps )
 {
 
@@ -218,6 +227,10 @@ void getTokens( char str[], int **temps, int *totalTemps, int *currentSize)
 	}	
 }	
 
+/*
+ *	Sort the passes array into descending order with selection sort,
+ *	so highest first.
+ */
 void sortTemps( int * temps, int numTemps)
 {
 	int i, compare, high, temp;	
@@ -318,23 +331,32 @@ double getAverage( int * temps, int numTemps, FILE * file )
 	return sum;
 }
 
+/*	If the difference of temp and average is greater than the 0.01
+ *	margin, then increment above. Now check if it is greater than the
+ *	lower end of the margin, if it is the set it to equals, otherwise,
+ *	it will be below. 
+ */
 void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 {
-	//If the difference of temp and average is greater than the 0.01
-	//margin, then increment above. Now check if it is greater than the
-	// lower end of the margin, if it is the set it to equals, otherwise,
-	// it will be below. 
-	int below = 0, above = 0, equal = 0, i;
+	int below = 0, above = 0, equal = 0, i, currentTemp;
 	for( i = 0; i < numTemps; i++ )
 	{
-		if( temps[i] - average >= 0.01 )
+		//Store the current temp so we don't hit the array more than once
+		//per loop cycle.
+		currentTemp = temps[i];
+
+		//Check if it is greater than 0.01
+		if( currentTemp - average >= 0.01 )
 		{
 			above++;
 		}
-		else if( temps[i] - average > -0.01 )
+		//Check if it is inbetween 0.01 and -0.01
+		else if( currentTemp - average > -0.01 )
 		{
 			equal++;
 		}
+		//If it is not greater than 0.01 and not inbetween 0.01, and -0.01,
+		// then it has to be below.
 		else
 		{
 			below++;
@@ -459,21 +481,37 @@ void getMode( int * temps, int numTemps, FILE * file )
 	free( occurrences );
 }
 
+/*
+ *	Runs through the array of associated tuples, and figures out what the
+ *	occurrence with the most occurrences is. Returns the temperature of the
+ *	most occurring temp.
+ */
 int getHighestOccurrence( int numOccurrences, int * occurrences )
 {	
 	int highest = 0, highNumber = 0;
 
 	int i = 0;
+	//Increment and multiply by two so we can properly check the tuples
 	while( i < numOccurrences * 2)
 	{
+		//Check the number of occurrences for the current tuple.
 		if( occurrences[i + 1] > highest )
 		{
+			//If it is the highest, set the highest occurrence to the
+			//temperature in the occurrences tuple.
 			highNumber = occurrences[i];
+
+			//Keep the highest occurrence count in the touple to the new
+			//highest, so the next run in the loop can keep track can
+			//compare the new highest occurrence count.
 			highest = occurrences[i+1];
 		}
+
+		//Increment by two since we are using tuples.
 		i += 2;
 	}
 
+	//Return the most occurring occurrence.
 	return highNumber;
 }
 
@@ -486,17 +524,20 @@ int getOccurrenceIndex( int currentTemp , int *numOccurrences,
 {
 	int i = 0;
 	
+	//Search through the tuple array by twos.
 	while ( i/2 < *numOccurrences && currentTemp != occurrences[ i ] )	
 	{
 		i += 2;
 	}
 
+	//If it is not in the array we must add it.
 	if( i/2 == *numOccurrences )
 	{
 		*numOccurrences += 1;
 		occurrences[i] = currentTemp;
 	}
 	
+	//Return the index at which the occurrence is located.
 	return  i;
 }
 		
