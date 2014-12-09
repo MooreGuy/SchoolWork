@@ -11,7 +11,7 @@
 #include <math.h>
 
 
-#define OUTPUT_FILE "/home/gmoore/Git/SchoolWork/cis231/C/Assignment4/CHANGETHIS.txt"
+#define OUTPUT_FILE "x:/231bA4GMooReport.txt"
 #define STRING_LENGTH 81
 #define PRINT_LENGTH 30
 #define TEMP_SPACING 12
