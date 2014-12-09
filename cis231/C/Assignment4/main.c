@@ -73,6 +73,9 @@ int main()
 	//Get the standard deviation
 	getStandardDeviation( temps, totalTemps, average, outputFile );
 
+	//Free the memory and file that we were using.
+	freeMem( temps, outputFile );
+
 
 	return 0;
 }
