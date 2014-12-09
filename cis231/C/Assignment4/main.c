@@ -27,8 +27,10 @@ void getHighLow( int * temps, int numTemps, FILE * file );
 void printName( FILE * file );
 FILE* openFile( );
 double getAverage( int * temps, int numTemps, FILE * file );
-void getAboveBelow( int * temps, int numTemps, int average, FILE * file );
-void getStandardDeviation( int * temps, int numTemps, int average, FILE * file );
+void getAboveBelow( int * temps, int numTemps, double average,
+	 FILE * file );
+void getStandardDeviation( int * temps, int numTemps, double average,
+	 FILE * file );
 void getMedian( int * temps, int numTemps, FILE * file );
 void getMode( int * temps, int numTemps, FILE * file );
 int getOccurrenceIndex( int currentTemp , int *numOccurrences,
@@ -66,7 +68,6 @@ int main()
 
 	//Get all of the output above, below or equal to the average.
 	getAboveBelow( temps, totalTemps, average, outputFile );
-
 
 	//Get the standard deviation
 	getStandardDeviation( temps, totalTemps, average, outputFile );
@@ -334,7 +335,7 @@ double getAverage( int * temps, int numTemps, FILE * file )
 	printf( "Average: %*.1f\n\n", PRINT_LENGTH - 7, average );
 	fprintf( file, "Average: %*.1f\n\n", PRINT_LENGTH - 7, average );
 
-	return sum;
+	return average;
 }
 
 /*	If the difference of temp and average is greater than the 0.01
@@ -342,9 +343,10 @@ double getAverage( int * temps, int numTemps, FILE * file )
  *	lower end of the margin, if it is the set it to equals, otherwise,
  *	it will be below. 
  */
-void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
+void getAboveBelow( int * temps, int numTemps, double average, FILE * file )
 {
 	int below = 0, above = 0, equal = 0, i, currentTemp;
+
 	for( i = 0; i < numTemps; i++ )
 	{
 		//Store the current temp so we don't hit the array more than once
@@ -352,12 +354,12 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 		currentTemp = temps[i];
 
 		//Check if it is greater than 0.01
-		if( currentTemp - average >= 0.01 )
+		if( (currentTemp - average) >= 0.01 )
 		{
 			above++;
 		}
 		//Check if it is inbetween 0.01 and -0.01
-		else if( currentTemp - average > -0.01 )
+		else if( (currentTemp - average) > -0.01 )
 		{
 			equal++;
 		}
@@ -384,7 +386,7 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 /*
  *Finds and prints the Standard Deviation
  */
-void getStandardDeviation( int * temps, int numTemps, int average,
+void getStandardDeviation( int * temps, int numTemps, double average,
 	 FILE * file )
 {
 	
