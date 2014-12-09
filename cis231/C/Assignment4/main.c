@@ -58,14 +58,15 @@ int main()
 	//Print out all of the temperatures in descending order.
 	printTemps( temps, totalTemps, outputFile );
 
+	//Get the highest and lowest values.
+	getHighLow( temps, totalTemps, outputFile );
+
 	//Decalre the average for use in other functions requiring it.
 	average = getAverage( temps, totalTemps, outputFile );
 
 	//Get all of the output above, below or equal to the average.
 	getAboveBelow( temps, totalTemps, average, outputFile );
 
-	//Get the highest and lowest values.
-	getHighLow( temps, totalTemps, outputFile );
 
 	//Get the standard deviation
 	getStandardDeviation( temps, totalTemps, average, outputFile );
@@ -345,10 +346,10 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 	int spacing = PRINT_LENGTH - 6;	
 
 	//Output data to console.
-	printf("Above:%*i\nBelow:%*i\nEqual:%*i\n\n", spacing, above, spacing, below, spacing, equal);
+	printf("Above:%*i\nEqual:%*i\nBelow:%*i\n\n", spacing, above, spacing, equal, spacing, below );
 
 	//Output data to file.	
-	fprintf( file, "Above:%*i\nBelow:%*i\nEqual:%*i\n\n", spacing, above, spacing, below, spacing, equal);
+	fprintf( file, "Above:%*i\nEqual:%*i\nBelow:%*i\n\n", spacing, above, spacing, equal, spacing, below );
 			
 }
 
@@ -384,9 +385,9 @@ void getStandardDeviation( int * temps, int numTemps, int average,
 
 		//Finally print the deviation divided by the number of
 		//temperatures.
-		printf("Standard Deviation:%*.1lf\n", printLength,
+		printf("Standard Deviation:%*.1lf\n\n", printLength,
 			 sqrt( deviation / (numTemps - 1 ) ) );
-		fprintf( file, "Standard Deviation:%*.1lf\n", printLength,
+		fprintf( file, "Standard Deviation:%*.1lf\n\n", printLength,
 			 sqrt( deviation / (numTemps - 1 ) )); 
 	}
 }
