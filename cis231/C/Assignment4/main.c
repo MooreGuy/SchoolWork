@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define STRING_LENGTH 81
 #define OUTPUT_FILE "/home/gmoore/Git/SchoolWork/cis231/C/Assignment4/CHANGETHIS.txt"
+#define STRING_LENGTH 81
+#define PRINT_LENGTH 30
 
 
 void strInput(char str[], int maxChars);
@@ -51,6 +52,8 @@ int main()
 	getHighLow( temps, totalTemps, outputFile );
 	//Get the most common number
 	getMode( temps, totalTemps, outputFile );
+	//Get the standard deviation
+	getStandardDeviation( temps, totalTemps, average, outputFile );
 
 	return 0;
 }
@@ -119,7 +122,7 @@ int getTemps( int ** temps )
 void promptStrInp( char str[] )
 {	
 	//Prompt input for the next line.
-	printf("Please enter integer values, 80 characters maximum:\n");
+	printf("Please enter integer temperatures, 80 characters maximum:\n");
 
 	//Get string input.
 	strInput( str, STRING_LENGTH );	
@@ -218,13 +221,17 @@ FILE*  openFile( )
  */
 void printTemps( int * temps, int numTemps, FILE * file )
 {
-	printf("Temperatures in degrees Fahrenheit:");
+	printf("Temperatures in degrees Fahrenheit:\n");
+	fprintf( file, "Temperatures in degrees Fahrenheit:\n");
 
 	int i;
 	for( i = 0; i < numTemps; i++ )
 	{
-		printf("%i\n", temps[i]); 
+		printf("Temperature %-8i%*i\n",i, PRINT_LENGTH - 20, temps[i]); 
+		fprintf( file, "Temperature %-8i%*i\n",i, PRINT_LENGTH - 20, temps[i]);
 	}		
+	printf("\n");
+	fprintf(file, "\n");
 }
 
 /*
@@ -232,8 +239,8 @@ void printTemps( int * temps, int numTemps, FILE * file )
  */
 void printName( FILE * file )
 {
-	printf("Guy Moore\n");
-	fprintf( file, "Guy Moore\n");
+	printf("Guy Moore\n\n");
+	fprintf( file, "Guy Moore\n\n");
 }
 
 /*
@@ -251,8 +258,8 @@ int getAverage( int * temps, int numTemps, FILE * file )
 	//The average is now stored in sum.
 	sum /= numTemps;
 
-	printf("Average: %i\n", sum);
-	fprintf( file, "Average: %i\n", sum);
+	printf( "Average: %*i\n\n", PRINT_LENGTH - 9, sum );
+	fprintf( file, "Average: %*i\n\n", PRINT_LENGTH - 9, sum);
 
 	return sum;
 }
@@ -280,12 +287,15 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 		}
 	}
 	
+	//Since all the output buffer lengths are the same, hold the length in
+	// an int and access it when needed
+	int spacing = PRINT_LENGTH - 6;	
+
 	//Output data to console.
-	printf("Above\n========\n%i\n\nBelow\n========\n%i\n\nEqual\n========"
-		   "\n%i\n\n", above, below, equal);
+	printf("Above:%*i\nBelow:%*i\nEqual:%*i\n\n", spacing, above, spacing, below, spacing, equal);
+
 	//Output data to file.	
-	fprintf( file, "Above\n========\n%i\n\nBelow\n========\n%i\n\nEqual\n"	
-				   "========\n%i\n\n", above, below, equal);
+	fprintf( file, "Above:%*i\nBelow:%*i\nEqual:%*i\n\n", spacing, above, spacing, below, spacing, equal);
 			
 }
 
@@ -295,11 +305,16 @@ void getAboveBelow( int * temps, int numTemps, int average, FILE * file )
 void getStandardDeviation( int * temps, int numTemps, int average,
 	 FILE * file )
 {
+	
+	//Store print length to avoid redundant math.
+	int printLength = PRINT_LENGTH - 17;
+
 	//If the data set is equal to zero, then it doesn't deviate,
 	//so outputing zero is valid and also avoids divide by zero
 	if( numTemps < 2 )
 	{
-    	printf("Standard Deviation:%11.1i\n", 0);
+    	printf("Standard Deviation:%*.1i\n", printLength, 0);
+		fprintf( file, "Standard Deviation:%*.1i\n", printLength, 0 );
 	}
 
 	else
@@ -312,11 +327,14 @@ void getStandardDeviation( int * temps, int numTemps, int average,
 		{
 			deviation += pow( temps[i] - average, 2);
 		} 
+	
 
 		//Finally print the deviation divided by the number of
 		//temperatures.
-		printf("Standard Deviation:%11.1lf\n",
+		printf("Standard Deviation:%*.1lf\n", printLength,
 			 sqrt( deviation / (numTemps - 1 ) ) );
+		fprintf( file, "Standard Deviation:%*.1lf\n", printLength,
+			 sqrt( deviation / (numTemps - 1 ) )); 
 	}
 }
 
@@ -329,10 +347,13 @@ void getMedian( int * temps, int numTemps, FILE * file )
 	//the chosen value in case of an odd number.
 	int median = temps[ numTemps / 2 ];
 
+	//Store print length to avoid redundant math.
+	int printLength = PRINT_LENGTH - 7;
+
 	//print mediant to console.
-	printf( "Median\n======\n%i\n\n", median );
+	printf( "Median:%*i\n\n", printLength, median );
 	//print median to file.
-	fprintf( file, "Median\n======\n%i\n\n", median );
+	fprintf( file, "Median:%*i\n\n", printLength, median );
 }
 
 /*
@@ -365,7 +386,7 @@ void getMode( int * temps, int numTemps, FILE * file )
 
 	//Stores the value of the highest occurrence number.
 	
-	printf( "Mode\n======\n%i\n\n", highest );
+	printf( "Mode:%*i\n\n", PRINT_LENGTH - 5, highest );
 	fprintf( file, "Mode\n======\n%i\n\n", highest);
 }
 
@@ -419,11 +440,16 @@ int getOccurrenceIndex( int currentTemp , int *numOccurrences,
  */
 void getHighLow( int * temps, int numTemps, FILE * file )
 {
+
+	//Avoid redundant maths by holding print lengths.
+	int printLength1 = PRINT_LENGTH - 4;
+	int printLength2 = PRINT_LENGTH - 5;
+
 	//Output first value in array (low) then last value (high).
-	printf("Low:\n======\n%i\n\nHigh:\n======\n%i\n\n", temps[0],
-		temps[numTemps-1]);
+	printf("Low:%*i\nHigh:%*i\n\n", printLength1, temps[0],
+		printLength2, temps[numTemps-1] );
 	//Output high then low to file.
-	fprintf( file, "Low:\n======\n%i\n\nHigh:\n======\n%i\n\n", temps[0],
-		temps[numTemps-1]);
+	fprintf( file, "Low:%*i\nHigh:%*i\n\n", printLength1, temps[0],
+		printLength2, temps[numTemps-1]);
 }
 
