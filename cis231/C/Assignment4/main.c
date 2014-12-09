@@ -397,9 +397,20 @@ void getStandardDeviation( int * temps, int numTemps, int average,
  */
 void getMedian( int * temps, int numTemps, FILE * file )
 {
+	int median;
+	
 	//Get median, divide in half, integer division will make the left value,
 	//the chosen value in case of an odd number.
-	int median = temps[ numTemps / 2 ];
+	//If even.
+	if( numTemps % 2 == 0 )
+	{
+		median = temps[ ( numTemps - 1 ) / 2 ];
+	}
+	//if odd.
+	else 
+	{
+		median = temps[ numTemps / 2];
+	}
 
 	//Store print length to avoid redundant math.
 	int printLength = PRINT_LENGTH - 7;
