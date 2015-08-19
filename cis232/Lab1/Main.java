@@ -16,18 +16,10 @@ public class Main
 	{
 		ArrayList<Integer> myArray = getIntInput();
 		displayTotalElements(myArray);
-		for(int myInt : myArray)
-		{
-			System.out.println(myInt);
-		}
-
-		System.out.println("");
 
 		sortIntsAscending(myArray);
-		for(int myInt : myArray)
-		{
-			System.out.println(myInt);
-		}
+		displayAllValuesAsc(myArray);
+
 	}
 
 	/**
@@ -64,12 +56,6 @@ public class Main
 		return numbers;
 	}
 
-	private static void displayTotalElements(ArrayList<Integer> arr)
-	{
-		System.out.printf("%s", "The total numbers input:");
-		System.out.printf("%20d\n", arr.size());
-	}
-
 	private static void sortIntsAscending(ArrayList<Integer> arr)
 	{
 		int minIndex;
@@ -92,5 +78,30 @@ public class Main
 			}
 		}
 
+	}
+
+	private static void displayTotalElements(ArrayList<Integer> arr)
+	{
+		System.out.printf("%s", "The total numbers input:");
+		System.out.printf("%20d\n", arr.size());
+
+		System.out.println("");
+	}
+
+	private static void displayAllValuesAsc(ArrayList<Integer> arr)
+	{
+		System.out.println("All numbers in ascending order:");
+		for(int curInt = 0; curInt < arr.size();  curInt++)
+		{
+			if(curInt % 10 == 0)
+			{
+				System.out.println("");
+			}
+
+			System.out.print(arr.get(curInt) + " ");
+
+		}
+
+		System.out.println("");
 	}
 }
