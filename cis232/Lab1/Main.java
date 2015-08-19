@@ -37,7 +37,7 @@ public class Main
 		String curString;
 		while(in.hasNextLine() && !(curString = in.nextLine()).equals(""))
 		{
-			Pattern p = Pattern.compile("-?[1-9]+");
+			Pattern p = Pattern.compile("-?[0-9]+");
 			Matcher m = p.matcher(curString);
 			while(m.find())
 			{
