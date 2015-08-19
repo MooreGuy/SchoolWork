@@ -14,8 +14,9 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		ArrayList<Integer> myArray = getIntegerInput();
-		for(Integer myInt : myArray)
+		ArrayList<Integer> myArray = getIntInput();
+		displayTotalElements(myArray);
+		for(int myInt : myArray)
 		{
 			System.out.println(myInt);
 		}
@@ -24,9 +25,9 @@ public class Main
 	/**
 	 * Get input until an empty string is inputted, discard the
 	 * empty string. Disregaurd non-numbers. Allow negatives.
-	 * Don't allow something that doesn't fit in an Integer.
+	 * Don't allow something that doesn't fit in an Int.
 	 */
-	private static ArrayList<Integer> getIntegerInput()
+	private static ArrayList<Integer> getIntInput()
 	{
 		System.out.println("Enter integers, or only enter to exit");
 
@@ -47,11 +48,17 @@ public class Main
 				}
 				catch(Exception NumberFormatException)
 				{
-					System.out.println(curGroup + ": doesn't fit in an Integer.");
+					System.out.println(curGroup + ": doesn't fit in an Int.");
 				}
 			}
 		}
 
 		return numbers;
+	}
+
+	private static void displayTotalElements(ArrayList<Integer> arr)
+	{
+		System.out.printf("%s", "The total numbers input:");
+		System.out.printf("%20d\n", arr.size());
 	}
 }
