@@ -14,12 +14,19 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		ArrayList<Integer> myArray = getIntInput();
-		displayTotalElements(myArray);
+		ArrayList<Integer> nums = getIntInput();
+		if(nums.size() == 0)
+		{
+			System.out.println("No numbers entered.");
+			return;
+		}
 
-		sortIntsAscending(myArray);
-		displayAllValuesAsc(myArray);
-
+		displayTotalElements(nums);
+		sortIntsAscending(nums);
+		displayAllValuesAsc(nums);
+		displayLowHigh(nums);
+		displayAverage(nums);
+		displayMean(nums);
 	}
 
 	/**
@@ -82,10 +89,10 @@ public class Main
 
 	private static void displayTotalElements(ArrayList<Integer> arr)
 	{
-		System.out.printf("%s", "The total numbers input:");
-		System.out.printf("%20d\n", arr.size());
+		System.out.print("The total numbers input:");
+		System.out.printf("%16d\n", arr.size());
 
-		System.out.println("");
+		System.out.println("\n");
 	}
 
 	private static void displayAllValuesAsc(ArrayList<Integer> arr)
@@ -102,6 +109,60 @@ public class Main
 
 		}
 
-		System.out.println("");
+		System.out.println("\n");
+	}
+
+	private static void displayLowHigh(ArrayList<Integer> arr)
+	{
+		System.out.print("The lowest number:");
+		System.out.printf("%22d\n", arr.get(0));
+		System.out.print("The highest number:");
+		System.out.printf("%21d\n", arr.get(arr.size() - 1));
+		System.out.println("\n");
+	}
+
+	private static void displayAverage(ArrayList<Integer> arr)
+	{
+		int sum = 0;
+		for(int i = 0; i < arr.size(); i++)
+		{
+			sum += arr.get(i);
+		}
+
+		System.out.print("The average is:");
+		System.out.printf("%25.2f\n", (double)sum / arr.size());
+
+		System.out.println("\n");
+	}
+
+	private static void displayMean(ArrayList<Integer> arr)
+	{
+		int freq = 1;
+		int mode = arr.get(0);
+		int curNum = arr.get(0);
+		int curFreq = 1;
+		for(int i = 1; i < arr.size(); i++)
+		{
+			if(curNum != arr.get(i))
+			{
+				if(curFreq > freq)
+				{
+					mode = curNum;
+					freq = curFreq;
+				}
+				curFreq = 1;
+				curNum = arr.get(i);
+			}
+			else
+			{
+				curFreq++;
+			}
+		}
+
+		System.out.print("The mode is:");
+		System.out.printf("%28d\n", mode);
+		System.out.print("The frequency of the mode is:");
+		System.out.printf("%11d\n", freq);
+		System.out.println("\n");
 	}
 }
