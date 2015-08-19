@@ -20,6 +20,14 @@ public class Main
 		{
 			System.out.println(myInt);
 		}
+
+		System.out.println("");
+
+		sortIntsAscending(myArray);
+		for(int myInt : myArray)
+		{
+			System.out.println(myInt);
+		}
 	}
 
 	/**
@@ -60,5 +68,29 @@ public class Main
 	{
 		System.out.printf("%s", "The total numbers input:");
 		System.out.printf("%20d\n", arr.size());
+	}
+
+	private static void sortIntsAscending(ArrayList<Integer> arr)
+	{
+		int minIndex;
+		for(int x = 0; x < arr.size() - 1; x++)
+		{
+			minIndex = x;
+			for(int y = x + 1; y < arr.size(); y++)
+			{
+				if(arr.get(minIndex) > arr.get(y))
+				{
+					minIndex = y;
+				}
+			}
+
+			if(x != minIndex)
+			{
+				int temp = arr.get(x);
+				arr.set(x, arr.get(minIndex));
+				arr.set(minIndex, temp);
+			}
+		}
+
 	}
 }
