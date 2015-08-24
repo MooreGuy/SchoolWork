@@ -49,10 +49,10 @@ class Date
 	{
 		month = 1;
 		day = 1;
-		year = 2015;
+		year = 2010;
 	}
 
-	// Single parameter constructor
+	// Single parameter date string constructor
 	public Date(String dateString)
 	{
 		// Clean input from user.
@@ -67,15 +67,11 @@ class Date
 		}
 		catch(NoSuchElementException nse) {
 			System.out.println("Malformed date string. Format is month/day/year. Defaulting to 1/1/2015.");
-			month = 1;
-			day = 1;
-			year = 2015;
+			setDefault();
 		}
-		catch(NumberFormatException nfe) {
+		catch(NumberFormatException nf) {
 			System.out.println("Malformed date string. Dates must be integer numbers. Defaulting to 1/1/2015");
-			month = 1;
-			day = 1;
-			year = 2015;
+			setDefault();
 		}
 	}
 
@@ -103,11 +99,17 @@ class Date
 		return month + "/" + day + "/" + year;
 	}
 
+	public void setDefault()
+	{
+		month = 1;
+		day = 1;
+		year = 2015;
+	}
+
 	public int getDay()
 	{
 		return day;
 	}
-
 	public int getMonth()
 	{
 		return month;
