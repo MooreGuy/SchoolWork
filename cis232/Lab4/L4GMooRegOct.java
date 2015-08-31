@@ -1,3 +1,9 @@
+/**
+ * Guy Moore
+ * Randy Scovil
+ * Lab 4
+ * Cuesta College
+ */
 import java.util.Random;
 
 public class L4GMooRegOct extends Shape implements Comparable
