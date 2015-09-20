@@ -24,6 +24,11 @@ public class A1232GMoo
 			double width = Double.parseDouble(getInput("Enter width: "));
 			return new Rectangle(length, width);
 		}
+		else if(input.equals("EquilateralTriangle"))
+		{
+			double sideLength = Double.parseDouble("Enter side length: ");
+			return new EquilateralTriangle(sideLength);
+		}
 
 		// No shape type for the given input exists.
 		return null;
