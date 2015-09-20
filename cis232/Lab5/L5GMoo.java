@@ -49,7 +49,7 @@ class L5GMoo
 		void Lab5Sort(ArrayList<AnyType> gAL)
 	{
 		for(int x = 0; x < gAL.size() - 1; x++)
-		{	
+		{
 			int lowestIndex = x;
 			for(int y = x + 1; y < gAL.size(); y++)
 			{
