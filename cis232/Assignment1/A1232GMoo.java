@@ -1,3 +1,10 @@
+/**
+ * Guy Moore
+ * Randy Scovil
+ * Assignment 1
+ * Cuesta College
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

@@ -1,3 +1,10 @@
+/**
+ * Guy Moore
+ * Randy Scovil
+ * Assignment 1
+ * Cuesta College
+ */
+
 public class Rectangle extends Shape implements Stretchable
 {
     public Rectangle( double len, double wid )

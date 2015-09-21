@@ -1,3 +1,10 @@
+/**
+ * Guy Moore
+ * Randy Scovil
+ * Assignment 1
+ * Cuesta College
+ */
+
 public class EquilateralTriangle extends Shape
 {
 	private double sideLength;
