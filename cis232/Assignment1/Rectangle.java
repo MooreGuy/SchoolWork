@@ -4,8 +4,9 @@
  * Assignment 1
  * Cuesta College
  */
+import java.util.Comparator;
 
-public class Rectangle extends Shape implements Stretchable
+public class Rectangle extends Shape
 {
     public Rectangle( double len, double wid )
     {
@@ -35,17 +36,6 @@ public class Rectangle extends Shape implements Stretchable
     public double getWidth( )
     {
         return width;
-    }
-
-    public void stretch( double factor )
-    {
-        if( factor <= 0 )
-            throw new IllegalArgumentException( );
-
-        if( length > width )
-            length *= factor;
-        else
-            width *= factor;
     }
 
     private double length;

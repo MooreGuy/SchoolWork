@@ -12,6 +12,11 @@ import java.util.Comparator;
 
 public class A1232GMoo
 {
+	// Variables to hold how the data should be presented to the user
+	// The user inputs these before data is presented.
+	private static String shapeCompareOption = "";
+	private static String shapeSortOption = "";
+
 	private static final String[] options = {
 		"quit",
 		"create shape",
@@ -53,31 +58,60 @@ public class A1232GMoo
 		}
 		else if(selectedOption.equals("list shapes"))
 		{
-			boolean validInput = false;
+			// Get the compare method
+			String input;
 			do
 			{
-				String input = getInput(
-					"Enter sort method, ascending or descending: ");
-				if(input.equals("ascending"))
-				{
-					listShapes(shapes);
-					validInput = true;
-				}
-				else if(input.equals("descending"))
-				{
-					listShapes(shapes);
-					validInput = true;
-				}
+				input = getInput("Enter compare method, area or perimeter: ");
 			}
-			while(validInput == false);
+			while(!input.equals("area") && !input.equals("perimeter"));
+			shapeCompareOption = input;
+
+			// Get the group by
+			do
+			{
+				input = getInput("Group by class yes or no? ");
+			}
+			while(!input.equals("yes") && !input.equals("no"));
+
+			Comparator<Shape> comp;
+			if(input.equals("yes"))
+			{
+				comp = new AscedingClassGroupComparator<Shape>();
+			}
+			else
+			{
+				comp = new AscendingComparator<Shape>();
+			}
+
+			sort(shapes, comp);
+			listShapes(shapes);
 		}
 	}
 
 	public static void listShapes(List<Shape> shapes)
 	{
-		for(Shape shape : shapes)
+		String input;
+		boolean validInput = false;
+		do
 		{
-			System.out.println(shape.toString());
+			input = getInput("Enter sort method, ascending or descending: ");
+		}
+		while(!input.equals("ascending") && !input.equals("descending"));
+
+		if(input.equals("ascending"))
+		{
+			for(int x = 0; x < shapes.size(); x++)
+			{
+				System.out.println(shapes.get(x).toString());
+			}
+		}
+		else
+		{
+			for(int x = shapes.size() - 1; x >= 0; x--)
+			{
+				System.out.println(shapes.get(x).toString());
+			}
 		}
 	}
 
@@ -148,47 +182,55 @@ public class A1232GMoo
 		return null;
 	}
 
-	static class AscendingComparator<AnyType extends Comparable<? super AnyType>>
-		implements Comparator<AnyType>
+	static class AscendingComparator<AnyType>
+		implements Comparator<Shape>
 	{
-		public int compare(AnyType o1, AnyType o2)
+		public int compare(Shape s1, Shape s2)
 		{
-			return o1.compareTo(o2);
-		}
-	}
-
-	static class DescendingComparator<AnyType extends Comparable<? super AnyType>>
-		implements Comparator<AnyType>
-	{
-		public int compare(AnyType o1, AnyType o2)
-		{
-			return -(o1.compareTo(o2));
+			return compareShapes(s1, s2);
 		}
 	}
 
 	// Sort the by class name and dimensions within the class name sort.
-	static class AscedingClassSortComparator<AnyType extends
-		Comparable<? super AnyType>> implements Comparator<AnyType>
+	static class AscedingClassGroupComparator<AnyType>
+		implements Comparator<Shape>
 	{
-		public int compare(AnyType o1, AnyType o2)
+		public int compare(Shape s1, Shape s2)
 		{
-			int classNameCompare = o1.getClass().getName().compareTo(
-				o2.getClass().getName());
+			int classNameCompare = s1.getClass().getName().compareTo(
+				s2.getClass().getName());
 
-			// If it is the same class name then compareTo
+			// If it is the same class name then compare the actual values
 			if(classNameCompare == 0)
 			{
-				return o1.compareTo(o2);
+				return compareShapes(s1, s2);
 			}
 
 			return classNameCompare;
 		}
 	}
 
+	public static int compareShapes(Shape s1, Shape s2)
+	{
+		Double shape1Value;
+		Double shape2Value;
+		if(shapeCompareOption == "area")
+		{
+			shape1Value = new Double(s1.area());
+			shape2Value = new Double(s2.area());
+		}
+		else
+		{
+			shape1Value = new Double(s1.perimeter());
+			shape2Value = new Double(s2.perimeter());
+		}
+
+		return shape1Value.compareTo(shape2Value);
+	}
+
 	public static <AnyType> void sort(List<AnyType> arr,
 		Comparator<? super AnyType> cmp)
 	{
-		System.out.println("Sorting.");
 		for(int x = 0; x < arr.size() - 1; x++)
 		{
 			int lowestIndex = x;
