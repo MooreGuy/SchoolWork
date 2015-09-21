@@ -46,6 +46,11 @@ public class A1232GMoo
 			double sideLength = Double.parseDouble(getInput("Enter side length: "));
 			return new RegularHexagon(sideLength);
 		}
+		else if(input.equals("Square"))
+		{
+			double sideLength = Double.parseDouble(getInput("Enter side length: "));
+			return new Square(sideLength);
+		};
 
 		// No shape type for the given input exists.
 		return null;
