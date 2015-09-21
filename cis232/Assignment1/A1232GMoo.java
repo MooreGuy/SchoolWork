@@ -8,6 +8,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
+import java.util.Comparator;
 
 public class A1232GMoo
 {
@@ -145,5 +146,66 @@ public class A1232GMoo
 		}
 
 		return null;
+	}
+
+	static class AscendingComparator<AnyType extends Comparable<? super AnyType>>
+		implements Comparator<AnyType>
+	{
+		public int compare(AnyType o1, AnyType o2)
+		{
+			return o1.compareTo(o2);
+		}
+	}
+
+	static class DescendingComparator<AnyType extends Comparable<? super AnyType>>
+		implements Comparator<AnyType>
+	{
+		public int compare(AnyType o1, AnyType o2)
+		{
+			return -(o1.compareTo(o2));
+		}
+	}
+
+	// Sort the by class name and dimensions within the class name sort.
+	static class AscedingClassSortComparator<AnyType extends
+		Comparable<? super AnyType>> implements Comparator<AnyType>
+	{
+		public int compare(AnyType o1, AnyType o2)
+		{
+			int classNameCompare = o1.getClass().getName().compareTo(
+				o2.getClass().getName());
+
+			// If it is the same class name then compareTo
+			if(classNameCompare == 0)
+			{
+				return o1.compareTo(o2);
+			}
+
+			return classNameCompare;
+		}
+	}
+
+	public static <AnyType> void sort(List<AnyType> arr,
+		Comparator<? super AnyType> cmp)
+	{
+		System.out.println("Sorting.");
+		for(int x = 0; x < arr.size() - 1; x++)
+		{
+			int lowestIndex = x;
+			for(int y = x + 1; y < arr.size(); y++)
+			{
+				if(cmp.compare(arr.get(lowestIndex), arr.get(y)) == 1)
+				{
+					lowestIndex = y;
+				}
+			}
+
+			if(lowestIndex != x)
+			{
+				AnyType tmp = arr.get(x);
+				arr.set(x, arr.get(lowestIndex));
+				arr.set(lowestIndex, tmp);
+			}
+		}
 	}
 }
