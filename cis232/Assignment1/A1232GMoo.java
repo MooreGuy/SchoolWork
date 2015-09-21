@@ -12,45 +12,55 @@ public class A1232GMoo
 {
 	public static void main(String[] args)
 	{
-		String input = getInput("Enter shape type: ");
+	}
 
-		Shape createdShape = createShape(input);
-		System.out.println(createdShape.toString());
+	public static double getLength(String prompt)
+	{
+		double input = -1;
+
+		Scanner scn = new Scanner(System.in);
+		do
+		{
+			System.out.print(prompt);
+
+			if(scn.hasNextDouble())
+			{
+				input = scn.nextDouble();
+			}
+		}
+		while(input < 0);
+
+		return input;
 	}
 
 	public static Shape createShape(String input)
 	{
 		if(input.equals("Circle"))
 		{
-			double radius = Double.parseDouble(getInput("Enter radius: "));
-			return new Circle(radius);
+			return new Circle(getLength("Enter radius: "));
 		}
 		else if(input.equals("Rectangle"))
 		{
-			double length = Double.parseDouble(getInput("Enter length: "));
-			double width = Double.parseDouble(getInput("Enter width: "));
+			double length = getLength("Enter length: ");
+			double width = getLength("Enter width: ");
 			return new Rectangle(length, width);
 		}
 		else if(input.equals("EquilateralTriangle"))
 		{
-			double sideLength = Double.parseDouble("Enter side length: ");
-			return new EquilateralTriangle(sideLength);
+			return new EquilateralTriangle(getLength("Enter side length: "));
 		}
 		else if(input.equals("RegularOctagon"))
 		{
-			double sideLength = Double.parseDouble(getInput("Enter side length: "));
-			return new RegularOctagon(sideLength);
+			return new RegularOctagon(getLength("Enter side length: "));
 		}
 		else if(input.equals("RegularHexagon"))
 		{
-			double sideLength = Double.parseDouble(getInput("Enter side length: "));
-			return new RegularHexagon(sideLength);
+			return new RegularHexagon(getLength("Enter side length: "));
 		}
 		else if(input.equals("Square"))
 		{
-			double sideLength = Double.parseDouble(getInput("Enter side length: "));
-			return new Square(sideLength);
-		};
+			return new Square(getLength("Enter side length: "));
+		}
 
 		// No shape type for the given input exists.
 		return null;
