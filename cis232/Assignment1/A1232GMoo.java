@@ -22,7 +22,8 @@ public class A1232GMoo
 		"create shape",
 		"list shapes"
 	};
-	private static ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private static ArrayList<A1232GmooShape> shapes =
+		new ArrayList<A1232GmooShape>();
 
 	public static void main(String[] args)
 	{
@@ -50,7 +51,7 @@ public class A1232GMoo
 		{
 			String input = getInput("Enter shape type: ");
 
-			Shape createdShape = createShape(input);
+			A1232GmooShape createdShape = createShape(input);
 
 			// Print out the shape and add it to the shapes list.
 			System.out.println(createdShape.toString());
@@ -74,14 +75,14 @@ public class A1232GMoo
 			}
 			while(!input.equals("yes") && !input.equals("no"));
 
-			Comparator<Shape> comp;
+			Comparator<A1232GmooShape> comp;
 			if(input.equals("yes"))
 			{
-				comp = new AscedingClassGroupComparator<Shape>();
+				comp = new AscedingClassGroupComparator<A1232GmooShape>();
 			}
 			else
 			{
-				comp = new AscendingComparator<Shape>();
+				comp = new AscendingComparator<A1232GmooShape>();
 			}
 
 			sort(shapes, comp);
@@ -89,7 +90,7 @@ public class A1232GMoo
 		}
 	}
 
-	public static void listShapes(List<Shape> shapes)
+	public static void listShapes(List<A1232GmooShape> shapes)
 	{
 		String input;
 		boolean validInput = false;
@@ -134,33 +135,33 @@ public class A1232GMoo
 		return input;
 	}
 
-	public static Shape createShape(String input)
+	public static A1232GmooShape createShape(String input)
 	{
 		if(input.equals("Circle"))
 		{
-			return new Circle(getLength("Enter radius: "));
+			return new A1232GmooCircle(getLength("Enter radius: "));
 		}
 		else if(input.equals("Rectangle"))
 		{
 			double length = getLength("Enter length: ");
 			double width = getLength("Enter width: ");
-			return new Rectangle(length, width);
+			return new A1232GmooRectangle(length, width);
 		}
 		else if(input.equals("EquilateralTriangle"))
 		{
-			return new EquilateralTriangle(getLength("Enter side length: "));
+			return new A1232GmooEquilateralTriangle(getLength("Enter side length: "));
 		}
 		else if(input.equals("RegularOctagon"))
 		{
-			return new RegularOctagon(getLength("Enter side length: "));
+			return new A1232GmooRegularOctagon(getLength("Enter side length: "));
 		}
 		else if(input.equals("RegularHexagon"))
 		{
-			return new RegularHexagon(getLength("Enter side length: "));
+			return new A1232GmooRegularHexagon(getLength("Enter side length: "));
 		}
 		else if(input.equals("Square"))
 		{
-			return new Square(getLength("Enter side length: "));
+			return new A1232GmooSquare(getLength("Enter side length: "));
 		}
 
 		// No shape type for the given input exists.
@@ -183,9 +184,9 @@ public class A1232GMoo
 	}
 
 	static class AscendingComparator<AnyType>
-		implements Comparator<Shape>
+		implements Comparator<A1232GmooShape>
 	{
-		public int compare(Shape s1, Shape s2)
+		public int compare(A1232GmooShape s1, A1232GmooShape s2)
 		{
 			return compareShapes(s1, s2);
 		}
@@ -193,9 +194,9 @@ public class A1232GMoo
 
 	// Sort the by class name and dimensions within the class name sort.
 	static class AscedingClassGroupComparator<AnyType>
-		implements Comparator<Shape>
+		implements Comparator<A1232GmooShape>
 	{
-		public int compare(Shape s1, Shape s2)
+		public int compare(A1232GmooShape s1, A1232GmooShape s2)
 		{
 			int classNameCompare = s1.getClass().getName().compareTo(
 				s2.getClass().getName());
@@ -210,7 +211,7 @@ public class A1232GMoo
 		}
 	}
 
-	public static int compareShapes(Shape s1, Shape s2)
+	public static int compareShapes(A1232GmooShape s1, A1232GmooShape s2)
 	{
 		Double shape1Value;
 		Double shape2Value;

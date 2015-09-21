@@ -6,9 +6,9 @@
  */
 import java.util.Comparator;
 
-public class Rectangle extends Shape
+public class A1232GmooRectangle extends A1232GmooShape
 {
-    public Rectangle( double len, double wid )
+    public A1232GmooRectangle( double len, double wid )
     {
         length = len; width = wid;
     }

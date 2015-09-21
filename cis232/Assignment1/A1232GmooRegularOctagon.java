@@ -6,11 +6,11 @@
  */
 import java.util.Random;
 
-public class RegularOctagon extends Shape
+public class A1232GmooRegularOctagon extends A1232GmooShape
 {
 	private double sideLength;
 
-	public RegularOctagon(double sideLength)
+	public A1232GmooRegularOctagon(double sideLength)
 	{
 		this.sideLength = sideLength;
 	}

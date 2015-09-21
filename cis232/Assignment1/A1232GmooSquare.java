@@ -5,11 +5,11 @@
  * Cuesta College
  */
 
-public class Square extends Shape
+public class A1232GmooSquare extends A1232GmooShape
 {
 	private double sideLength;
 
-	public Square(double sideLength)
+	public A1232GmooSquare(double sideLength)
 	{
 		this.sideLength = sideLength;
 	}

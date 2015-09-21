@@ -5,11 +5,11 @@
  * Cuesta College
  */
 
-public class RegularHexagon extends Shape
+public class A1232GmooRegularHexagon extends A1232GmooShape
 {
 	private double sideLength;
 
-	public RegularHexagon(double sideLength)
+	public A1232GmooRegularHexagon(double sideLength)
 	{
 		this.sideLength = sideLength;
 	}

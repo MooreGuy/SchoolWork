@@ -5,11 +5,11 @@
  * Cuesta College
  */
 
-public class EquilateralTriangle extends Shape
+public class A1232GmooEquilateralTriangle extends A1232GmooShape
 {
 	private double sideLength;
 
-	public EquilateralTriangle(double sideLength)
+	public A1232GmooEquilateralTriangle(double sideLength)
 	{
 		this.sideLength = sideLength;
 	}

@@ -1,10 +1,10 @@
 
-public abstract class Shape implements Comparable<Shape>
+public abstract class A1232GmooShape
 {
     public abstract double area( );
     public abstract double perimeter( );
  
-    public int compareTo( Shape rhs )
+    public int compareTo( A1232GmooShape rhs )
     {
         double diff = area( ) - rhs.area( );
         if( diff == 0 )

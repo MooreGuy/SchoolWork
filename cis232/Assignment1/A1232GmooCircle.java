@@ -1,6 +1,6 @@
-public class Circle extends Shape
+public class A1232GmooCircle extends A1232GmooShape
 {
-    public Circle( double rad )
+    public A1232GmooCircle( double rad )
     {
         radius = rad;
     }
