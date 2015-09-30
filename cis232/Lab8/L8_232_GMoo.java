@@ -6,6 +6,8 @@
  */
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.io.File;
 import javax.swing.JFileChooser;
 
@@ -16,7 +18,13 @@ public class L8_232_GMoo {
 		}
 
 		File startDirectory = chooseDirectory();
-		ArrayList<String> pdfPathNames = recursivePDFSpider(startDirectory);
+		List<String> pdfPathNames = recursivePDFSpider(startDirectory);
+		for (String name : pdfPathNames) {
+			System.out.println(name);
+		}
+
+		startDirectory = chooseDirectory();
+		pdfPathNames = nonRecursivePDFSpider(startDirectory);
 		for (String name : pdfPathNames) {
 			System.out.println(name);
 		}
@@ -58,6 +66,34 @@ public class L8_232_GMoo {
 				pdfPathNames.addAll(recursivePDFSpider(curFile));
 			} else if(curFile.toPath().toString().endsWith(".pdf")) {
 				pdfPathNames.add(curFile.getAbsolutePath());
+			}
+		}
+
+		return pdfPathNames;
+	}
+
+	public static ArrayList<String> nonRecursivePDFSpider(File startDirectory) {
+		ArrayList<String> pdfPathNames = new ArrayList<String>();
+		Stack<File> directories = new Stack<File>();
+
+		File[] list = startDirectory.listFiles();
+		for (File currentFile : list) {
+			if (currentFile.isDirectory()) {
+				directories.push(currentFile);
+			} else if(currentFile.toPath().toString().endsWith(".pdf")) {
+				pdfPathNames.add(currentFile.getAbsolutePath());
+			}
+		}
+
+		while(directories.empty()) {
+			list = directories.pop().listFiles();
+
+			for (File currentFile : list) {
+				if (currentFile.isDirectory()) {
+					directories.push(currentFile);
+				} else if(currentFile.toPath().toString().endsWith(".pdf")) {
+					pdfPathNames.add(currentFile.getAbsolutePath());
+				}
 			}
 		}
 
