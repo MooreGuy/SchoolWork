@@ -298,6 +298,19 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
         }
     }
 
+	// TODO: Make this private since sorting should be done automatically.
+	public void sortAscending() {
+		for(int x = 1; x < theSize; x++) {
+			Comparable<AnyType> temp = (Comparable<AnyType>) theItems[x];
+			int y = x;
+
+			for(; y > 0 && temp.compareTo(theItems[y - 1]) < 0; y--) {
+				theItems[y] = theItems[y - 1];
+			}
+			theItems[y] = (AnyType) temp;
+		}
+	}
+
     private static final int DEFAULT_CAPACITY = 10;
     private static final int NOT_FOUND = -1;
 
