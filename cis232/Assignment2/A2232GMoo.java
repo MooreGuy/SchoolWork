@@ -311,6 +311,33 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
 		}
 	}
 
+	/**
+	 * Searches through the sorted array for the target and if found it will return
+	 * the index for it, if it doesn't, then it will return a negative result of
+	 * where it's index should be if it were to be input.
+	 */
+	public int binarySearch(Comparable<AnyType> target) {
+		int middle = 0;
+
+		for (int low = 0, high = theSize; low <= high; ) {
+			middle = (low + high) / 2;
+
+			if (target.compareTo(theItems[middle]) == 0) {
+				return middle;
+			}
+
+			if (target.compareTo(theItems[middle]) < 0) {
+				high = middle - 1;
+			}
+
+			if (target.compareTo(theItems[middle]) > 0) {
+				low = middle + 1;
+			}
+		}
+
+		return (- middle) - 1;
+	}
+
     private static final int DEFAULT_CAPACITY = 10;
     private static final int NOT_FOUND = -1;
 
