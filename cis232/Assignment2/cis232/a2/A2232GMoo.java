@@ -188,7 +188,7 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
 		AnyType highest = theItems[0];
 
 		int highestCount = 1;
-		int currentCount = 2;
+		int currentCount = 1;
 		for (int x = 1; x < theSize; x++) {
 			if ((theItems[x] == null && theItems[x - 1] == null) ||
 					(theItems[x] != null && theItems[x - 1] != null &&
