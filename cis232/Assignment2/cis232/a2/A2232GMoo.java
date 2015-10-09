@@ -190,13 +190,15 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
 		int highestCount = 1;
 		int currentCount = 1;
 		for (int x = 1; x < theSize; x++) {
-			if (theItems[x].compareTo(theItems[x - 1]) == 0)
+			if (theItems[x].compareTo(theItems[x - 1]) == 0) {
 				currentCount++;
-			else {
-				if (highestCount < currentCount)
-					highestCount = currentCount;
+			} else {
+				currentCount = 1;
+			}
 
-				highest = theItems[x];
+			if (highestCount < currentCount) {
+				highestCount = currentCount;
+				highest = theItems[x - 1];
 			}
 		}
 
