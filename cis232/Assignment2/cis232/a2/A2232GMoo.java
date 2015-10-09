@@ -10,10 +10,10 @@ import java.util.NoSuchElementException;
 
 /**
  * The A2232GMoo implements a growable array.
- * Insertions are always done at the end.
+ * Insertions are always done in order.
  */
-public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends AbstractCollection<AnyType> implements List<AnyType>
-{
+public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
+	extends AbstractCollection<AnyType> implements List<AnyType> {
     /**
      * Construct an empty A2232GMoo.
      */
@@ -22,6 +22,9 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
         clear( );
     }
 
+	/**
+	 * Constructs a A2232GMoo with a specified size.
+	 */
 	public A2232GMoo(int customSize) {
 		clear(customSize);
 	}
@@ -51,13 +54,24 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
             return new SubList( this, from, to );
         }
 
-        public SubList( int from, int to )
-        {  if( from < 0 || to > A2232GMoo.this.size( ) ) throw new IllegalArgumentException( from + " " + to + " " + A2232GMoo.this.size( ) );
-           original = A2232GMoo.this; offset = from; size = to - from; }
+        public SubList( int from, int to ) {
+			if( from < 0 || to > A2232GMoo.this.size( ) ) {
+				throw new IllegalArgumentException( from + " " + to + " " +
+					A2232GMoo.this.size( ) );
+			}
 
-        public SubList( SubList sub, int from, int to )
-        { if( from < 0 || to > sub.size( ) ) throw new IllegalArgumentException( from + " " + to + " " + sub.size( ) );
-          original = sub.original; offset = sub.offset + from; size = to - from; }
+			original = A2232GMoo.this; offset = from; size = to - from;
+		}
+
+        public SubList( SubList sub, int from, int to ) {
+			if( from < 0 || to > sub.size( ) ) {
+				throw new IllegalArgumentException( from + " " + to +
+					" " + sub.size( ) );
+			}
+
+			original = sub.original; offset = sub.offset + from; size = to -
+				from;
+		}
 
         public int size( )
         { return size; }
@@ -78,7 +92,11 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
         { throw new UnsupportedOperationException( ); }
 
         public boolean contains( Object x )
-        { for( AnyType item : this ) if( item.equals( x ) ) return true; return false;  }
+        {
+			for( AnyType item : this )
+				if( item.equals( x ) )
+					return true; return false;
+		}
 
         public ListIterator<AnyType> listIterator( int idx )
         { return original.listIterator( offset + idx ); }
@@ -104,7 +122,9 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
     public AnyType get( int idx )
     {
         if( idx < 0 || idx >= size( ) )
-            throw new ArrayIndexOutOfBoundsException( "Index " + idx + "; size " + size( ) );
+            throw new ArrayIndexOutOfBoundsException( "Index " + idx +
+				"; size " + size( ) );
+
         return theItems[ idx ];
     }
 
@@ -118,7 +138,9 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
     public AnyType set( int idx, AnyType newVal )
     {
         if( idx < 0 || idx >= size( ) )
-            throw new ArrayIndexOutOfBoundsException( "Index " + idx + "; size " + size( ) );
+            throw new ArrayIndexOutOfBoundsException( "Index " + idx +
+				"; size " + size( ) );
+
         AnyType old = theItems[ idx ];
         theItems[ idx ] = newVal;
 
@@ -192,6 +214,7 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
         {
             AnyType [ ] old = theItems;
             theItems = (AnyType []) new Comparable[ theItems.length * 2 + 1 ];
+
             for( int i = 0; i < size( ); i++ )
                 theItems[ i ] = old[ i ];
         }
@@ -208,6 +231,11 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
         return true;
     }
 
+	/**
+	 * The list needs to always be sorted, so no matter if the index is
+	 * specified or not, the add method will always function the same, index or
+	 * no index.
+	 */
 	public void add(int index, AnyType element) {
 		add(element);
 	}
@@ -272,11 +300,13 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
         return new A2232GMooIterator( 0 );
     }
     /**
-     * Obtains a ListIterator object used to traverse the collection bidirectionally.
+     * Obtains a ListIterator object used to traverse the collection
+	 * bidirectionally.
      * @return an iterator positioned prior to the requested element.
      * @param idx the index to start the iterator. Use size() to do complete
      * reverse traversal. Use 0 to do complete forward traversal.
-     * @throws IndexOutOfBoundsException if idx is not between 0 and size(), inclusive.
+     * @throws IndexOutOfBoundsException if idx is not between 0 and size(),
+	 * inclusive.
      */
     public ListIterator<AnyType> listIterator( int idx )
     {
@@ -383,7 +413,7 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
 		return -1;
 	}
 
-	class ModeResult<AnyType> implements Result<AnyType> {
+	private class ModeResult<AnyType> implements Result<AnyType> {
 		ModeResult(AnyType mo, int co) {
 			mode = mo;
 			count = co;
