@@ -4,7 +4,7 @@ import weiss.util.*;
  * The A2232GMoo implements a growable array.
  * Insertions are always done at the end.
  */
-public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements List<AnyType>
+public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends AbstractCollection<AnyType> implements List<AnyType>
 {
     /**
      * Construct an empty A2232GMoo.
@@ -110,6 +110,8 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
         AnyType old = theItems[ idx ];
         theItems[ idx ] = newVal;
 
+		sortAscending();
+
         return old;
     }
 
@@ -154,16 +156,26 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
         if( theItems.length == size( ) )
         {
             AnyType [ ] old = theItems;
-            theItems = (AnyType []) new Object[ theItems.length * 2 + 1 ];
+            theItems = (AnyType []) new Comparable[ theItems.length * 2 + 1 ];
             for( int i = 0; i < size( ); i++ )
                 theItems[ i ] = old[ i ];
         }
 
-        theItems[ theSize++ ] = x;
+		int index = theSize;
+		for (; index > 0 && x.compareTo(theItems[index - 1]) < 0; index--)
+			theItems[index] = theItems[index - 1];
 
+		theItems[index] = x;
+
+		theSize++;
         modCount++;
+
         return true;
     }
+
+	public void add(int index, AnyType element) {
+		add(element);
+	}
 
     /**
      * Removes an item from this collection.
@@ -206,7 +218,7 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
     public void clear( )
     {
         theSize = 0;
-        theItems = (AnyType []) new Object[ DEFAULT_CAPACITY ];
+        theItems = (AnyType []) new Comparable[ DEFAULT_CAPACITY ];
         modCount++;
     }
 
@@ -301,7 +313,7 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
 	// TODO: Make this private since sorting should be done automatically.
 	public void sortAscending() {
 		for(int x = 1; x < theSize; x++) {
-			Comparable<AnyType> temp = (Comparable<AnyType>) theItems[x];
+			AnyType temp = theItems[x];
 			int y = x;
 
 			for(; y > 0 && temp.compareTo(theItems[y - 1]) < 0; y--) {
@@ -311,27 +323,18 @@ public class A2232GMoo<AnyType> extends AbstractCollection<AnyType> implements L
 		}
 	}
 
-	/**
-	 * Searches through the sorted array for the target and if found it will return
-	 * the index for it, if it doesn't, then it will return a negative result of
-	 * where it's index should be if it were to be input.
-	 */
-	public int binarySearch(Comparable<AnyType> target) {
+	public int binarySearch(AnyType target) {
 		int middle = 0;
 
-		for (int low = 0, high = theSize; low <= high; ) {
+		for (int low = 0, high = theSize - 1; low <= high;) {
 			middle = (low + high) / 2;
-
-			if (target.compareTo(theItems[middle]) == 0) {
-				return middle;
-			}
-
-			if (target.compareTo(theItems[middle]) < 0) {
-				high = middle - 1;
-			}
 
 			if (target.compareTo(theItems[middle]) > 0) {
 				low = middle + 1;
+			} else if (target.compareTo(theItems[middle]) < 0) {
+				high = middle - 1;
+			} else {
+				return middle;
 			}
 		}
 
