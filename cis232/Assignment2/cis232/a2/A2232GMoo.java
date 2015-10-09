@@ -42,10 +42,10 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
     public A2232GMoo<AnyType> subList( int from, int to )
     { return new SubList( from, to ); }
 
-    private class SubList extends A2232GMoo<AnyType>
-    {
-        private List<AnyType> original;
-        private int offset;
+	private class SubList extends A2232GMoo<AnyType>
+	{
+		private List<AnyType> original;
+		private int offset;
         private int size;
 
 
@@ -188,9 +188,11 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
 		AnyType highest = theItems[0];
 
 		int highestCount = 1;
-		int currentCount = 1;
+		int currentCount = 2;
 		for (int x = 1; x < theSize; x++) {
-			if (theItems[x].compareTo(theItems[x - 1]) == 0) {
+			if ((theItems[x] == null && theItems[x - 1] == null) ||
+					(theItems[x] != null && theItems[x - 1] != null &&
+					theItems[x].compareTo( theItems[x - 1]) == 0)) {
 				currentCount++;
 			} else {
 				currentCount = 1;
@@ -222,8 +224,10 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
         }
 
 		int index = theSize;
-		for (; index > 0 && x.compareTo(theItems[index - 1]) < 0; index--)
-			theItems[index] = theItems[index - 1];
+		if (x != null) {
+			for (; index > 0 && x.compareTo(theItems[index - 1]) < 0; index--)
+				theItems[index] = theItems[index - 1];
+		}
 
 		theItems[index] = x;
 
@@ -383,16 +387,18 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>>
         }
     }
 
-	// TODO: Make this private since sorting should be done automatically.
-	public void sortAscending() {
+	private void sortAscending() {
 		for(int x = 1; x < theSize; x++) {
 			AnyType temp = theItems[x];
-			int y = x;
 
-			for(; y > 0 && temp.compareTo(theItems[y - 1]) < 0; y--) {
+			int y = x;
+			while (y > 0 && (theItems[y - 1] == null && temp != null) ||
+					temp != null && temp.compareTo(theItems[y - 1]) < 0) {
 				theItems[y] = theItems[y - 1];
+				y--;
 			}
-			theItems[y] = (AnyType) temp;
+
+			theItems[y] = temp;
 		}
 	}
 
