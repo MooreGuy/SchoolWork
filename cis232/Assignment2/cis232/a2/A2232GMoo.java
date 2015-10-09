@@ -1,4 +1,12 @@
-import weiss.util.*;
+package cis232.a2;
+
+import weiss.util.AbstractCollection;
+import weiss.util.List;
+import weiss.util.Collection;
+import weiss.util.Iterator;
+import weiss.util.ListIterator;
+import java.util.ConcurrentModificationException;
+import java.util.NoSuchElementException;
 
 /**
  * The A2232GMoo implements a growable array.
@@ -13,6 +21,10 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
     {
         clear( );
     }
+
+	public A2232GMoo(int customSize) {
+		clear(customSize);
+	}
 
     /**
      * Construct an A2232GMoo with same items as another Collection.
@@ -144,8 +156,31 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
                 return i;
 
         return NOT_FOUND;
-
     }
+
+	public Result<AnyType> getMode() {
+		if (theSize == 0) {
+			return new ModeResult<AnyType>(null, 0);
+		}
+
+		AnyType highest = theItems[0];
+
+		int highestCount = 1;
+		int currentCount = 1;
+		for (int x = 1; x < theSize; x++) {
+			if (theItems[x].compareTo(theItems[x - 1]) == 0)
+				currentCount++;
+			else {
+				if (highestCount < currentCount)
+					highestCount = currentCount;
+
+				highest = theItems[x];
+			}
+		}
+
+		return new ModeResult<AnyType>(highest, highestCount);
+	}
+
     /**
      * Adds an item to this collection, at the end.
      * @param x any object.
@@ -221,6 +256,12 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
         theItems = (AnyType []) new Comparable[ DEFAULT_CAPACITY ];
         modCount++;
     }
+
+	public void clear(int customSize) {
+		theSize = 0;
+		theItems = (AnyType []) new Comparable[customSize];
+		modCount++;
+	}
 
     /**
      * Obtains an Iterator object used to traverse the collection.
@@ -323,22 +364,36 @@ public class A2232GMoo<AnyType extends Comparable<? super AnyType>> extends Abst
 		}
 	}
 
-	public int binarySearch(AnyType target) {
+	public static <SomeType extends Comparable<? super SomeType>> int
+			binarySearch(A2232GMoo<SomeType> sortedList, SomeType target) {
 		int middle = 0;
 
-		for (int low = 0, high = theSize - 1; low <= high;) {
+		for (int low = 0, high = sortedList.size() - 1; low <= high;) {
 			middle = (low + high) / 2;
 
-			if (target.compareTo(theItems[middle]) > 0) {
+			if (target.compareTo(sortedList.get(middle)) > 0) {
 				low = middle + 1;
-			} else if (target.compareTo(theItems[middle]) < 0) {
+			} else if (target.compareTo(sortedList.get(middle)) < 0) {
 				high = middle - 1;
 			} else {
 				return middle;
 			}
 		}
 
-		return (- middle) - 1;
+		return -1;
+	}
+
+	class ModeResult<AnyType> implements Result<AnyType> {
+		ModeResult(AnyType mo, int co) {
+			mode = mo;
+			count = co;
+		}
+
+		public AnyType mode() { return mode; }
+		public int count() { return count; }
+
+		private AnyType mode;
+		private int count;
 	}
 
     private static final int DEFAULT_CAPACITY = 10;

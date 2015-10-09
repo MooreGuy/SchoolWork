@@ -1,0 +1,7 @@
+Add binary search
+
+The binary search searches the sorted array and will return the
+index of the target element when it is found, or if it is not found
+then the negative value minus one for where it should be placed
+will be returned instead. If the list has nothing in it, then it
+will return the 
