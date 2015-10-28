@@ -1,3 +1,9 @@
+/**
+ * Guy Moore
+ * Assignmnet 2
+ * Instructor: Randy Scovil
+ * Cuesta College
+ */
 package cis232.a2;
 
 import weiss.util.AbstractCollection;

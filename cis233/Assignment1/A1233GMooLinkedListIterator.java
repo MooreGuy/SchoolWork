@@ -13,13 +13,13 @@
  * @author Mark Allen Weiss
  * @see LinkedList
  */
-public class LinkedListIterator<AnyType>
+public class A1233GMooLinkedListIterator<AnyType>
 {
     /**
      * Construct the list iterator
      * @param theNode any node in the linked list.
      */
-    LinkedListIterator( ListNode<AnyType> theNode )
+    A1233GMooLinkedListIterator( A1233GMooListNode<AnyType> theNode )
     {
         current = theNode;
     }
@@ -53,5 +53,5 @@ public class LinkedListIterator<AnyType>
             current = current.next;
     }
 
-    ListNode<AnyType> current;    // Current position
+    A1233GMooListNode<AnyType> current;    // Current position
 }
