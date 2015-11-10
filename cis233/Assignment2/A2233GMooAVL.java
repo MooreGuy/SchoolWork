@@ -24,7 +24,8 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		root = insert(x, root);
 	}
 
-	protected A2233GMooBinaryNode<AnyType> insert(AnyType x, A2233GMooBinaryNode<AnyType> t) {
+	protected A2233GMooBinaryNode<AnyType> insert(AnyType x,
+		A2233GMooBinaryNode<AnyType> t) {
 		if(t == null)
 			t = new A2233GMooBinaryNode<AnyType>(x);
 		else if(x.compareTo(t.element) < 0)
@@ -58,7 +59,8 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		print(node.right, builder);
 	}
 
-	private A2233GMooBinaryNode<AnyType> find(AnyType x, A2233GMooBinaryNode<AnyType> t) {
+	private A2233GMooBinaryNode<AnyType> find(AnyType x,
+		A2233GMooBinaryNode<AnyType> t) {
 		while(t != null) {
 			if(x.compareTo(t.element) < 0)
 				t = t.left;
@@ -71,21 +73,42 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		return null;
 	}
 
-	protected A2233GMooBinaryNode<AnyType> remove(AnyType x, A2233GMooBinaryNode<AnyType> t) {
+	public void remove(AnyType x) {
+		remove(x, root);
+	}
+
+	protected A2233GMooBinaryNode<AnyType> remove(AnyType x,
+		A2233GMooBinaryNode<AnyType> t) {
 		if(t == null)
-			// NOTE: TONY THE PONY
+			throw new ItemNotFoundException(x.toString());
 		if(x.compareTo(t.element) < 0)
-			t.left = remove(x, t.left);
+			remove(x, t.left);
 		else if(x.compareTo(t.element) > 0)
-			t.right = remove(x, t.right);
-		else if(t.left != null && t.right != null)
-		{
-			t.element = findMin(t.right).element;
-			t.right = removeMin(t.right);
-		}
+			remove(x, t.right);
 		else
-			t = (t.left != null) ? t.left : t.right;
+			t.count--;
 
 		return t;
+	}
+
+	protected A2233GMooBinaryNode<AnyType> findMin(
+		A2233GMooBinaryNode<AnyType> t) {
+		if(t.left != null)
+			findMin(t.left);
+
+		return t;
+	}
+
+	protected A2233GMooBinaryNode<AnyType> removeMin(
+		A2233GMooBinaryNode<AnyType> t) {
+		if(t == null) {
+			throw new ItemNotFoundException();
+		} else if(t.left != null) {
+			t.left.count = t.left.count - 1;
+			removeMin(t.left);
+			return t;
+		}
+		else
+			return t.right;
 	}
 }
