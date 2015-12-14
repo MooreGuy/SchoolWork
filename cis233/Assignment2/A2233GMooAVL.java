@@ -57,13 +57,36 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		else
 			t.count++;
 
-		int leftHeight = (t.left == null) ? 0 : t.left.height;
-		int rightHeight = (t.right == null) ? 0 : t.right.height;
-
-		t.height = (t.left == null) ? 0 : t.left.height + 1;
-
-		return t;
+		return balance(t);
 	}
+
+    private static final int ALLOWED_IMBALANCE = 1;
+
+    private A2233GMooBinaryNode<AnyType>
+		balance(A2233GMooBinaryNode<AnyType> t) {
+        if( t == null )
+            return t;
+
+        if( height( t.left ) - height( t.right ) > ALLOWED_IMBALANCE )
+            if( height( t.left.left ) >= height( t.left.right ) )
+                t = rotateWithLeftChild( t );
+            else
+                t = doubleRotateWithLeftChild( t );
+        else
+        if( height( t.right ) - height( t.left ) > ALLOWED_IMBALANCE )
+            if( height( t.right.right ) >= height( t.right.left ) )
+                t = rotateWithRightChild( t );
+            else
+                t = doubleRotateWithRightChild( t );
+
+        t.height = Math.max( height( t.left ), height( t.right ) ) + 1;
+        return t;
+    }
+
+    private int height( A2233GMooBinaryNode<AnyType> t )
+    {
+        return t == null ? -1 : t.height;
+    }
 
 	public void printBalTree(boolean ascending) {
 		if (root == null) {
@@ -192,7 +215,7 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		else
 			t.count--;
 
-		return t;
+		return balance(t);
 	}
 
 	public A2233GMooBinaryNode<AnyType> findMin(
@@ -272,15 +295,23 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		A2233GMooBinaryNode<AnyType> k1 = k2.left;
 		k2.left = k1.right;
 		k1.right = k2;
+
+        k2.height = Math.max( height( k2.left ), height( k2.right ) ) + 1;
+        k1.height = Math.max( height( k1.left ), k2.height ) + 1;
+
 		return k1;
 	}
 
 	A2233GMooBinaryNode<AnyType> rotateWithRightChild(
 		A2233GMooBinaryNode<AnyType> k1) {
 
-		A2233GMooBinaryNode<AnyType> k2 = k1.left;
-		k1.left = k2.right;
-		k2.right = k1;
+		A2233GMooBinaryNode<AnyType> k2 = k1.right;
+		k1.right = k2.left;
+		k2.left = k1;
+
+		k1.height = Math.max( height( k1.left ), height( k1.right ) ) + 1;
+        k2.height = Math.max( height( k2.right ), k1.height ) + 1;
+
 		return k2;
 	}
 
