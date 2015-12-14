@@ -226,7 +226,15 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		return t;
 	}
 
-	protected A2233GMooBinaryNode<AnyType> removeMin(
+	public A2233GMooBinaryNode<AnyType> findMax(
+		A2233GMooBinaryNode<AnyType> t) {
+		if(t.right != null)
+			findMin(t.right);
+
+		return t;
+	}
+
+	public  A2233GMooBinaryNode<AnyType> removeMin(
 		A2233GMooBinaryNode<AnyType> t) {
 		if(t == null) {
 			throw new ItemNotFoundException();
