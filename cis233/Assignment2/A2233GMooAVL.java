@@ -1,3 +1,9 @@
+package cis233.a2;
+
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import weiss.nonstandard.ItemNotFoundException;
+
 public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 	A2233GMooBinaryNode<AnyType> root;
 
@@ -13,6 +19,22 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 			left = right = null;
 			height = 0;
 			count = 1;
+		}
+
+		public String toString() {
+			StringBuilder build = new StringBuilder();
+			build.append("Data: ");
+			build.append(element);
+
+			build.append("    Height: ");
+			build.append(height);
+
+			build.append("    Balance: ");
+			int leftHeight = (left == null) ? 0 : left.height;
+			int rightHeight = (right == null) ? 0 : right.height;
+			build.append(leftHeight - rightHeight);
+
+			return build.toString();
 		}
 	}
 
@@ -34,29 +56,111 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 			t.right = insert(x, t.right);
 		else
 			t.count++;
+
+		int leftHeight = (t.left == null) ? 0 : t.left.height;
+		int rightHeight = (t.right == null) ? 0 : t.right.height;
+
+		t.height = (t.left == null) ? 0 : t.left.height + 1;
+
 		return t;
 	}
 
-	public String toString() {
+	public void printBalTree(boolean ascending) {
+		if (root == null) {
+			System.out.println("Tree is currently empty");
+			return;
+		}
+
 		StringBuilder builder = new StringBuilder();
-		print(root, builder);
-		return builder.toString().trim();
+		balancedTree(root, builder, ascending);
+		System.out.print(builder.toString());
 	}
 
-	public void print(A2233GMooBinaryNode<AnyType> node, StringBuilder builder) {
+	public void printTree() {
+		if (isEmpty()) {
+			System.out.println( "Empty tree" );
+		} else {
+			printTree(root);
+		}
+	}
+
+	public boolean isEmpty( ) {
+        return root == null;
+    }
+
+	private void printTree(A2233GMooBinaryNode<AnyType> t) {
+		if(t == null) {
+			printTree(t.left);
+			for(int x = 0; x < t.count; x++) {
+				System.out.println(t.element);
+			}
+			printTree(t.right);
+		}
+	}
+
+	public void writeBalTree(boolean ascending) {
+		PrintWriter writer ;
+		try {
+			writer = new PrintWriter("A2233GMooAVLout.txt");
+		} catch(FileNotFoundException fnf) {
+			System.out.println("File not found exception.");
+			return;
+		}
+
+		if (root == null) {
+			writer.println("Tree is currently empty");
+			writer.close();
+			return;
+		}
+
+		StringBuilder builder = new StringBuilder();
+		balancedTree(root, builder, ascending);
+
+		writer.print(builder.toString());
+		writer.close();
+	}
+
+	public void balancedTree(A2233GMooBinaryNode<AnyType> node,
+		StringBuilder builder, boolean ascending) {
+
 		if (node == null) {
 			return;
 		}
 
-		print(node.left, builder);
+		A2233GMooBinaryNode<AnyType> firstDirection;
+		A2233GMooBinaryNode<AnyType> secondDirection;
+		if (ascending)  {
+			firstDirection = node.left;
+			secondDirection = node.right;
+		}
+		else {
+			firstDirection = node.right;
+			secondDirection = node.left;
+		}
+
+		balancedTree(firstDirection, builder, ascending);
 
 		// One for each count.
 		for (int x = 0; x < node.count; x++) {
-			builder.append(node.element);
-			builder.append(" ");
+			// Current node
+			builder.append(node.toString());
+
+			builder.append("\n\tLeft: ");
+			if (node.left == null)
+				builder.append("null");
+			else
+				builder.append(node.left.toString());
+
+			builder.append("\n\tRight: ");
+			if (node.right == null)
+				builder.append("null");
+			else
+				builder.append(node.right.toString());
+
+			builder.append("\n");
 		}
 
-		print(node.right, builder);
+		balancedTree(secondDirection, builder, ascending);
 	}
 
 	private A2233GMooBinaryNode<AnyType> find(AnyType x,
@@ -91,7 +195,7 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		return t;
 	}
 
-	protected A2233GMooBinaryNode<AnyType> findMin(
+	public A2233GMooBinaryNode<AnyType> findMin(
 		A2233GMooBinaryNode<AnyType> t) {
 		if(t.left != null)
 			findMin(t.left);
@@ -110,5 +214,85 @@ public class A2233GMooAVL <AnyType extends Comparable<? super AnyType>> {
 		}
 		else
 			return t.right;
+	}
+
+	String author() {
+		return "Guy";
+	}
+
+	private A2233GMooBinaryNode<AnyType> highestCount(
+		A2233GMooBinaryNode<AnyType> current,
+		A2233GMooBinaryNode<AnyType> highest) {
+		if (current.count > highest.count)
+			highest = current;
+
+		A2233GMooBinaryNode<AnyType> rightCount;
+		A2233GMooBinaryNode<AnyType> leftCount;
+		if (current.left != null) {
+			leftCount = highestCount(current.left, highest);
+			if (highest.count < leftCount.count)
+				highest = leftCount;
+		}
+		if (current.right != null) {
+			rightCount = highestCount(current.right, highest);
+			if (highest.count < rightCount.count)
+				highest = rightCount;
+		}
+
+		return highest;
+	}
+
+	public Result<AnyType> findMode() {
+		A2233GMooBinaryNode<AnyType> mode = highestCount(root, root);
+		return new AVLResult<AnyType>(mode.element, mode.count);
+	}
+
+	public static class AVLResult<ResultType extends
+		Comparable<? super ResultType>> implements Result<ResultType>{
+		private ResultType mode;
+		private int count;
+
+		public AVLResult(ResultType mode, int count) {
+			this.mode = mode;
+			this.count = count;
+		}
+
+		public int count() {
+			return count;
+		}
+
+		public ResultType mode() {
+			return mode;
+		}
+	}
+
+	A2233GMooBinaryNode<AnyType> rotateWithLeftChild(
+		A2233GMooBinaryNode<AnyType> k2) {
+
+		A2233GMooBinaryNode<AnyType> k1 = k2.left;
+		k2.left = k1.right;
+		k1.right = k2;
+		return k1;
+	}
+
+	A2233GMooBinaryNode<AnyType> rotateWithRightChild(
+		A2233GMooBinaryNode<AnyType> k1) {
+
+		A2233GMooBinaryNode<AnyType> k2 = k1.left;
+		k1.left = k2.right;
+		k2.right = k1;
+		return k2;
+	}
+
+	A2233GMooBinaryNode<AnyType> doubleRotateWithRightChild(
+		A2233GMooBinaryNode<AnyType> k1) {
+		k1.right = rotateWithLeftChild(k1.right);
+		return rotateWithRightChild(k1);
+	}
+
+	A2233GMooBinaryNode<AnyType> doubleRotateWithLeftChild(
+		A2233GMooBinaryNode<AnyType> k3) {
+		k3.left = rotateWithLeftChild(k3.left);
+		return rotateWithRightChild(k3);
 	}
 }

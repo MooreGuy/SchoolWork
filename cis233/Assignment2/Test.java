@@ -4,6 +4,7 @@ public class Test {
 		System.out.println("Multi Add " + testMultiAdd());
 		System.out.println("Single Remove " + testRemove());
 		System.out.println("Multi Remove " + testMultiRemove());
+		System.out.println("balancedTree " + testBalancedTree());
 	}
 
 	private static boolean testAdd() {
@@ -52,5 +53,22 @@ public class Test {
 
 		return testTree.toString().equals("1 3 3");
 
+	}
+
+	public static boolean testBalancedTree() {
+		A2233GMooAVL<Integer> testTree = new A2233GMooAVL<Integer>();
+		testTree.insert(1);
+		testTree.insert(3);
+		testTree.insert(2);
+		testTree.insert(3);
+
+		testTree.writeBalTree(true);
+
+		testTree.printBalTree(true);
+
+		System.out.println("Mode: ");
+		System.out.println(testTree.findMode());
+
+		return false;
 	}
 }
